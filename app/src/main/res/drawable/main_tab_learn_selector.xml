@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <bitmap android:src="@drawable/learn_white" android:tint="@color/colorPrimary"/>
+    </item>
+    <item android:state_selected="false">
+        <bitmap android:src="@drawable/learn_white" android:tint="@color/line_color_gray"/>
+    </item>
+    <item>
+        <bitmap android:src="@drawable/learn_white" android:tint="@color/line_color_gray"/>
+    </item>
+    <!--<item android:state_selected="false" android:drawable="@drawable/learn_white"/>-->
+    <!--<item android:drawable="@drawable/learn_white"/>-->
+</selector>

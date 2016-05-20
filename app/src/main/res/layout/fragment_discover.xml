@@ -1,0 +1,102 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mosai.corporatetraining.fragment.MeFragment">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+        <TextView
+            android:id="@+id/tv_category"
+            style="@style/titlebtntext"
+            android:layout_alignParentLeft="true"
+            android:text="@string/category" />
+        <ImageView
+            android:clickable="true"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/iv_search"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@drawable/bg_imagebutton"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_search" />
+    </RelativeLayout>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/divider_height"-->
+        <!--android:background="@color/line_color_gray" />-->
+    <include layout="@layout/layout_horizontalline"/>
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+
+    <!--</FrameLayout>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:text="@string/new_course"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/tv_recommended"/>
+            <com.mosai.ui.HorizontalListView
+                android:id="@+id/hlv_newcourses"
+                android:layout_height="150dp"
+                android:layout_width="match_parent">
+
+            </com.mosai.ui.HorizontalListView>
+        </LinearLayout>
+            <View
+                android:layout_margin="5dp"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/line_color_gray_light" />
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:text="@string/recommended"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/tv_newcourses"/>
+            <com.mosai.ui.HorizontalListView
+                android:id="@+id/hlv_recommended"
+                android:layout_height="150dp"
+                android:layout_width="match_parent">
+
+            </com.mosai.ui.HorizontalListView>
+        </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

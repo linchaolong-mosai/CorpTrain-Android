@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">H2H Train</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="help">HELP</string>
+    <string name="show">SHOW</string>
+    <string name="hide">HIDE</string>
+    <string name="login">LOGIN</string>
+    <string name="create_an_account">CREATE AN ACCOUNT</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_hint">Enter your email address. You will receive a confirmation email with instruction to reset your password.</string>
+    <string name="send">SEND</string>
+    <string name="return_to_login">Return to Login</string>
+    <string name="name">Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="discover">Discover</string>
+    <string name="search">Search</string>
+    <string name="notification">Notification</string>
+    <string name="category">Category</string>
+    <string name="calendar">Calendar</string>
+    <string name="my_courses">My Courses</string>
+    <string name="me">Me</string>
+    <string name="drop_course">Drop Course</string>
+
+    <string name="personal_info">Personal Info</string>
+    <string name="change_password">Change Password</string>
+    <string name="clear_offline_course_materials">Clear Offline Course Materials</string>
+    <string name="rate_h2h">Rate H2H</string>
+    <string name="feedback">Feedback</string>
+    <string name="photo">Photo</string>
+    <string name="company_name">Company Name</string>
+    <string name="phone">Phone</string>
+    <string name="unbound">Unbound</string>
+    <string name="to_bind">to bind</string>
+
+    <string name="network_request_timeout">Network request timeout, please check the network settings</string>
+    <string name="parse_data_error">Parse data error</string>
+    <string name="server_response_value_error">Server response value error, the error code is %1$s</string>
+
+    <string name="loading_text">loading&#8230;</string>
+
+    <string name="ok">OK</string>
+
+    <string name="error">Error</string>
+    <string name="success">Success</string>
+    <string name="email_format_error">Email format error</string>
+    <string name="email_cannot_be_empty">Email cannot be empty</string>
+    <string name="password_cannot_be_empty">Password cannot be empty</string>
+    <string name="first_name_cannot_be_empty">First name cannot be empty</string>
+    <string name="last_name_cannot_be_empty">Last name cannot be empty</string>
+    <string name="re_enter_password_cannot_be_empty">Confirm password cannot be empty</string>
+    <string name="incorrect_password">Incorrect password, please check again</string>
+    <string name="forgot_success_hint">Please check your email for the new password.</string>
+
+    <string name="phone_number">Phone Number</string>
+    <string name="Mobile_number">Mobile Number</string>
+    <string name="phone_cannot_be_empty">Phone cannot be empty</string>
+
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+
+    <string name="subject">Subject</string>
+    <string name="subject_cannot_be_empty">Subject cannot be empty</string>
+    <string name="feedback_text_hint">Tap to provide feedback</string>
+    <string name="feedback_cannot_be_empty">Feedback cannot be empty</string>
+    <string name="photo_album">Photo album</string>
+    <string name="photograph">Photograph</string>
+    <string name="new_course">NEW COURSES</string>
+    <string name="recommended">RECOMMENDED</string>
+</resources>

@@ -1,0 +1,166 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MainTheme" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="ToolBar_Theme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light"><!-- Widget.Material.PopupMenu.Overflow -->
+        <!-- Required for pre-Lollipop. -->
+        <item name="overlapAnchor">false</item>
+        <!-- Required for Lollipop. -->
+        <item name="android:overlapAnchor" tools:targetApi="21">false</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/default_blue</item>
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
+    </style>
+
+    <style name="LoginTheme" parent="SplashTheme">
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/login_bg</item>
+    </style>
+
+    <style name="dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="TextView.Lable" parent="android:Widget.Holo.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black9</item>
+        <item name="android:visibility">invisible</item>
+    </style>
+
+    <style name="Button.Login" parent="android:Widget.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_blue_shape</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="line" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:background">@color/line_gray</item>
+    </style>
+
+    <style name="line_marginBottom" parent="line">
+        <item name="android:layout_marginBottom">@dimen/standard_margin</item>
+    </style>
+
+    <style name="EditText.Default" parent="@android:style/Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingBottom">@dimen/standard_padding</item>
+        <item name="android:paddingTop">@dimen/standard_padding</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textCursorDrawable">@null</item>
+    </style>
+
+    <style name="TextView.ShowPWD" parent="android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/standard_padding</item>
+        <item name="android:textColor">@color/black9</item>
+        <item name="android:tag">true</item>
+        <item name="android:text">@string/show</item>
+    </style>
+
+    <style name="ImageView_Logo">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">100dp</item>
+        <item name="android:src">@drawable/logo</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="TextView_Me_Item" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingRight">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingTop">@dimen/standard_padding</item>
+        <item name="android:paddingBottom">@dimen/standard_padding</item>
+        <item name="android:textColor">@color/black3</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Personal_Info_RelativeLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
+    </style>
+
+    <style name="Personal_Info_TextView_Left" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/black3</item>
+        <item name="android:layout_alignParentStart" tools:targetApi="17">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <style name="Personal_Info_TextView_right" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColor">@color/black9</item>
+        <item name="android:layout_alignParentEnd" tools:targetApi="17">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="titletext">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="titlebtntext">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/bg_imagebutton</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="listviewstyle">
+        <item name="android:cacheColorHint">@null</item>
+        <item name="android:divider">@color/line_color_gray</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+    </style>
+
+
+</resources>

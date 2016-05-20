@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".activity.PersonalInfoActivity">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+        <TextView
+            style="@style/titletext"
+            android:layout_centerInParent="true"
+            android:text="@string/personal_info"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"/>
+
+    <RelativeLayout
+        style="@style/Personal_Info_RelativeLayout"
+        android:paddingBottom="@dimen/standard_padding"
+        android:paddingTop="@dimen/standard_padding">
+
+        <TextView
+            style="@style/Personal_Info_TextView_Left"
+            android:text="@string/photo"/>
+
+        <com.mosai.ui.CircleImageView
+            android:scaleType="centerCrop"
+            app:border_color="@android:color/white"
+            android:id="@+id/ivMyicon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/blank_user_small"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlName"
+        style="@style/Personal_Info_RelativeLayout">
+
+        <TextView
+            style="@style/Personal_Info_TextView_Left"
+            android:text="@string/name"/>
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/Personal_Info_TextView_right"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/Personal_Info_RelativeLayout">
+
+        <TextView
+            style="@style/Personal_Info_TextView_Left"
+            android:text="@string/company_name"/>
+
+        <TextView
+            android:id="@+id/tvCompanyName"
+            style="@style/Personal_Info_TextView_right"
+            android:text="@string/unbound"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlPhone"
+        style="@style/Personal_Info_RelativeLayout">
+
+        <TextView
+            style="@style/Personal_Info_TextView_Left"
+            android:text="@string/phone"/>
+
+        <TextView
+            android:id="@+id/tvPhone"
+            style="@style/Personal_Info_TextView_right"
+            android:text="@string/to_bind"/>
+    </RelativeLayout>
+
+</LinearLayout>

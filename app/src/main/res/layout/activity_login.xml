@@ -1,0 +1,89 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.LoginActivity">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        style="@style/ImageView_Logo"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <TextView
+        android:id="@+id/tvEmail"
+        style="@style/TextView.Lable"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:layout_marginTop="@dimen/activity_vertical_margin_double"
+        android:text="@string/email"/>
+
+    <EditText
+        android:id="@+id/etEmail"
+        style="@style/EditText.Default"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:hint="@string/email"
+        android:imeOptions="actionNext"
+        android:inputType="textEmailAddress"
+        android:maxLength="@integer/email_length_max"/>
+
+    <View
+        style="@style/line_marginBottom"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"/>
+
+    <TextView
+        android:id="@+id/tvPassword"
+        style="@style/TextView.Lable"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:text="@string/password"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right">
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/EditText.Default"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="@string/password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLength="@integer/password_length_max"/>
+
+        <TextView
+            android:id="@+id/tvShow"
+            style="@style/TextView.ShowPWD"
+            android:tag="@string/help"
+            android:text="@string/help"/>
+    </LinearLayout>
+
+    <View
+        style="@style/line_marginBottom"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="@style/Button.Login"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:text="@string/login"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Button.Login"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:background="@android:color/transparent"
+        android:text="@string/create_an_account"
+        android:visibility="gone"/>
+
+</LinearLayout>

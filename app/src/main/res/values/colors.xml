@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2BC3BF</color>
+    <!--<color name="colorPrimaryDark">#1C8280</color>-->
+    <color name="colorPrimaryDark">@color/titlecolor</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="titlecolor">#FEFEFE</color>
+    <color name="status_bar_color">#50000000</color>
+    <color name="bottom_layout_color">#F9F9F9</color>
+    <color name="black3">#333333</color>
+    <color name="black6">#666666</color>
+    <color name="black9">#999999</color>
+    <color name="black28">#282828</color>
+
+    <color name="default_blue">@color/colorPrimary</color>
+    <color name="gray_cf">#CFCFCF</color>
+    <color name="line_gray">#EBEBEB</color>
+    <color name="line_gray_f2">#F2F2F2</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="black">#000000</color>
+
+    <color name="bg_allviewbackground">#ffffff</color>
+    <color name="pressed_bgcolor">#b7c2c7d1</color>
+    <color name="white">#ffffff</color>
+    <color name="line_color_gray">#CFCFCF</color>
+    <color name="line_color_gray_light">#55CFCFCF</color>
+</resources>

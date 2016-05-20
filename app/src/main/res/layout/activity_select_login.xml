@@ -1,0 +1,33 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.SelectLoginActivity">
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        style="@style/ImageView_Logo"
+        android:layout_gravity="center_horizontal"/>
+
+
+    <Button
+        android:id="@+id/btnLogin"
+        style="@style/Button.Login"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:layout_above="@+id/btnRegister"
+        android:text="@string/login"/>
+
+    <Button
+        android:id="@+id/btnRegister"
+        style="@style/Button.Login"
+        android:layout_marginLeft="@dimen/content_margin_left_right"
+        android:layout_marginRight="@dimen/content_margin_left_right"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:text="@string/create_an_account"/>
+
+</RelativeLayout>

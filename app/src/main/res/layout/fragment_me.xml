@@ -1,0 +1,76 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:overScrollMode="never"
+    android:scrollbars="none"
+    tools:context=".fragment.MeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+
+        <RelativeLayout
+            android:id="@+id/rlTopPanel"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@color/default_blue">
+
+            <com.mosai.ui.CircleImageView
+                android:scaleType="centerCrop"
+                app:border_color="@android:color/transparent"
+                android:id="@+id/ivHeadpotrait"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/blank_user_big"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivHeadpotrait"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/standard_margin"
+                android:text="seaef"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvPersonalInfo"
+            style="@style/TextView_Me_Item"
+            android:layout_marginTop="@dimen/standard_padding"
+            android:drawableRight="@drawable/mini_right_arrow"
+            android:text="@string/personal_info"/>
+
+        <TextView
+            android:id="@+id/tvChangePassword"
+            style="@style/TextView_Me_Item"
+            android:drawableRight="@drawable/mini_right_arrow"
+            android:text="@string/change_password"/>
+
+        <TextView
+            android:id="@+id/tvClearOffline"
+            style="@style/TextView_Me_Item"
+            android:text="@string/clear_offline_course_materials"/>
+
+        <TextView
+            android:id="@+id/tvRateH2H"
+            style="@style/TextView_Me_Item"
+            android:drawableRight="@drawable/mini_right_arrow"
+            android:text="@string/rate_h2h"/>
+
+        <TextView
+            android:id="@+id/tvFeedback"
+            style="@style/TextView_Me_Item"
+            android:drawableRight="@drawable/mini_right_arrow"
+            android:text="@string/feedback"/>
+    </LinearLayout>
+</ScrollView>
