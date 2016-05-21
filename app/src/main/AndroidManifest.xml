@@ -39,7 +39,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"></activity>
+            android:theme="@style/LoginTheme">
+        </activity>
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
