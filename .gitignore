@@ -1,11 +1,6 @@
-.gradle/2.10/taskArtifacts/cache.properties
-.gradle/2.10/taskArtifacts/cache.properties.lock
-.gradle/2.10/taskArtifacts/fileHashes.bin
-*.bin
-*.lock
-.idea/.name
-*.xml
-app/app.iml
-*.properties
-ui/ui.iml
-*.iml
+
+/.gradle/
+/.idea/
+/build/
+/CorpTrain-Android.iml
+/local.properties
