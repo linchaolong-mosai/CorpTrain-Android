@@ -8,13 +8,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.activity.ChangePasswordActivity;
 import com.mosai.corporatetraining.activity.FeedbackActivity;
+import com.mosai.corporatetraining.activity.LoginActivity;
 import com.mosai.corporatetraining.activity.PersonalInfoActivity;
 import com.mosai.corporatetraining.local.UserPF;
+import com.mosai.corporatetraining.util.AppManager;
 import com.mosai.corporatetraining.util.LogUtils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.CircleImageView;
@@ -22,13 +25,21 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 /**
  * me
  */
 public class MeFragment extends Fragment implements View.OnClickListener {
+    private MaterialDialog mldgSignout;
+    private Context mContext;
+    private Button btnSignout;
     private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback;
     private CircleImageView ivHeadpotrait;
     private DisplayImageOptions options;
+
+
+
     public MeFragment() {
         // Required empty public constructor
     }
@@ -45,6 +56,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.mContext = context;
         LogUtils.i("onAttach");
     }
 
@@ -76,6 +88,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tvChangePassword = ViewUtil.findViewById(view, R.id.tvChangePassword);
         tvFeedback = ViewUtil.findViewById(view, R.id.tvFeedback);
         ivHeadpotrait = ViewUtil.findViewById(view,R.id.ivHeadpotrait);
+        btnSignout = ViewUtil.findViewById(view,R.id.btn_signout);
         setImageloaderOptions();
         initListener();
         initData();
@@ -85,13 +98,33 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tvPersonalInfo.setOnClickListener(this);
         tvChangePassword.setOnClickListener(this);
         tvFeedback.setOnClickListener(this);
+        btnSignout.setOnClickListener(this);
     }
 
     private void initData() {
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
-
+        mldgSignout = new MaterialDialog(mContext)
+                .setTitle("Tips")
+                .setMessage("Do you want to Sign out?")
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mldgSignout.dismiss();
+                        signout();
+                    }
+                })
+                .setNegativeButton("Cancel", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mldgSignout.dismiss();
+                    }
+                });
     }
-
+    private void signout(){
+        UserPF.getInstance().putString(UserPF.PASSWORD,"");
+        AppManager.getAppManager().finishAllActivity();
+        startActivity(new Intent(mContext, LoginActivity.class));
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -153,7 +186,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             case R.id.tvFeedback:
                 startActivity(new Intent(getActivity(), FeedbackActivity.class));
                 break;
-
+            case R.id.btn_signout:
+                mldgSignout.show();
+                break;
         }
     }
 

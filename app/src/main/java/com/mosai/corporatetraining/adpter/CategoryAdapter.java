@@ -24,7 +24,7 @@ public class CategoryAdapter extends CommonAdapter<Categories>{
     @Override
     protected void fillData(CommonViewHolder holder, int position) {
             Categories category = listDatas.get(position);
-            TextView textView = holder.getView(R.id.tv_name);
+            TextView textView = holder.getView(R.id.tv_creater);
             textView.setText(category.getName());
     }
 }

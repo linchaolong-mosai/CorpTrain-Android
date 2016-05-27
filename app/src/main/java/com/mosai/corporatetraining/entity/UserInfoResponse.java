@@ -1,6 +1,7 @@
 package com.mosai.corporatetraining.entity;
 
 public class UserInfoResponse extends HttpResponse {
+    public String password;
 	public int userId;
     public String name;
     public String email;

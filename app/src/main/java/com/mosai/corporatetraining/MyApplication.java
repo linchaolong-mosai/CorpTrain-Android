@@ -2,6 +2,7 @@ package com.mosai.corporatetraining;
 
 import android.app.Application;
 
+import com.mosai.corporatetraining.common.AbnormalHandler;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AsyncHttp;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
@@ -22,6 +23,14 @@ public class MyApplication extends Application {
         AsyncHttp.getInstance().init(this);
         UserPF.getInstance().init(this);
         initImageLoader();
+        initAbnormalHandler();
+
+    }
+    private void initAbnormalHandler(){
+        if(BuildConfig.DEBUG){
+            AbnormalHandler crashHandler = AbnormalHandler.getInstance();
+            crashHandler.init(getApplicationContext());
+        }
     }
     private void initImageLoader(){
         ImageLoaderConfiguration config = new ImageLoaderConfiguration

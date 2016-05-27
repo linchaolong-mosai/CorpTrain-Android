@@ -1,19 +1,35 @@
 package com.mosai.corporatetraining.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.network.AppAction;
+import com.mosai.ui.CantScrollViewPager;
+import com.mosai.ui.SegmentedControlView;
 
 /**
  * me
  */
-public class MyCoursesFragment extends Fragment {
-
+public class MyCoursesFragment extends Fragment implements SegmentedControlView.OnSelectionChangedListener {
+    private final static int COUNT = 3;
+    private final static int ONE = 0;
+    private final static int TWO = 1;
+    private final static int THREE = 2;
+    private Context context;
+    private View view;
+    private CourseListFragment mandatory,enrolled,completed;
+    private SegmentedControlView scv;
+    private CantScrollViewPager viewPager;
     public MyCoursesFragment() {
         // Required empty public constructor
     }
@@ -26,20 +42,14 @@ public class MyCoursesFragment extends Fragment {
      */
     public static MyCoursesFragment newInstance() {
         MyCoursesFragment fragment = new MyCoursesFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+
     }
 
     @Override
@@ -47,37 +57,82 @@ public class MyCoursesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i(this.toString(), "onCreateView()");
-        return inflater.inflate(R.layout.fragment_my_courses, container, false);
+        view =  inflater.inflate(R.layout.fragment_my_courses, container, false);
+        viewPager = (CantScrollViewPager) view.findViewById(R.id.viewPager);
+        scv = (SegmentedControlView) view.findViewById(R.id.scv);
+        scv.setColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.white));
+
+        scv.setStretch(true);
+
+        try {
+            scv.setItems(new String[]{"Mandatory", "Enrolled","Completed"}, new String[]{"one", "two","three"});
+            scv.setDefaultSelection(0);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return view;
     }
 
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+    @Override
+    public void newSelection(String identifier, String value) {
+        if ("one".equals(value)) {
+            viewPager.setCurrentItem(ONE);
+        } else if ("two".equals(value)) {
+            viewPager.setCurrentItem(TWO);
+        } else{
+            viewPager.setCurrentItem(THREE);
         }
-    }*/
+    }
 
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
+    private class TabAdapter extends FragmentPagerAdapter {
+        public TabAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+            // TODO Auto-generated constructor stub
+        }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   /* public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }*/
+        @Override
+        public Fragment getItem(int arg0) {
+            // TODO Auto-generated method stub
+            switch (arg0) {
+                case ONE:
+                    return mandatory;
+                case TWO:
+                    return enrolled;
+                case THREE:
+                    return completed;
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return COUNT;
+        }
+
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = new Bundle();
+        mandatory = new CourseListFragment();
+        bundle.putInt("tag",ONE);
+        bundle.putInt("type", AppAction.SEARCH_USER_COURSE_FILTER_TYPE_MANDATORY);
+        mandatory.setArguments(bundle);
+
+
+        enrolled = new CourseListFragment();
+        bundle.putInt("tag",TWO);
+        bundle.putInt("type", AppAction.SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED);
+        enrolled.setArguments(bundle);
+
+        completed = new CourseListFragment();
+        bundle.putInt("tag",THREE);
+        bundle.putInt("type", AppAction.SEARCH_USER_COURSE_FILTER_TYPE_FINISHED);
+        completed.setArguments(bundle);
+
+        viewPager.setAdapter(new TabAdapter(((AppCompatActivity)context).getSupportFragmentManager()));
+        scv.setOnSelectionChangedListener(this);
+    }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -19,7 +20,9 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.activity.CategoryActivity;
+import com.mosai.corporatetraining.activity.CourseDetailActivity;
 import com.mosai.corporatetraining.activity.MainActivity;
+import com.mosai.corporatetraining.activity.SearchCourseMainActivity;
 import com.mosai.corporatetraining.adpter.CourseCoverAdapter;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.bean.usercourse.UserCourseRoot;
@@ -213,6 +216,22 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
 
     }
     private void addListener(){
+        hlvRecommended.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                intent.putExtra("course",recommendCourses.get(position));
+                startActivity(intent);
+            }
+        });
+        hlvNewcourses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                intent.putExtra("course",newCourses.get(position));
+                startActivity(intent);
+            }
+        });
         view.findViewById(R.id.tv_category).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,18 +241,18 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         view.findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(mContext, SearchCourseMainActivity.class));
             }
         });
     }
     /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFratListenerQuizQuestion) {
+            mListener = (OnFratListenerQuizQuestion) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFratListenerQuizQuestion");
         }
     }*/
 
@@ -253,7 +272,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-   /* public interface OnFragmentInteractionListener {
+   /* public interface OnFratListenerQuizQuestion {
         void onFragmentInteraction(Uri uri);
     }*/
 }

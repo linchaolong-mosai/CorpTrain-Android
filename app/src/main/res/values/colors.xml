@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="red">#c23232</color>
     <color name="colorPrimary">#2BC3BF</color>
     <!--<color name="colorPrimaryDark">#1C8280</color>-->
     <color name="colorPrimaryDark">@color/titlecolor</color>
@@ -12,13 +13,14 @@
     <color name="black9">#999999</color>
     <color name="black28">#282828</color>
 
+    <color name="grey">#fb7c7c7c</color>
     <color name="default_blue">@color/colorPrimary</color>
     <color name="gray_cf">#CFCFCF</color>
     <color name="line_gray">#EBEBEB</color>
     <color name="line_gray_f2">#F2F2F2</color>
     <color name="actionsheet_gray">#8F8F8F</color>
     <color name="black">#000000</color>
-
+    <color name="pressed_bgcolor_green">#502BC3BF</color>
     <color name="bg_allviewbackground">#ffffff</color>
     <color name="pressed_bgcolor">#b7c2c7d1</color>
     <color name="white">#ffffff</color>

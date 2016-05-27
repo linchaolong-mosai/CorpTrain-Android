@@ -1,10 +1,14 @@
 package com.mosai.corporatetraining.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.mosai.corporatetraining.broadcast.TokenExpireReceiver;
+import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AsyncHttp;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
 import com.mosai.corporatetraining.util.AppManager;
@@ -23,12 +27,14 @@ public class BaseActivity extends AppCompatActivity {
 	private Toast toast;
     private HintDialog hintDialog;
     private DefaultProgressIndicator progressIndicator;
-
+    private IntentFilter tokenexpireIntentFilter;
+    private TokenExpireReceiver tokenExpireReceiver;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         context = this;
         AppManager.getAppManager().addActivity(this);
+        register();
 	}
 
 	@Override
@@ -107,6 +113,14 @@ public class BaseActivity extends AppCompatActivity {
         dismissProgressDialog();
         AsyncHttp.getInstance().getClient().cancelRequests(this, true);
         AppManager.getAppManager().finishActivity(this);
+        unregister();
+    }
+
+    private void unregister() {
+        registerTokenExpireBroadcast();
+    }
+    private void register() {
+        unregisterTokenExpireBroadcast();
     }
     public void back() {
         SwitchingAnim.backward(this);
@@ -114,5 +128,33 @@ public class BaseActivity extends AppCompatActivity {
 
     public void forword() {
         SwitchingAnim.forward(this);
+    }
+
+    protected boolean openTokenExpireBroadcast(){
+        return true;
+    }
+    private void registerTokenExpireBroadcast(){
+        if(openTokenExpireBroadcast()){
+            if(tokenexpireIntentFilter==null && tokenExpireReceiver==null){
+                tokenexpireIntentFilter = new IntentFilter(TokenExpireReceiver.action);
+                tokenExpireReceiver = new TokenExpireReceiver();
+                registerReceiver(tokenExpireReceiver,tokenexpireIntentFilter);
+                tokenExpireReceiver.setTokenExpireCallback(new TokenExpireReceiver.TokenExpireCallback() {
+                    @Override
+                    public void teCallback() {
+                        //登录超时
+                        AppManager.getAppManager().finishAllActivity();
+//                        UserPF.getInstance().putBoolean(UserPF.IS_LOGIN, false);
+                        UserPF.getInstance().putString(UserPF.PASSWORD,"");
+                        startActivity(new Intent(BaseActivity.this,LoginActivity.class));
+                    }
+                });
+            }
+        }
+    }
+    private void unregisterTokenExpireBroadcast(){
+        if(openTokenExpireBroadcast()){
+
+        }
     }
 }

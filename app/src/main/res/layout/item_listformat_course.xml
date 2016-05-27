@@ -19,7 +19,7 @@
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:layout_width="90dp"
-        android:id="@+id/tv_name"/>
+        android:id="@+id/tv_creater"/>
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_marginTop="10dp"

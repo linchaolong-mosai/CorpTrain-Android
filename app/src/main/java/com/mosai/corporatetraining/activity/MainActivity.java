@@ -2,6 +2,7 @@ package com.mosai.corporatetraining.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import com.mosai.corporatetraining.fragment.DiscoverFragment;
 import com.mosai.corporatetraining.fragment.MeFragment;
 import com.mosai.corporatetraining.fragment.MyCoursesFragment;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.utils.ToastUtils;
 
 public class MainActivity extends BaseToolbarActivity {
     private Menu menu;
@@ -186,5 +188,19 @@ public class MainActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
+    }
+    private long lastKeyBackTime = 0;
+    @Override
+    public void onBackPressed() {
+        long nowtime = SystemClock.elapsedRealtime();
+        if (lastKeyBackTime == 0 || nowtime - lastKeyBackTime > 1500) {
+//            GV.showToast(this, "再按一次 退出晋信", 15);
+            ToastUtils.showToast(this,"Press again to exit app");
+            lastKeyBackTime = nowtime;
+        } else {
+            lastKeyBackTime = 0;
+            finish();
+//            moveTaskToBack(true);
+        }
     }
 }

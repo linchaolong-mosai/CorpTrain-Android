@@ -2,10 +2,7 @@ package com.mosai.corporatetraining.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,46 +54,53 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 		ViewUtil.setEditorAction(etPassword, btnLogin);
 		ViewUtil.setEdittextLabelVisibility(etEmail, tvEmail);
 		ViewUtil.setEdittextLabelVisibility(etPassword, tvPassword);
-        etPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text;
-                if (s.length() == 0) {
-                    text = getString(R.string.help);
-                } else {
-                    Object obj = tvShow.getTag(tvShow.getId());
-                    if (obj == null || ((boolean) obj)) {
-                        text = getString(R.string.show);
-                        tvShow.setTag(tvShow.getId(), true);
-                    } else {
-                        text = getString(R.string.hide);
-                        tvShow.setTag(tvShow.getId(), false);
-                    }
-                }
-                tvShow.setText(text);
-                tvShow.setTag(text);
-            }
-        });
+//        etPassword.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String text;
+//                if (s.length() == 0) {
+//                    text = getString(R.string.help);
+//                } else {
+//                    Object obj = tvShow.getTag(tvShow.getId());
+//                    if (obj == null || ((boolean) obj)) {
+//                        text = getString(R.string.show);
+//                        tvShow.setTag(tvShow.getId(), true);
+//                    } else {
+//                        text = getString(R.string.hide);
+//                        tvShow.setTag(tvShow.getId(), false);
+//                    }
+//                }
+//                tvShow.setText(text);
+//                tvShow.setTag(text);
+//            }
+//        });
 	}
 
 	private void initData() {
-        etEmail.setText("ctuser@whatever.com");
-        etPassword.setText("tutormeet1");
-//		String email = UserPF.getInstance().getString(UserPF.USER_EMAIL, "");
-//		if (!TextUtils.isEmpty(email)) {
-//			etEmail.setText(email);
+//        etEmail.setText("ctuser@whatever.com");
+//        etPassword.setText("tutormeet1");
+		String email = UserPF.getInstance().getString(UserPF.USER_EMAIL, "");
+        String password = UserPF.getInstance().getString(UserPF.PASSWORD, "");
+		if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+			etEmail.setText(email);
+            etPassword.setText(password);
+            login();
 //			etPassword.requestFocus();
-//		}
+		}
+        if(!TextUtils.isEmpty(email) && TextUtils.isEmpty(password)){
+            etEmail.setText(email);
+            etPassword.setText(password);
+        }
 	}
 
 	@Override
@@ -124,18 +128,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             Intent intent = new Intent(this, ForgotPasswordActivity.class);
             intent.putExtra("email", etEmail.getText().toString());
             startActivity(intent);
-        } else {
-            if ((boolean) tvShow.getTag(tvShow.getId())) {
-                tvShow.setText(R.string.hide);
-                tvShow.setTag(tvShow.getId(), false);
-                etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            } else {
-                tvShow.setText(R.string.show);
-                tvShow.setTag(tvShow.getId(), true);
-                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            }
-            etPassword.setSelection(etPassword.length());
         }
+//        else {
+//            if ((boolean) tvShow.getTag(tvShow.getId())) {
+//                tvShow.setText(R.string.hide);
+//                tvShow.setTag(tvShow.getId(), false);
+//                etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+//            } else {
+//                tvShow.setText(R.string.show);
+//                tvShow.setTag(tvShow.getId(), true);
+//                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//            }
+//            etPassword.setSelection(etPassword.length());
+//        }
     }
 
     private void login() {
@@ -157,6 +162,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			@Override
 			public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
 				UserInfoResponse userInfoResponse = (UserInfoResponse) response;
+                userInfoResponse.password = etPassword.getText().toString();
 				UserPF.getInstance().saveUserInfo(userInfoResponse);
                 getCurrentCtUser();
 //                getTokenInfo();
@@ -186,8 +192,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 CurrentCtUserResponse currentCtUserResponse = (CurrentCtUserResponse) response;
                 UserPF.getInstance().saveCtUser(currentCtUserResponse);
-                startActivity(new Intent(context, MainActivity.class));
-				finish();
+//                startActivity(new Intent(context, MainActivity.class));
+//				finish();
             }
 
             @Override
@@ -198,6 +204,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void onResponesefinish() {
                 dismissProgressDialog();
+				startActivity(new Intent(context, MainActivity.class));
+				finish();
             }
         });
     }

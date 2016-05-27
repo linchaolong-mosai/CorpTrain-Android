@@ -4,7 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mosai.corporatetraining.fragment.MeFragment">
+    tools:context="com.mosai.corporatetraining.activity.CategoryActivity">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
 
 
+        <TextView
+
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            style="@style/titletext"
+            android:text="@string/my_courses"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"></include>
+    <com.mosai.ui.SegmentedControlView
+        android:id="@+id/scv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+    </com.mosai.ui.SegmentedControlView>
+
+    <include layout="@layout/layout_horizontalline"></include>
+    <com.mosai.ui.CantScrollViewPager
+        android:layout_weight="1"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
+    </com.mosai.ui.CantScrollViewPager>
 </LinearLayout>

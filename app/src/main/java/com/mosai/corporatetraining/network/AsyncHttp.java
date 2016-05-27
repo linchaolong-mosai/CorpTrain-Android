@@ -11,8 +11,15 @@ import com.loopj.android.http.RequestParams;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.LogUtils;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.security.KeyStore;
+import java.util.HashMap;
 import java.util.Map;
+
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 
 /**
  * HTTP请求
@@ -87,16 +94,28 @@ public class AsyncHttp {
                            AsyncHttpResponseHandler responseHandler){
         execute(context, url, params, map, method, null, responseHandler);
     }
-
+    protected void postJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
+        LogUtils.i(url);
+        client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+//        client.addHeader("Content-Type","application/json");
+        JSONObject jsonObject = new JSONObject(hashMap);
+        try {
+            StringEntity stringEntity = new StringEntity(jsonObject.toString());
+            client.post(context,url,stringEntity,ContentType.APPLICATION_JSON.toString(),responseHandler);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
     protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
                            AsyncHttpResponseHandler responseHandler){
         params = getRequestParams(params, map);
-        LogUtils.i(url + (params == null ? "" : ("?" + params.toString())));
+        LogUtils.i(url + (params == null?"":("?" + params.toString())));
         if (contentType == null) {
             client.removeHeader(AsyncHttpClient.HEADER_CONTENT_TYPE);
         } else {
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE, contentType);
         }
+
         if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
             client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
         } else {
@@ -108,6 +127,15 @@ public class AsyncHttp {
                 break;
             case METHOD_GET:
                 client.get(context, url, params, responseHandler);
+                break;
+            case METHOD_PUT:
+                JSONObject json = new JSONObject(map);
+                try {
+                    StringEntity body = new StringEntity(json.toString());
+                    client.put(context, url, body, ContentType.APPLICATION_JSON.toString(), responseHandler);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             default:
                 client.put(context, url, params, responseHandler);

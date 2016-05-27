@@ -47,7 +47,12 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
                     HttpResponse response = FastJsonUtils.parseObject(responseString, mClass);
 					if (response != null && response.isSuccess()) {
 						onResponeseSucess(statusCode, response, responseString);// 成功
-					} else {
+					}
+					//token_expire
+					else if(response != null && response.returnCode==HttpResponse.CODE_TOKEN_EXPIRE){
+
+					}
+					else {
 						onResponeseFail(statusCode, response);
 					}
 				} else {

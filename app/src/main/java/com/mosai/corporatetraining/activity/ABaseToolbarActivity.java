@@ -9,16 +9,11 @@ import android.os.Bundle;
  * 邮箱：zhounianbin@mastercom.cn
  */
 public abstract class ABaseToolbarActivity extends BaseToolbarActivity{
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        setContentView(setContent());
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(setContent());
         initView();
         initDatas();
         addListener();

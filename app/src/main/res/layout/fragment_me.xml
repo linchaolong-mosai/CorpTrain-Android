@@ -72,5 +72,13 @@
             style="@style/TextView_Me_Item"
             android:drawableRight="@drawable/mini_right_arrow"
             android:text="@string/feedback"/>
+
+        <Button
+            android:id="@+id/btn_signout"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_imagebutton_grey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"/>
     </LinearLayout>
 </ScrollView>

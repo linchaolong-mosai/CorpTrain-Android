@@ -1,12 +1,11 @@
 package com.mosai.corporatetraining.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Bundle;
 
 import com.mosai.corporatetraining.R;
-import com.mosai.corporatetraining.local.UserPF;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -25,11 +24,12 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
                 Intent intent = new Intent();
-                if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
-                    intent.setClass(context, MainActivity.class);
-                } else {
-                    intent.setClass(context, LoginActivity.class);
-                }
+//                if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
+//                    intent.setClass(context, MainActivity.class);
+//                } else {
+//                    intent.setClass(context, LoginActivity.class);
+//                }
+                intent.setClass(context, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

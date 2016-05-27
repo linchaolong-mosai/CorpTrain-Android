@@ -17,6 +17,7 @@ public class UserPF {
 	private static final String DATABASE_NAME = "USER";
 	public static final String APP_VERSION = "APP_VERSION";
 	/** 默认值为false */
+	public static final String PASSWORD = "PASSWORD";
 	public static final String IS_LOGIN = "IS_LOGIN";
 	public static final String USER_NAME = "USER_NAME";
 	public static final String USER_ID = "USER_ID";
@@ -104,6 +105,7 @@ public class UserPF {
 	 * @param userInfoResponse
 	 */
 	public void saveUserInfo(UserInfoResponse userInfoResponse) {
+		putString(PASSWORD,userInfoResponse.password);
 		putBoolean(IS_LOGIN, true);
 		putBoolean(IS_ADMIN, userInfoResponse.isAdmin);
 		putBoolean(IS_CT_ADMIN, userInfoResponse.isCtAdmin);
