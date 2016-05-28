@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mosai.corporatetraining.activity.CategoryActivity">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+
+        <include layout="@layout/layout_ib_titile_back"></include>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            style="@style/titletext"
+            android:text="Quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="1/3"
+            android:id="@+id/tv_page"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"></include>
+    <com.mosai.ui.CantScrollViewPager
+        android:layout_weight="1"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
+    </com.mosai.ui.CantScrollViewPager>
+    <RelativeLayout
+
+        android:padding="5dp"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:id="@+id/ll_next"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_imagebutton"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="16sp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/white"
+            android:text="Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@drawable/ic_next_step"
+            android:scaleType="centerInside"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        </LinearLayout>
+        <ImageView
+            android:background="@drawable/bg_imagebutton"
+            android:id="@+id/iv_last_step"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_last_step"
+            android:scaleType="centerInside"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </RelativeLayout>
+</LinearLayout>

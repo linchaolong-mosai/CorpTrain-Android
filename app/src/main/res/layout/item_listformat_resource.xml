@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_listview"
+    android:padding="5dp">
+    <ImageView
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+        android:id="@+id/iv_class"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_class"/>
+    <LinearLayout
+        android:id="@+id/ll_info"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/iv_class"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:singleLine="true"
+            android:id="@+id/tv_classname"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="test"/>
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/tv_duedate"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="test"/>
+    </LinearLayout>
+
+</RelativeLayout>

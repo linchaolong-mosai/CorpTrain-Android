@@ -11,4 +11,5 @@
     <dimen name="action_bar_size">47dp</dimen>
     <dimen name="divider_height">1dp</dimen>
     <dimen name="titleheight">48dp</dimen>
+    <dimen name="iv_quiz_summary">50dp</dimen>
 </resources>

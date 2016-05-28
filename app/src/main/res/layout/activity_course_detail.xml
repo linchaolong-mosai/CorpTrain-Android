@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        android:background="@color/titlecolor">
+
+        <include layout="@layout/layout_ib_titile_back"></include>
+
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/titletext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:text="title" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_horizontalline"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_course_default_cover" />
+
+        <FrameLayout
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RatingBar
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:clickable="false"
+                android:id="@+id/ratingbar"
+                style="@style/roomRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="4">
+
+            </RatingBar>
+
+            <RelativeLayout
+                android:onClick="rating"
+                android:id="@+id/rl_rating"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"></RelativeLayout>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <com.mosai.ui.SegmentedControlView
+        android:id="@+id/scv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" >
+    </com.mosai.ui.SegmentedControlView>
+
+    <include layout="@layout/layout_horizontalline"></include>
+    <com.mosai.ui.CantScrollViewPager
+        android:layout_weight="1"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
+    </com.mosai.ui.CantScrollViewPager>
+</LinearLayout>
+

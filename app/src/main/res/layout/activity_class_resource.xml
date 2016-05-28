@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+
+        <include layout="@layout/layout_ib_titile_back"></include>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            style="@style/titletext"
+            android:text="title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"></include>
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_course_default_cover" />
+    <TextView
+
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        android:id="@+id/tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" />
+    <ListView
+        android:id="@+id/lv"
+        style="@style/listviewstyle"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"/>
+</LinearLayout>

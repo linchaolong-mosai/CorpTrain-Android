@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mosai.corporatetraining.activity.CategoryActivity">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+
+       <include layout="@layout/layout_ib_titile_back"></include>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            style="@style/titletext"
+            android:text="@string/search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"></include>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/line_gray"
+        android:padding="8dp">
+        <LinearLayout
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/shape_white_conner"
+            >
+            <ImageView
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_search"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+    <com.mosai.ui.ClearEditText
+        android:imeOptions="actionSearch"
+        android:layout_marginLeft="5dp"
+        android:hint="@string/search_course"
+        android:background="@color/white"
+        android:id="@+id/cet_search"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    <ListView
+
+        android:id="@+id/lv"
+        style="@style/listviewstyle"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="match_parent"/>
+</LinearLayout>

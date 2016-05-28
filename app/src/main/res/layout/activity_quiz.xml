@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.mosai.corporatetraining.activity.QuizActivity">
+    <RelativeLayout
+        android:background="@color/titlecolor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleheight"
+        >
+
+        <include layout="@layout/layout_ib_titile_back_close"></include>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_centerInParent="true"
+            style="@style/titletext"
+            android:text="title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+    <include layout="@layout/layout_horizontalline"></include>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_lessonname"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="lesson"
+        android:textSize="18sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv_description"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="lesson"
+        android:textSize="14sp"
+        android:textColor="@color/black"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_start_quiz"
+        android:textColor="@color/white"
+        android:text="@string/start_quiz"
+        android:background="@drawable/bg_imagebutton_green"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
