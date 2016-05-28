@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
 	protected Context context;
 	private Toast toast;
     private HintDialog hintDialog;
-    private DefaultProgressIndicator progressIndicator;
+    protected DefaultProgressIndicator progressIndicator;
     private IntentFilter tokenexpireIntentFilter;
     private TokenExpireReceiver tokenExpireReceiver;
 	@Override

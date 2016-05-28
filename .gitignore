@@ -4,3 +4,5 @@
 /build/
 /CorpTrain-Android.iml
 /local.properties
+/app/app.iml
+/ui/ui.iml

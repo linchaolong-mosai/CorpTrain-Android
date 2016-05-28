@@ -1,5 +1,6 @@
 package com.mosai.corporatetraining.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -11,20 +12,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.quiz.Question;
 import com.mosai.corporatetraining.bean.quiz.Questions;
-import com.mosai.corporatetraining.bean.quiz.QuizSummary;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
 import com.mosai.corporatetraining.entity.HttpResponse;
 import com.mosai.corporatetraining.fragment.QuizQuestionFragment;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.mosai.utils.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,23 +70,14 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             super.handleMessage(msg);
             submitCount+=1;
             if(submitCount>=count){
-                getSummary();
+//                getSummary();
+                Intent intent = new Intent(context,QuizSummaryActivity.class);
+                intent.putExtra("resource",resources);
+                startActivityForResult(intent,0);
             }
         }
     };
-    private void getSummary(){
-        AppAction.getQuizSummary(context, "user", resources.getClassId(), resources.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
-            @Override
-            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                try {
-                    QuizSummary summary = new Gson().fromJson(new JSONObject(responseString).getJSONObject("summary").toString(),QuizSummary.class);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
     private void submitQuizAnswers(){
         for (QuizQuestionFragment fragment:fragments){
             AppAction.submitQuizAnswer(context, resources.getClassId(), fragment.question.getQuestionId(), fragment.adapter.index, new HttpResponseHandler(HttpResponse.class) {
@@ -107,10 +95,13 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         }
     }
     private void checkIndex(){
-        if(index==count){
+        if(index>=count){
+            if(count==index){
             submitQuizAnswers();
-            //完成
-//            ToastUtils.showToast(context,"done");
+                MyLog.e("znb","submitQuizAnswers");
+            }else{
+                index-=1;
+            }
             return;
         }
         String page = String.format("%d/%d",index+1,count);
@@ -178,5 +169,21 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
     @Override
     public void onFragmentInteraction(Question question) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            back();
+        }else{
+
+            //重做
+//            index-=1;
+            index =0;
+            submitCount=0;
+            checkIndex();
+//            viewPager.setCurrentItem(index);
+        }
     }
 }
