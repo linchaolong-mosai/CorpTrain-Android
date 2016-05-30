@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="survey_level">
+        <item>Strongly Agree</item>
+        <item>Somewhat Agree</item>
+        <item>Somewhat Disagree</item>
+        <item>Neutral</item>
+        <item>Strongly Disagree</item>
+    </string-array>
+</resources>

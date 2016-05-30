@@ -142,9 +142,11 @@
             android:name=".activity.QuizQuestionsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
-        <activity android:name=".activity.QuizSummaryActivity"
+        <activity
+            android:name=".activity.QuizSummaryActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainTheme"></activity>
+            android:theme="@style/MainTheme" />
+        <activity android:name=".activity.SurveyQuestionsActivity"></activity>
     </application>
 
 </manifest>

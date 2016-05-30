@@ -116,10 +116,10 @@ public class BaseActivity extends AppCompatActivity {
         unregister();
     }
 
-    private void unregister() {
+    private void register() {
         registerTokenExpireBroadcast();
     }
-    private void register() {
+    private void unregister() {
         unregisterTokenExpireBroadcast();
     }
     public void back() {

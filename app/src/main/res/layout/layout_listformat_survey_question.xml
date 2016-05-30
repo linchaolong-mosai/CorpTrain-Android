@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:gravity="center_vertical"
+    android:background="@color/white">
+<Button
+    android:id="@+id/btn_anwser1"
+    android:textColor="@color/black"
+    android:background="@drawable/selector_bg_servuy_question"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+    <Button
+
+        android:id="@+id/btn_anwser2"
+        android:textColor="@color/black"
+        android:background="@drawable/selector_bg_servuy_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+
+        android:id="@+id/btn_anwser3"
+        android:textColor="@color/black"
+        android:background="@drawable/selector_bg_servuy_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+
+        android:id="@+id/btn_anwser4"
+        android:textColor="@color/black"
+        android:background="@drawable/selector_bg_servuy_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+
+        android:id="@+id/btn_anwser5"
+        android:textColor="@color/black"
+        android:background="@drawable/selector_bg_servuy_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

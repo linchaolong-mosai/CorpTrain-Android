@@ -19,6 +19,7 @@ import com.mosai.corporatetraining.bean.classesforcourse.Classes;
 import com.mosai.corporatetraining.bean.quiz.Quiz;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
 import com.mosai.corporatetraining.bean.resourseforclass.ResourcesRoot;
+import com.mosai.corporatetraining.bean.survey.SurveyQuestion;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.constants.Constants;
 import com.mosai.corporatetraining.entity.HttpResponse;
@@ -31,6 +32,7 @@ import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -111,7 +113,26 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         });
         getClassResource();
     }
-
+    private void getSurvey(final Resources resource){
+        AppAction.getQuestionslistBySurveyId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                try {
+                    ArrayList<SurveyQuestion> surveyQuestions = new ArrayList<SurveyQuestion>();
+                   JSONArray questions =  new JSONObject(responseString).getJSONArray("questions");
+                   for(int i=0;i<questions.length();i++){
+                       JSONObject question = questions.getJSONObject(i);
+                    SurveyQuestion surveyQuestion = new Gson().fromJson(question.toString(), SurveyQuestion.class);
+                    surveyQuestions.add(surveyQuestion);
+                   }
+                    Intent intent = new Intent();
+                    intent.putExtra("questions", surveyQuestions);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void getQuiz(final Resources resource) {
         AppAction.getQuizByQuizId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
             @Override

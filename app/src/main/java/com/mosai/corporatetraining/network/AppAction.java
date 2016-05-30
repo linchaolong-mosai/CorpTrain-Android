@@ -351,14 +351,16 @@ public class AppAction {
         String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicQuiz/summary/"),userId,classId,quizId);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
-    public static void submitQuizAnswer(Context context,String classId,String questionId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
-        /**
-         *  tutormeetweb/api/basicQuiz/answer
-         * "answer":1,
-         "classId": "BBBBBBBB-BBBB-BBBB-BBBB-111111111111",
-         "questionId": "FFFFFFFF-FFFF-FFFF-FFFF-111111111111"
-         */
 
+    /**
+     * 提交Quiz答案
+     * @param context
+     * @param classId
+     * @param questionId
+     * @param answerIndex
+     * @param asyncHttpResponseHandler
+     */
+    public static void submitQuizAnswer(Context context,String classId,String questionId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
         HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("answer",answerIndex);
         params.put("classId",classId);
@@ -368,9 +370,57 @@ public class AppAction {
 //        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicQuiz/answer"),AsyncHttp.METHOD_POST,"application/json",asyncHttpResponseHandler);
     }
 
+    /**
+     * 获取Quiz总结
+     * @param context
+     * @param user
+     * @param classId
+     * @param quizId
+     * @param responseHandler
+     */
     public static void getQuizSummary(Context context,String user,String classId,String quizId,AsyncHttpResponseHandler responseHandler){
         //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/summary/user/<class_id>/<quiz_id>
         String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicQuiz/summary/"),user,classId,quizId,responseHandler);
+        AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
+    }
+    /**
+     * 获取surveyId的questions
+     * @param context
+     * @param surveyId
+     * @param responseHandler
+     */
+    public static void getQuestionslistBySurveyId(Context context,String surveyId,AsyncHttpResponseHandler responseHandler){
+        //https://train-qa.liveh2h.com/tutormeetweb/api/basicSurvey/question/list/<quiz_id>
+        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicSurvey/question/list/")+surveyId,AsyncHttp.METHOD_GET,responseHandler);
+    }
+
+    /**
+     * 提交Survey答案
+     * @param context
+     * @param classId
+     * @param surveyId
+     * @param answerIndex
+     * @param asyncHttpResponseHandler
+     */
+    public static void submitSurveyAnswer(Context context,String classId,String surveyId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
+        HashMap<String,Object> params = new HashMap<String,Object>();
+        params.put("answer",answerIndex);
+        params.put("classId",classId);
+        params.put("surveyId",surveyId);
+        AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/basicSurvey/answer"),params,asyncHttpResponseHandler);
+    }
+
+    /**
+     * get Survey summary
+     * @param context
+     * @param user
+     * @param classId
+     * @param surveyId
+     * @param responseHandler
+     */
+    public static void getSurveySummary(Context context,String user,String classId,String surveyId,AsyncHttpResponseHandler responseHandler){
+        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicSurvey/summary/"),user,classId,surveyId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
 }
