@@ -30,10 +30,11 @@ public class SurveyQuestionAdapter extends CommonAdapter<String> {
             @Override
             public void onClick(View v) {
                 index = position;
-                notifyDataSetChanged();
                 if(clickCallback!=null){
                     clickCallback.callback(index);
+
                 }
+                notifyDataSetChanged();
             }
         });
         btnAnswer.setSelected(index==position?true:false);

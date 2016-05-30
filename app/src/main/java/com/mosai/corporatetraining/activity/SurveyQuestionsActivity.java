@@ -73,7 +73,8 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
         questions.get(index).answer = answer;
         if (index < count - 1) {
             this.index = index + 1;
-            tvPage.setText(String.format("%d/%d", index + 1, count));
+            tvPage.setText(String.format("%d/%d", this.index + 1, count));
+            viewPager.setCurrentItem(this.index);
         }else{
             submitServeyAnwsers();
         }
@@ -96,6 +97,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
     };
     private void submitServeyAnwsers(){
         for (SurveyQuestion question:questions){
+
             AppAction.submitSurveyAnswer(context, resources.getClassId(), question.questionId, question.answer, new HttpResponseHandler(HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {

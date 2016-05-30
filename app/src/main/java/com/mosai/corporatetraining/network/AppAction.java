@@ -252,12 +252,10 @@ public class AppAction {
      * @param courseId
      * @param responseHandle
      */
+
     public static void joinCourse(Context context,String courseId,AsyncHttpResponseHandler responseHandle){
         //tutormeetweb/api/course/join/
-        RequestParams params = new RequestParams();
-        params.setUseJsonStreamer(true);
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/join/")+courseId,params,AsyncHttp.METHOD_POST, "application/json",responseHandle);
-
+        AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/course/join/")+courseId,null,responseHandle);
     }
 
     /**
@@ -398,15 +396,15 @@ public class AppAction {
      * 提交Survey答案
      * @param context
      * @param classId
-     * @param surveyId
+     * @param questionId
      * @param answerIndex
      * @param asyncHttpResponseHandler
      */
-    public static void submitSurveyAnswer(Context context,String classId,String surveyId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
+    public static void submitSurveyAnswer(Context context,String classId,String questionId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
         HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("answer",answerIndex);
         params.put("classId",classId);
-        params.put("surveyId",surveyId);
+        params.put("questionId",questionId);
         AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/basicSurvey/answer"),params,asyncHttpResponseHandler);
     }
 

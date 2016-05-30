@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     >
     <TextView
-        android:background="@color/grey"
+        android:background="@color/pressed_bgcolor"
         android:id="@+id/tv_question"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

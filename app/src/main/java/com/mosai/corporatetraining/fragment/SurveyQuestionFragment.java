@@ -17,6 +17,7 @@ import com.mosai.corporatetraining.bean.survey.SurveyQuestion;
 import com.mosai.corporatetraining.util.ViewUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SurveyQuestionFragment extends Fragment {
@@ -82,8 +83,10 @@ public class SurveyQuestionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         btn_submit.setSelected(false);
+        answers = Arrays.asList(context.getResources().getStringArray(R.array.survey_level));
         adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_survey_question);
         lv.setAdapter(adapter);
+        tvQuestion.setText(mParam2.text);
         addListener();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -99,7 +102,7 @@ public class SurveyQuestionFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if(btn_submit.isSelected()){
-                        btn_submit.setSelected(false);
+//                        btn_submit.setSelected(false);
                         onButtonPressed(adapter.index);
                     }
                 }

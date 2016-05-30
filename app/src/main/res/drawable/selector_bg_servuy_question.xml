@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_selected="true">
         <shape>
-            <stroke android:color="@color/colorPrimary"></stroke>
-            <corners android:radius="3dp"></corners>
-            <solid android:color="@color/grey"></solid>
-        </shape>
-    </item>
-    <item android:state_selected="false">
-        <shape>
-            <stroke android:color="@color/grey"></stroke>
+            <stroke android:color="@color/colorPrimary"
+                android:width="2dp"></stroke>
             <corners android:radius="3dp"></corners>
             <solid android:color="@color/white"></solid>
         </shape>
     </item>
+    <item android:state_selected="false">
+        <shape>
+            <stroke android:color="@color/pressed_bgcolor"></stroke>
+            <corners android:radius="3dp"></corners>
+            <solid android:color="@color/pressed_bgcolor"></solid>
+        </shape>
+    </item>
     <item>
     <shape>
-        <stroke android:color="@color/grey"></stroke>
+        <stroke android:color="@color/pressed_bgcolor"></stroke>
         <corners android:radius="3dp"></corners>
-        <solid android:color="@color/white"></solid>
+        <solid android:color="@color/pressed_bgcolor"></solid>
+
     </shape>
     </item>
 </selector>

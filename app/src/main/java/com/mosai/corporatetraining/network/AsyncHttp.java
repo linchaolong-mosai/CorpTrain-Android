@@ -98,13 +98,18 @@ public class AsyncHttp {
         LogUtils.i(url);
         client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
 //        client.addHeader("Content-Type","application/json");
-        JSONObject jsonObject = new JSONObject(hashMap);
-        try {
-            StringEntity stringEntity = new StringEntity(jsonObject.toString());
-            client.post(context,url,stringEntity,ContentType.APPLICATION_JSON.toString(),responseHandler);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if(hashMap==null){
+            client.post(context,url,null,ContentType.APPLICATION_JSON.toString(),responseHandler);
+        }else{
+            JSONObject jsonObject = new JSONObject(hashMap);
+            try {
+                StringEntity stringEntity = new StringEntity(jsonObject.toString());
+                client.post(context,url,stringEntity,ContentType.APPLICATION_JSON.toString(),responseHandler);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
+
     }
     protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
                            AsyncHttpResponseHandler responseHandler){
