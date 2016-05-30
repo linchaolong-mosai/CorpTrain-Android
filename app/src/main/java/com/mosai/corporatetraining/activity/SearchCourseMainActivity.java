@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.adpter.SearchCourseResultAdapter;
@@ -78,21 +75,22 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
             }
 
             public void afterTextChanged(Editable s) {
-                filter(cetCourses.getText().toString());
+//                filter(cetCourses.getText().toString());
             }
         });
-        cetCourses.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    //过滤
-                    filter(v.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
+//        cetCourses.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    //过滤
+//                    filter(v.getText().toString());
+//                    Tools.hideSoftInput(cetCourses);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
         getDatas();
     }
 

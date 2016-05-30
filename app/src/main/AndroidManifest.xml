@@ -115,6 +115,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:name=".activity.SearchCourseMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />

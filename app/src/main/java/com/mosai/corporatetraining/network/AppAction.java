@@ -23,9 +23,10 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
-    private static final String BASE_URL = "https://train-qa.liveh2h.com/";
-    public static final String IMG_RESOURSE_COURSE_URL = BASE_URL + "resources/";
-    public static final String FILE_RESOURSE_COURSE_URL = BASE_URL + "resources/";
+    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
+//    private static final String BASE_URL = "https://train-qa.liveh2h.com/corptraining/";
+    public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
+    public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
 
     public static String getUrl(String url) {
         return BASE_URL + url;
@@ -44,7 +45,7 @@ public class AppAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("email", email);
         map.put("password", password);
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/corplogin.do"), params, map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, getUrl("corplogin.do"), params, map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     /**
@@ -58,7 +59,7 @@ public class AppAction {
         map.put("action", "forgotPwd");
         map.put("email", email);
         map.put("locale", Locale.getDefault().getLanguage());
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/message.do"), map,
+        AsyncHttp.getInstance().execute(context, getUrl("message.do"), map,
                 AsyncHttp.METHOD_POST, "application/x-www-form-urlencoded", responseHandler);
     }
 
@@ -68,7 +69,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getCurrentCtUser(Context context, AsyncHttpResponseHandler responseHandler) {
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/api/ctUser"), AsyncHttp.METHOD_GET, responseHandler);
+        AsyncHttp.getInstance().execute(context, getUrl("api/ctUser"), AsyncHttp.METHOD_GET, responseHandler);
     }
 
     /**
@@ -105,7 +106,7 @@ public class AppAction {
         map.put("action", "updateUser");
         map.put("original", original);
         map.put("password", password);
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/corpuser.do"), map,
+        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map,
                 AsyncHttp.METHOD_POST, "application/x-www-form-urlencoded", responseHandler);
     }
 
@@ -119,7 +120,7 @@ public class AppAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("action", "updateUser");
         map.put("name", name);
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     /**
@@ -132,7 +133,7 @@ public class AppAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("action", "updateUser");
         map.put("phone", phone);
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     public static void submitFeedback(Context context, String subject, String text, AsyncHttpResponseHandler responseHandler) {
@@ -140,7 +141,7 @@ public class AppAction {
         params.put("subject", subject);
         params.put("text", text);
         params.setUseJsonStreamer(true);
-        AsyncHttp.getInstance().execute(context, getUrl("tutormeetweb/api/ctUser/feedback"),
+        AsyncHttp.getInstance().execute(context, getUrl("api/ctUser/feedback"),
                 params, AsyncHttp.METHOD_POST, "application/json", responseHandler);
     }
 
@@ -172,8 +173,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getTopCategoryList(Context context,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/category/subcategories
-        AsyncHttp.getInstance().execute(context,BASE_URL+"tutormeetweb/api/category/subcategories",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/category/subcategories
+        AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
     /**
@@ -183,8 +184,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSubCategorylist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/category/subcategories
-        AsyncHttp.getInstance().execute(context,BASE_URL+"tutormeetweb/api/category/subcategories/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/category/subcategories
+        AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
 
@@ -195,8 +196,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getCourselist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/category/subcategories
-        AsyncHttp.getInstance().execute(context,BASE_URL+"tutormeetweb/api/category/courses/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/category/subcategories
+        AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/courses/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
     /**
@@ -205,7 +206,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getUserCourses(Context context,AsyncHttpResponseHandler responseHandler){
-//        AsyncHttp.getInstance().execute(context,BASE_URL+"tutormeetweb/api/course/user?filter_type=1&offset=0&limit=100&filter_string",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+//        AsyncHttp.getInstance().execute(context,BASE_URL+"corptraining/api/course/user?filter_type=1&offset=0&limit=100&filter_string",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
           getUserCourseByType(context,SEARCH_COURSE_FILTER_TYPE_ALL,responseHandler);
     }
 
@@ -216,7 +217,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getUserCourseByType(Context context,int type,AsyncHttpResponseHandler responseHandler){
-        AsyncHttp.getInstance().execute(context,BASE_URL+"tutormeetweb/api/course/user?filter_type="+type+"&offset=0&limit=100&filter_string",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+        AsyncHttp.getInstance().execute(context,BASE_URL+"api/course/user?filter_type="+type+"&offset=0&limit=100&filter_string",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
 
     }
     /**
@@ -228,7 +229,7 @@ public class AppAction {
     public static void getUserCoursesBySearch(Context context,String filter,AsyncHttpResponseHandler responseHandler){
         AsyncHttp.getInstance().execute(context,
 
-                BASE_URL+ "tutormeetweb/api/course/user?filter_type=1&offset=0&limit=100&filter_string="+filter
+                BASE_URL+ "api/course/user?filter_type=1&offset=0&limit=100&filter_string="+filter
                 ,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -243,7 +244,7 @@ public class AppAction {
         HashMap<String,Object> hashmap = new HashMap<>();
         hashmap.put("courseId",courseId);
         hashmap.put("rating",rating);
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/rating"),null,hashmap,AsyncHttp.METHOD_PUT,null,responseHandler);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/rating"),null,hashmap,AsyncHttp.METHOD_PUT,null,responseHandler);
     }
 
     /**
@@ -254,8 +255,8 @@ public class AppAction {
      */
 
     public static void joinCourse(Context context,String courseId,AsyncHttpResponseHandler responseHandle){
-        //tutormeetweb/api/course/join/
-        AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/course/join/")+courseId,null,responseHandle);
+        //corptraining/api/course/join/
+        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/join/")+courseId,null,responseHandle);
     }
 
     /**
@@ -265,7 +266,7 @@ public class AppAction {
      * @param asyncHttpResponseHandler
      */
     public static void getCommentsByCourseId(Context context,String courseId,AsyncHttpResponseHandler asyncHttpResponseHandler){
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/comments/"+courseId),AsyncHttp.METHOD_GET,asyncHttpResponseHandler);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/comments/"+courseId),AsyncHttp.METHOD_GET,asyncHttpResponseHandler);
     }
 
     /**
@@ -278,7 +279,7 @@ public class AppAction {
     public static void submitCourseComment(Context context,String courseId,String comment,AsyncHttpResponseHandler responseHandler){
         HashMap<String,Object> hashmap = new HashMap<>();
         hashmap.put("comment",comment);
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/comment/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandler);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/comment/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandler);
 
     }
 
@@ -289,7 +290,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getCourseByCourseId(Context context,String courseId,AsyncHttpResponseHandler responseHandler){
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -299,8 +300,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getClassesByCourseId(Context context,String courseId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/course/classes/<course_id>
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/course/classes/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/course/classes/<course_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/classes/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -310,8 +311,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getResourceByClassId(Context context,String classId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/class/resources/<class_id>
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/class/resources/")+classId,AsyncHttp.METHOD_GET,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/class/resources/<class_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/class/resources/")+classId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -321,8 +322,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuizByQuizId(Context context,String quizId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/<quiz_id>
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicQuiz/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/basicQuiz/<quiz_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/basicQuiz/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -332,8 +333,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuestionslistByQuizId(Context context,String quizId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/question/list/<quiz_id>
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicQuiz/question/list/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/basicQuiz/question/list/<quiz_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/basicQuiz/question/list/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -345,8 +346,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSummaryById(Context context,String userId,String classId,String quizId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/summary/user/<class_id>/<quiz_id>
-        String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicQuiz/summary/"),userId,classId,quizId);
+        //https://train-qa.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        String url = String.format("%s%s/%s/%s",getUrl("api/basicQuiz/summary/"),userId,classId,quizId);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -363,9 +364,9 @@ public class AppAction {
         params.put("answer",answerIndex);
         params.put("classId",classId);
         params.put("questionId",questionId);
-        AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/basicQuiz/answer"),params,asyncHttpResponseHandler);
+        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/basicQuiz/answer"),params,asyncHttpResponseHandler);
 //        params.setUseJsonStreamer(true);
-//        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicQuiz/answer"),AsyncHttp.METHOD_POST,"application/json",asyncHttpResponseHandler);
+//        AsyncHttp.getInstance().execute(context,getUrl("corptraining/api/basicQuiz/answer"),AsyncHttp.METHOD_POST,"application/json",asyncHttpResponseHandler);
     }
 
     /**
@@ -377,8 +378,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuizSummary(Context context,String user,String classId,String quizId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/summary/user/<class_id>/<quiz_id>
-        String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicQuiz/summary/"),user,classId,quizId,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        String url = String.format("%s%s/%s/%s",getUrl("api/basicQuiz/summary/"),user,classId,quizId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
     /**
@@ -388,8 +389,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuestionslistBySurveyId(Context context,String surveyId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicSurvey/question/list/<quiz_id>
-        AsyncHttp.getInstance().execute(context,getUrl("tutormeetweb/api/basicSurvey/question/list/")+surveyId,AsyncHttp.METHOD_GET,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/basicSurvey/question/list/<quiz_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/basicSurvey/question/list/")+surveyId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
     /**
@@ -405,7 +406,7 @@ public class AppAction {
         params.put("answer",answerIndex);
         params.put("classId",classId);
         params.put("questionId",questionId);
-        AsyncHttp.getInstance().postJsonBody(context,getUrl("tutormeetweb/api/basicSurvey/answer"),params,asyncHttpResponseHandler);
+        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/basicSurvey/answer"),params,asyncHttpResponseHandler);
     }
 
     /**
@@ -417,8 +418,8 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSurveySummary(Context context,String user,String classId,String surveyId,AsyncHttpResponseHandler responseHandler){
-        //https://train-qa.liveh2h.com/tutormeetweb/api/basicQuiz/summary/user/<class_id>/<quiz_id>
-        String url = String.format("%s%s/%s/%s",getUrl("tutormeetweb/api/basicSurvey/summary/"),user,classId,surveyId,responseHandler);
+        //https://train-qa.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        String url = String.format("%s%s/%s/%s",getUrl("api/basicSurvey/summary/"),user,classId,surveyId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
 }
