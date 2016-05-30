@@ -107,7 +107,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                 } else if (resource.getResourceType() == Constants.RESOURCE_TYPE_QUIZ) {
                     getQuiz(resource);
                 } else {
-
+                   getSurvey(resource);
                 }
             }
         });
@@ -125,8 +125,10 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                     SurveyQuestion surveyQuestion = new Gson().fromJson(question.toString(), SurveyQuestion.class);
                     surveyQuestions.add(surveyQuestion);
                    }
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(context,SurveyQuestionsActivity.class);
                     intent.putExtra("questions", surveyQuestions);
+                    intent.putExtra("resource",resource);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -168,6 +170,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
 
     @Override
     public void back() {
+        if(httpHandler!=null)
         httpHandler.cancel();
         super.back();
     }

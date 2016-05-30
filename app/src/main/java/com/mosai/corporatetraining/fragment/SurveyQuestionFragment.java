@@ -8,15 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.adpter.SurveyQuestionAdapter;
 import com.mosai.corporatetraining.bean.survey.SurveyQuestion;
 import com.mosai.corporatetraining.util.ViewUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SurveyQuestionFragment extends Fragment {
-    private Button btn_answer1,btn_answer2,btn_answer3,btn_answer4,btn_answer5,btn_submit;
+    private Button btn_submit;
     private TextView tvQuestion;
+    private ListView lv;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,42 +65,58 @@ public class SurveyQuestionFragment extends Fragment {
         }
     }
     private View view;
+    private SurveyQuestionAdapter adapter;
+    private List<String> answers = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_survey_question, container, false);
-        btn_answer1 = ViewUtil.findViewById(view,R.id.btn_anwser1);
-        btn_answer2 = ViewUtil.findViewById(view,R.id.btn_anwser2);
-        btn_answer3 = ViewUtil.findViewById(view,R.id.btn_anwser3);
-        btn_answer4 = ViewUtil.findViewById(view,R.id.btn_anwser4);
-        btn_answer5 = ViewUtil.findViewById(view,R.id.btn_anwser5);
-        btn_submit = ViewUtil.findViewById(view,R.id.btn_submit);
         tvQuestion = ViewUtil.findViewById(view,R.id.tv_question);
-        btn_submit.setSelected(false);
+        lv = ViewUtil.findViewById(view,R.id.lv);
+        btn_submit = ViewUtil.findViewById(view,R.id.btn_submit);
         return view;
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        btn_submit.setSelected(false);
+        adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_survey_question);
+        lv.setAdapter(adapter);
         addListener();
         super.onViewCreated(view, savedInstanceState);
     }
 
     private void addListener() {
-
+        adapter.setClickCallback(new SurveyQuestionAdapter.ClickCallback() {
+            @Override
+            public void callback(int index) {
+                btn_submit.setSelected(true);
+            }
+        });
+            btn_submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(btn_submit.isSelected()){
+                        btn_submit.setSelected(false);
+                        onButtonPressed(adapter.index);
+                    }
+                }
+            });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(int answer) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(answer);
+            mListener.onFragmentInteraction(mParam1,answer);
         }
     }
-
+    private Context context;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        this.context = context;
         if (context instanceof OnSurveyQuetsionFragmentInteractionListener) {
             mListener = (OnSurveyQuetsionFragmentInteractionListener) context;
         } else {
@@ -121,6 +143,6 @@ public class SurveyQuestionFragment extends Fragment {
      */
     public interface OnSurveyQuetsionFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(int answer);
+        void onFragmentInteraction(int index,int answer);
     }
 }

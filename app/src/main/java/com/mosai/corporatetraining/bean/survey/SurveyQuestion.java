@@ -10,4 +10,5 @@ import java.io.Serializable;
  */
 public class SurveyQuestion implements Serializable{
     public String surveyId,questionId,text;
+    public int answer=-1;
 }
