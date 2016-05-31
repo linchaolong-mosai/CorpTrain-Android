@@ -31,6 +31,7 @@ public class CourseComentsFragment extends Fragment {
     private List<Comments> comments = new ArrayList<>();
     private Context context;
     private EditText etReply;
+
     private ListView lvComment;
     private View view;
     private Courses course;

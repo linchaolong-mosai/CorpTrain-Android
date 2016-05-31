@@ -1,15 +1,18 @@
 package com.mosai.corporatetraining.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.activity.CourseDetailActivity;
 import com.mosai.corporatetraining.adpter.SearchCourseResultAdapter;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.bean.usercourse.UserCourseRoot;
@@ -55,7 +58,20 @@ public class CourseListFragment extends Fragment{
         adapter = new SearchCourseResultAdapter(context, courses, R.layout.item_listformat_course_searchresult);
         listView.setAdapter(adapter);
         getDatas();
+        addListener();
     }
+
+    private void addListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, CourseDetailActivity.class);
+                intent.putExtra("course",courses.get(position));
+                startActivity(intent);
+            }
+        });
+    }
+
     private void getDatas(){
         int type = getArguments().getInt("type",0);
         AppAction.getUserCourseByType(context,type, new HttpResponseHandler(UserCourseRoot.class) {

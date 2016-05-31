@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -25,11 +24,11 @@ import com.mosai.corporatetraining.constants.Constants;
 import com.mosai.corporatetraining.entity.HttpResponse;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
+import com.mosai.corporatetraining.util.LogUtils;
 import com.mosai.corporatetraining.util.Utils;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.ui.NoScrollListview;
 import com.mosai.utils.FileUtils;
-import com.mosai.utils.MyLog;
-import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
@@ -39,7 +38,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 描述:
@@ -53,7 +55,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     private Courses courses;
     private Classes classes;
     private TextView tvName, tvDes, tvTitle;
-    private ListView lv;
+    private NoScrollListview lv;
     private ClassResourceAdapter adapter;
     private List<Resources> resources = new ArrayList<>();
 
@@ -102,33 +104,34 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Resources resource = ClassResourceActivity.this.resources.get(position);
-                if (resource.getResourceType() == Constants.RESOURCE_TYPE_FILE) {
-                    downloadFile(ClassResourceActivity.this.resources.get(position));
-
-                } else if (resource.getResourceType() == Constants.RESOURCE_TYPE_QUIZ) {
+                if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
                     getQuiz(resource);
+                } else if (resource.getResourceType() == Constants.ResourceTypeSurvey) {
+                    getSurvey(resource);
                 } else {
-                   getSurvey(resource);
+                    downloadFile(ClassResourceActivity.this.resources.get(position),position);
+
                 }
             }
         });
         getClassResource();
     }
-    private void getSurvey(final Resources resource){
+
+    private void getSurvey(final Resources resource) {
         AppAction.getQuestionslistBySurveyId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {
                     ArrayList<SurveyQuestion> surveyQuestions = new ArrayList<SurveyQuestion>();
-                   JSONArray questions =  new JSONObject(responseString).getJSONArray("questions");
-                   for(int i=0;i<questions.length();i++){
-                       JSONObject question = questions.getJSONObject(i);
-                    SurveyQuestion surveyQuestion = new Gson().fromJson(question.toString(), SurveyQuestion.class);
-                    surveyQuestions.add(surveyQuestion);
-                   }
-                    Intent intent = new Intent(context,SurveyQuestionsActivity.class);
+                    JSONArray questions = new JSONObject(responseString).getJSONArray("questions");
+                    for (int i = 0; i < questions.length(); i++) {
+                        JSONObject question = questions.getJSONObject(i);
+                        SurveyQuestion surveyQuestion = new Gson().fromJson(question.toString(), SurveyQuestion.class);
+                        surveyQuestions.add(surveyQuestion);
+                    }
+                    Intent intent = new Intent(context, SurveyQuestionsActivity.class);
                     intent.putExtra("questions", surveyQuestions);
-                    intent.putExtra("resource",resource);
+                    intent.putExtra("resource", resource);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -136,16 +139,17 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             }
         });
     }
+
     private void getQuiz(final Resources resource) {
         AppAction.getQuizByQuizId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {
                     JSONObject result = new JSONObject(responseString);
-                    Quiz quiz =  new Gson().fromJson(result.optJSONObject("quiz").toString(),Quiz.class);
-                    Intent intent = new Intent(context,QuizActivity.class);
-                    intent.putExtra("quiz",quiz);
-                    intent.putExtra("resource",resource);
+                    Quiz quiz = new Gson().fromJson(result.optJSONObject("quiz").toString(), Quiz.class);
+                    Intent intent = new Intent(context, QuizActivity.class);
+                    intent.putExtra("quiz", quiz);
+                    intent.putExtra("resource", resource);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -167,38 +171,59 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
 
     private HttpUtils httpUtils = new HttpUtils();
-    private HttpHandler<?> httpHandler;
+//    private HttpHandler<?> httpHandler;
+    private HashMap<String, HttpHandler<?>> httpHandlers = new HashMap<>();
 
     @Override
-    public void back() {
-        if(httpHandler!=null)
-        httpHandler.cancel();
-        super.back();
+    protected void onDestroy() {
+        super.onDestroy();
+//        Map map = new HashMap();
+        Iterator iter = httpHandlers.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+//            String key = (String) entry.getKey();
+            HttpHandler<?> val = (HttpHandler<?>) entry.getValue();
+            val.cancel();
+            }
     }
 
     private void openFile(String path) {
-        FileUtils.openFile(path);
+        startActivity(FileUtils.openFile(path));
     }
 
-    private void downloadFile(Resources recources) {
-        final String path = Utils.getLocalFile(this, recources.getClassId() + recources.getName());
-        String url = Utils.getFileUrl(recources.getClassId(), recources.getName());
-        if (!Utils.checkLocalFile(this, path)) {
-            httpHandler = httpUtils.download(url,
-                    path, false, false,
+    private void downloadFile(final Resources recources, final int position) {
+        final String path = Utils.getLocalFile(this, recources.getResourceId() + "_" + recources.getName());
+        String url = Utils.getFileUrl(recources.getResourceId(), recources.getName().replace(" ", "%20"));
+        //https://train-qa.liveh2h.com/resources/DD86D6B6-36DD-4D70-ACD3-32C5F7FD0C9C/4.pdf
+
+//        if (!Utils.checkLocalFile(this, path)) {
+        if (!httpHandlers.containsKey(path)) {
+            HttpHandler<?> httpHandler = httpUtils.download(url,
+                    path, true, true,
                     new RequestCallBack<File>() {
                         @Override
                         public void onSuccess(ResponseInfo<File> responseInfo) {
-                            ToastUtils.showToast(context, "下载成功");
+//                            ToastUtils.showToast(context, "下载成功");
+                            LogUtils.e("下载成功");
                             openFile(path);
-                            httpHandler.cancel();
+//                            httpHandler.cancel();
+                            httpHandlers.get(path).cancel();
+                            resources.get(position).exist=true;
+                            resources.get(position).showProgress=false;
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
                         public void onFailure(HttpException e, String s) {
-                            ToastUtils.showToast(context, "下载失败");
-                            MyLog.e("znb","下载失败"+s);
-                            httpHandler.cancel();
+//                            ToastUtils.showToast(context, "下载失败");
+                            LogUtils.e("下载失败" + s);
+//                            httpHandler.cancel();
+                            if (s.equals(getString(R.string.has_downloaded))) {
+                                openFile(path);
+                                resources.get(position).exist=true;
+
+                            }
+                            httpHandlers.get(path).cancel();
                         }
 
                         @Override
@@ -209,10 +234,23 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         @Override
                         public void onLoading(long total, long current, boolean isUploading) {
                             super.onLoading(total, current, isUploading);
+                            LogUtils.e(String.format("name:%s,total:%s,current:%s", recources.getName(), total + "", current + ""));
+                           resources.get(position).showProgress=true;
+                            resources.get(position).totalcount=total;
+                            resources.get(position).currentcount=current;
+                            adapter.notifyDataSetChanged();
                         }
                     });
-        } else {
-            openFile(path);
+            httpHandlers.put(path, httpHandler);
+        }else{
+            if(resources.get(position).exist){
+                openFile(path);
+            }
         }
+
+
+//        } else {
+//            openFile(path);
+//        }
     }
 }

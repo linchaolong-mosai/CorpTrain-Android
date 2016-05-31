@@ -1,6 +1,7 @@
 package com.mosai.corporatetraining;
 
 import android.app.Application;
+import android.os.Environment;
 
 import com.mosai.corporatetraining.common.AbnormalHandler;
 import com.mosai.corporatetraining.local.UserPF;
@@ -9,6 +10,8 @@ import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemor
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+
+import java.io.File;
 
 /**
  * Created by Rays on 16/5/9.
@@ -24,7 +27,7 @@ public class MyApplication extends Application {
         UserPF.getInstance().init(this);
         initImageLoader();
         initAbnormalHandler();
-
+        initDirs();
     }
     private void initAbnormalHandler(){
         if(BuildConfig.DEBUG){
@@ -46,5 +49,12 @@ public class MyApplication extends Application {
                 .writeDebugLogs()
                 .build();//开始构建
         ImageLoader.getInstance().init(config);
+    }
+    private void initDirs(){
+        File file = new File(Environment.getExternalStorageDirectory()+File.separator
+                + this.getPackageName() + File.separator);
+        if(!file.exists()){
+            file.mkdirs();
+        }
     }
 }

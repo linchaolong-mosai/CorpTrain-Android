@@ -27,6 +27,8 @@ import com.mosai.corporatetraining.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 
 public class CourseDetailsFragment extends Fragment {
     private List<Classes> classes = new ArrayList<>();
@@ -85,11 +87,22 @@ public class CourseDetailsFragment extends Fragment {
         });
 
     }
+    MaterialDialog dialog;
     private void joinCourse(){
         AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-
+                dialog = new MaterialDialog(context).setTitle("Tips")
+                        .setMessage(context.getResources().getString(R.string.enrolled_success))
+                        .setCanceledOnTouchOutside(false)
+                        .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+                    dialog.show();
+                    btnJoinCourse.setVisibility(View.GONE);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.mosai.corporatetraining.util;
 
 import android.content.Context;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import com.mosai.corporatetraining.network.AppAction;
@@ -20,7 +21,7 @@ public class Utils {
         return new File(getLocalFile(context,filename)).exists();
     }
     public static String getLocalFile(Context context,String filename){
-       return "/sdcard/" + context.getPackageName() + File.separator+filename;
+       return Environment.getExternalStorageDirectory()+File.separator + context.getPackageName() + File.separator+filename;
     }
     public static String getImgUrl(String id,String name){
         return String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,id,name);

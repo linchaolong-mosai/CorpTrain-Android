@@ -23,8 +23,8 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
-    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
-//    private static final String BASE_URL = "https://train-qa.liveh2h.com/corptraining/";
+//    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
+    private static final String BASE_URL = "https://train-qa.liveh2h.com/corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
 
@@ -256,7 +256,11 @@ public class AppAction {
 
     public static void joinCourse(Context context,String courseId,AsyncHttpResponseHandler responseHandle){
         //corptraining/api/course/join/
-        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/join/")+courseId,null,responseHandle);
+        //https://train-qa.liveh2h.com/tutormeetweb/api/course/completePercent/<course_id>
+        HashMap<String,Object> hashmap = new HashMap<>();
+        hashmap.put("completePercent",2);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/completePercent/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandle);
+//        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/completePercent/")+courseId,null,responseHandle);
     }
 
     /**

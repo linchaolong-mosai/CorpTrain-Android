@@ -1,10 +1,13 @@
 package com.mosai.corporatetraining.adpter;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
+import com.mosai.corporatetraining.constants.Constants;
+import com.mosai.ui.HorizontalProgressBarWithNumber;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 
@@ -36,6 +39,21 @@ public class ClassResourceAdapter extends CommonAdapter<Resources>{
         TextView tvClassName = holder.getView(R.id.tv_classname);
 //        TextView tvDuedate = holder.getView(R.id.tv_duedate);
         tvClassName.setText(resources.getName());
-//        tvDuedate.setText("Due "+ DateTimeUtil.getFormatDate(new Date(classes.getClassInfo().getCreateTime())));
+
+        HorizontalProgressBarWithNumber horizontalProgressBarWithNumber = holder.getView(R.id.hprogressbar);
+
+        if(resources.getResourceType()== Constants.ResourceTypeQuiz||resources.getResourceType()==Constants.ResourceTypeSurvey){
+            horizontalProgressBarWithNumber.setVisibility(View.GONE);
+        }else{
+            if(resources.showProgress){
+                horizontalProgressBarWithNumber.setVisibility(View.VISIBLE);
+                horizontalProgressBarWithNumber.setMax(100);
+                int progress = (int)((resources.currentcount*0.01f)/(resources.totalcount*0.01f)*100);
+                horizontalProgressBarWithNumber.setProgress(progress);
+            }else{
+                horizontalProgressBarWithNumber.setVisibility(View.GONE);
+            }
+
+        }
     }
 }

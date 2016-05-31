@@ -7,7 +7,9 @@ package com.mosai.corporatetraining.constants;
  * 邮箱：nianbin@mosainet.com
  */
 public interface Constants {
-    int RESOURCE_TYPE_QUIZ = 1;
-    int RESOURCE_TYPE_SURVEY = 2;
-    int RESOURCE_TYPE_FILE = 3;
+    int ResourceTypeDoc = 3;
+    int ResourceTypeVideo = 4;
+    int ResourceTypeImage = 5;
+    int ResourceTypeQuiz = 1;
+    int ResourceTypeSurvey = 2;
 }
