@@ -14,6 +14,7 @@ import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.adpter.QuizQuestionAdapter;
 import com.mosai.corporatetraining.bean.quiz.Answer;
 import com.mosai.corporatetraining.bean.quiz.Question;
+import com.mosai.corporatetraining.util.LogUtils;
 import com.mosai.corporatetraining.util.ViewUtil;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class QuizQuestionFragment extends Fragment {
-
+    private boolean firstLoad = true;
     private View view;
     public QuizQuestionAdapter adapter;
     private List<Answer> answers = new ArrayList<>();
@@ -50,11 +51,12 @@ public class QuizQuestionFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            //执行一次
             question = (Question) getArguments().getSerializable(TAG);
             answers.addAll(question.getAnswers());
+
         }
     }
     private TextView tvQuestion;
@@ -63,19 +65,31 @@ public class QuizQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        LogUtils.e("znb"+"onCreateView"+question.getText());
+        if(firstLoad){
         view =  inflater.inflate(R.layout.fragment_quiz_question, container, false);
         tvQuestion = ViewUtil.findViewById(view,R.id.tv_question);
         listView = ViewUtil.findViewById(view,R.id.lv);
+
+        }
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        LogUtils.e("znb"+"onViewCreated"+question.getText());
+        if(firstLoad){
         tvQuestion.setText(question.getText());
+//        if(adapter==null){
         adapter = new QuizQuestionAdapter(context,answers,R.layout.item_listformat_quiz_question);
         listView.setAdapter(adapter);
+//        }else{
+//            adapter.notifyDataSetChanged();
+//        }
         addListener();
+            firstLoad=false;
+        }
     }
 
     private void addListener() {

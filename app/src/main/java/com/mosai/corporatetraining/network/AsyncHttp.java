@@ -99,7 +99,8 @@ public class AsyncHttp {
         client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
 //        client.addHeader("Content-Type","application/json");
         if(hashMap==null){
-            client.post(context,url,null,ContentType.APPLICATION_JSON.toString(),responseHandler);
+            client.addHeader("Content-Type","application/json");
+            client.post(context,url,null,null,responseHandler);
         }else{
             JSONObject jsonObject = new JSONObject(hashMap);
             try {

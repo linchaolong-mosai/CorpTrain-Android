@@ -28,6 +28,7 @@ import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.Utils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.utils.FileUtils;
+import com.mosai.utils.MyLog;
 import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -196,6 +197,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         @Override
                         public void onFailure(HttpException e, String s) {
                             ToastUtils.showToast(context, "下载失败");
+                            MyLog.e("znb","下载失败"+s);
                             httpHandler.cancel();
                         }
 

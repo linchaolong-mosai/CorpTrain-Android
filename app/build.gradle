@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config_debug {
-            keyAlias 'znb_debugkey'
-            keyPassword 'znb2238226'
-            storeFile file('C:/Users/Administrator/Desktop/debug.keystore')
-            storePassword 'znb2238226'
-        }
-    }
+//    signingConfigs {
+//        config_debug {
+//            keyAlias 'znb_debugkey'
+//            keyPassword 'znb2238226'
+//            storeFile file('D:/debug.keystore')
+//            storePassword 'znb2238226'
+//        }
+//    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {

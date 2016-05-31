@@ -75,7 +75,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
             }
 
             public void afterTextChanged(Editable s) {
-//                filter(cetCourses.getText().toString());
+                filter(cetCourses.getText().toString());
             }
         });
 //        cetCourses.setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SurveyQuestionFragment extends Fragment {
+    private boolean firstLoad = true;
     private Button btn_submit;
     private TextView tvQuestion;
     private ListView lv;
@@ -72,23 +73,29 @@ public class SurveyQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        if(firstLoad){
         view = inflater.inflate(R.layout.fragment_survey_question, container, false);
         tvQuestion = ViewUtil.findViewById(view,R.id.tv_question);
         lv = ViewUtil.findViewById(view,R.id.lv);
         btn_submit = ViewUtil.findViewById(view,R.id.btn_submit);
+
+        }
         return view;
     }
 
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if(firstLoad){
         btn_submit.setSelected(false);
         answers = Arrays.asList(context.getResources().getStringArray(R.array.survey_level));
         adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_survey_question);
         lv.setAdapter(adapter);
         tvQuestion.setText(mParam2.text);
         addListener();
-        super.onViewCreated(view, savedInstanceState);
+            firstLoad=false;
+        }
     }
 
     private void addListener() {
