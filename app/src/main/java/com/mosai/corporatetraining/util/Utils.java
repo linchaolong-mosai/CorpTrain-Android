@@ -35,4 +35,11 @@ public class Utils {
     public static String getFileUrl(String resourceId,String name){
         return String.format("%s%s/%s", AppAction.FILE_RESOURSE_COURSE_URL,resourceId,name);
     }
+    public static boolean renameToNewFile(String src, String dest)
+    {
+        File srcDir = new File(src);  //就文件夹路径
+        boolean isOk = srcDir.renameTo(new File(dest));  //dest新文件夹路径，通过renameto修改
+        System.out.println("renameToNewFile is OK ? :" +isOk);
+        return isOk;
+    }
 }

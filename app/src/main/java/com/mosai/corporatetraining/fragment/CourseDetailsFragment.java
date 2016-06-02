@@ -69,6 +69,7 @@ public class CourseDetailsFragment extends Fragment {
 
     }
     private void addListener(){
+        btnJoinCourse.setVisibility(getArguments().getBoolean("mycourse",false)?View.GONE:View.VISIBLE);
         btnJoinCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,9 +93,11 @@ public class CourseDetailsFragment extends Fragment {
         AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                dialog = new MaterialDialog(context).setTitle("Tips")
+                dialog = new MaterialDialog(context)
+//                        .setTitle("Tips")
                         .setMessage(context.getResources().getString(R.string.enrolled_success))
                         .setCanceledOnTouchOutside(false)
+
                         .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -104,6 +107,7 @@ public class CourseDetailsFragment extends Fragment {
                     dialog.show();
                     btnJoinCourse.setVisibility(View.GONE);
             }
+
         });
     }
     private void getClasses(){

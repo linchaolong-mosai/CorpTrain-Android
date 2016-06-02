@@ -41,7 +41,7 @@ public class StarRatingDialog {
         View view = View.inflate(context, R.layout.view_star_rating,null);
         ratingBar = (RatingBar) view.findViewById(R.id.ratingbar);
         mMaterialDialog = new MaterialDialog(context)
-                .setTitle("Rating")
+//                .setTitle("Rating")
                 .setContentView(view)
                 .setPositiveButton("Submit", new View.OnClickListener() {
                     @Override

@@ -104,14 +104,53 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Resources resource = ClassResourceActivity.this.resources.get(position);
+                String path = Utils.getLocalFile(context, resource.getResourceId() + "_" + resource.getName());
+                String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
+                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
                 if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
                     getQuiz(resource);
                 } else if (resource.getResourceType() == Constants.ResourceTypeSurvey) {
                     getSurvey(resource);
-                } else {
-                    downloadFile(ClassResourceActivity.this.resources.get(position),position);
-
+                } else if(resource.getResourceType() == Constants.ResourceTypeImage){
+                    if(new File(filepath).exists()){
+                        //打开本地文件
+//                        openFile(filepath);
+                        Intent intent = new Intent(context,ShowImageActivity.class);
+                        intent.putExtra("filepath",filepath);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context,ShowImageActivity.class);
+                        intent.putExtra("url",url);
+                        intent.putExtra("path",path);
+                        intent.putExtra("filepath",filepath);
+                        startActivity(intent);
+                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                    }
+                } else if(resource.getResourceType() == Constants.ResourceTypeVideo){
+                    if(new File(filepath).exists()){
+                        Intent intent = new Intent(context,VideoActivity.class);
+                        intent.putExtra("resource",resource);
+                        intent.putExtra("path",filepath);
+                        startActivity(intent);
+                    }else{
+                        Intent intent = new Intent(context,VideoActivity.class);
+                        intent.putExtra("resource",resource);
+                        intent.putExtra("url",url);
+                        startActivity(intent);
+                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                    }
+                } else{
+                    if(new File(filepath).exists()){
+                        //打开本地文件
+                        openFile(filepath);
+                    }else{
+                        Intent intent = new Intent(context,WebViewActivity.class);
+                        intent.putExtra("url",url);
+                        startActivity(intent);
+                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                    }
                 }
+
             }
         });
         getClassResource();
@@ -137,6 +176,20 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                     e.printStackTrace();
                 }
             }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
         });
     }
 
@@ -155,6 +208,20 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                     e.printStackTrace();
                 }
             }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
         });
     }
 
@@ -166,6 +233,20 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                 resources.clear();
                 resources.addAll(root.getResources());
                 adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }
@@ -192,21 +273,17 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
 
     private void downloadFile(final Resources recources, final int position) {
+        final String filepath = Utils.getLocalFile(context, Constants.downloadedtag+recources.getResourceId() + "_" + recources.getName());
         final String path = Utils.getLocalFile(this, recources.getResourceId() + "_" + recources.getName());
         String url = Utils.getFileUrl(recources.getResourceId(), recources.getName().replace(" ", "%20"));
-        //https://train-qa.liveh2h.com/resources/DD86D6B6-36DD-4D70-ACD3-32C5F7FD0C9C/4.pdf
-
-//        if (!Utils.checkLocalFile(this, path)) {
         if (!httpHandlers.containsKey(path)) {
             HttpHandler<?> httpHandler = httpUtils.download(url,
                     path, true, true,
                     new RequestCallBack<File>() {
                         @Override
                         public void onSuccess(ResponseInfo<File> responseInfo) {
-//                            ToastUtils.showToast(context, "下载成功");
                             LogUtils.e("下载成功");
-                            openFile(path);
-//                            httpHandler.cancel();
+                            Utils.renameToNewFile(path,filepath);
                             httpHandlers.get(path).cancel();
                             resources.get(position).exist=true;
                             resources.get(position).showProgress=false;
@@ -215,14 +292,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
 
                         @Override
                         public void onFailure(HttpException e, String s) {
-//                            ToastUtils.showToast(context, "下载失败");
                             LogUtils.e("下载失败" + s);
-//                            httpHandler.cancel();
-                            if (s.equals(getString(R.string.has_downloaded))) {
-                                openFile(path);
-                                resources.get(position).exist=true;
-
-                            }
                             httpHandlers.get(path).cancel();
                         }
 
@@ -242,15 +312,8 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         }
                     });
             httpHandlers.put(path, httpHandler);
-        }else{
-            if(resources.get(position).exist){
-                openFile(path);
-            }
         }
 
 
-//        } else {
-//            openFile(path);
-//        }
     }
 }

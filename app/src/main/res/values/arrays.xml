@@ -3,8 +3,8 @@
     <string-array name="survey_level">
         <item>Strongly Agree</item>
         <item>Somewhat Agree</item>
-        <item>Somewhat Disagree</item>
         <item>Neutral</item>
+        <item>Somewhat Disagree</item>
         <item>Strongly Disagree</item>
     </string-array>
 </resources>

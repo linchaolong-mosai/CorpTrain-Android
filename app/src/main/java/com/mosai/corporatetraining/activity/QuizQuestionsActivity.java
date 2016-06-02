@@ -84,12 +84,22 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
 
+                    handler.sendEmptyMessage(0);
+                }
+
+                @Override
+                public void onResponeseStart() {
+                    showProgressDialog();
                 }
 
                 @Override
                 public void onResponesefinish() {
-                    super.onResponesefinish();
-                    handler.sendEmptyMessage(0);
+                    dismissProgressDialog();
+                }
+
+                @Override
+                public void onResponeseFail(int statusCode, HttpResponse response) {
+                    showHintDialog(response.message);
                 }
             });
         }

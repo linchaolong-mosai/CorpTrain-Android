@@ -114,19 +114,21 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
                 SearchCourseMainActivity.this.courses = courses;
-                dismissProgressDialog();
             }
 
             @Override
-            public void onStart() {
+            public void onResponeseStart() {
                 showProgressDialog();
             }
 
             @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message.toString());
+            public void onResponesefinish() {
                 dismissProgressDialog();
+            }
 
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }

@@ -175,20 +175,22 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 ImageLoader.getInstance().getDiskCache().remove(ivurl);
                 ImageLoader.getInstance().getMemoryCache().remove(ivurl);
                 ImageLoader.getInstance().displayImage(ivurl, ivMyicon, options);
-                dismissProgressDialog();
 
             }
 
             @Override
-            public void onStart() {
+            public void onResponeseStart() {
                 showProgressDialog();
             }
 
             @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message.toString());
+            public void onResponesefinish() {
                 dismissProgressDialog();
+            }
 
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
 

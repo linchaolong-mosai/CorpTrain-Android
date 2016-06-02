@@ -173,19 +173,25 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
                 newCourseCoverAdapter.notifyDataSetChanged();
                 recommendedCourseCoverAdapter.notifyDataSetChanged();
                 initSlider();
-                ((MainActivity)mContext).dismissProgressDialog();
             }
             @Override
-            public void onStart() {
+            public void onResponeseStart() {
                 ((MainActivity)mContext).showProgressDialog();
             }
 
             @Override
+            public void onResponesefinish() {
+                ((MainActivity)mContext).dismissProgressDialog();
+            }
+
+
+            @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
                 ((MainActivity)mContext).showHintDialog(response.message.toString());
-                ((MainActivity)mContext).dismissProgressDialog();
+
 
             }
+
         });
     }
     private void initSroller(){

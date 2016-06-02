@@ -18,7 +18,7 @@
             android:id="@+id/tv_title"
             android:layout_centerInParent="true"
             style="@style/titletext"
-            android:text="title"
+            android:text="@string/quiz"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 

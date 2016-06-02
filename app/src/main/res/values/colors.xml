@@ -27,4 +27,6 @@
     <color name="line_color_gray">#CFCFCF</color>
     <color name="line_color_gray_light">#55CFCFCF</color>
     <color name="brown">#F5A623</color>
+
+    <color name="quiz_question">#EBEBEB</color>
 </resources>

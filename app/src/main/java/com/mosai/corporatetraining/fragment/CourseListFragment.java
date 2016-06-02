@@ -67,6 +67,7 @@ public class CourseListFragment extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("course",courses.get(position));
+                intent.putExtra("mycourse",true);
                 startActivity(intent);
             }
         });
@@ -79,10 +80,10 @@ public class CourseListFragment extends Fragment{
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
-                CourseListFragment.this.courses = courses;
+                CourseListFragment.this.courses.clear();
+                CourseListFragment.this.courses.addAll(courses);
                 adapter.notifyDataSetChanged();
             }
-
         });
     }
 }

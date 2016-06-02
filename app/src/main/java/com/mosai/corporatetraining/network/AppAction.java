@@ -157,9 +157,6 @@ public class AppAction {
         try {
             params.put("file",new File(path));
             AsyncHttp.getInstance().getClient().removeAllHeaders();
-
-
-
             AsyncHttp.getInstance().execute(context, BASE_URL+"tutormeetupload/changeavatar.do",
                     params, AsyncHttp.METHOD_POST,"multipart/form-data;boundary=----WebKitFormBoundarytl61TC9tokeItvRA;image/JPEG", responseHandler);
         } catch (FileNotFoundException e) {

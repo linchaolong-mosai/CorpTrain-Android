@@ -31,17 +31,8 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 	@Override
 	public void onSuccess(int statusCode, Header[] headers,
 			String responseString) {
-		/*if (headers != null) {
-			StringBuilder builder = new StringBuilder();
-            for (Header h : headers) {
-                String _h = String.format(Locale.US, "%s : %s", h.getName(), h.getValue());
-                builder.append(_h);
-                builder.append("\n");
-            }
-            LogUtils.i("请求headers：" + builder.toString());
-		}*/
 		LogUtils.i("状态码：" + statusCode + " 返回值：" + responseString);
-		if (statusCode == HttpURLConnection.HTTP_OK) {
+		if (statusCode == HttpURLConnection.HTTP_OK ||statusCode == HttpURLConnection.HTTP_CREATED) {
 			try {
 				if (FastJsonUtils.isJson(responseString)) {
                     HttpResponse response = FastJsonUtils.parseObject(responseString, mClass);
@@ -63,6 +54,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
                 onResponeseFail(statusCode, new HttpResponse(getString(R.string.parse_data_error)));
 			}
 		} else {
+
             onResponeseFail(statusCode, new HttpResponse(getString(R.string.server_response_value_error, statusCode)));
 		}
 	}

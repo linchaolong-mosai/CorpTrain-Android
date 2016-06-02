@@ -63,6 +63,20 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
                 UserPF.getInstance().putString(UserPF.PHONE, phone);
                 finish();
             }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
         });
     }
 }

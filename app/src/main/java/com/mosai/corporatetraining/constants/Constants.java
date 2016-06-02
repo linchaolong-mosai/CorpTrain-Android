@@ -7,6 +7,7 @@ package com.mosai.corporatetraining.constants;
  * 邮箱：nianbin@mosainet.com
  */
 public interface Constants {
+    String downloadedtag = "downloadedtag_success";
     int ResourceTypeDoc = 3;
     int ResourceTypeVideo = 4;
     int ResourceTypeImage = 5;

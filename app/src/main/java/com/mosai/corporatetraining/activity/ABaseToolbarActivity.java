@@ -2,6 +2,8 @@ package com.mosai.corporatetraining.activity;
 
 import android.os.Bundle;
 
+import butterknife.ButterKnife;
+
 /**
  * 描述:
  * 作者：周年斌
@@ -9,11 +11,15 @@ import android.os.Bundle;
  * 邮箱：zhounianbin@mastercom.cn
  */
 public abstract class ABaseToolbarActivity extends BaseToolbarActivity{
+    protected void beforeSetContent(){
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        beforeSetContent();
         setContentView(setContent());
+        ButterKnife.bind(this);
         initView();
         initDatas();
         addListener();

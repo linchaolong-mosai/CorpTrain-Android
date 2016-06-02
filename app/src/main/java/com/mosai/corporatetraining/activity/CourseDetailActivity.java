@@ -38,6 +38,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     private Courses course;
     private RatingBar ratingBar;
     private TextView tvTitle;
+    private boolean mycourse;
     @Override
     protected void initDatas() {
         ratingBar.setRating(course.getCourseInfo().getRating());
@@ -59,6 +60,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     @Override
     protected void initView() {
         course = (Courses) getIntent().getSerializableExtra("course");
+        mycourse = getIntent().getBooleanExtra("mycourse",false);
         starRatingDialog = new StarRatingDialog(context);
         ivIcon = ViewUtil.findViewById(this, R.id.iv_icon);
 
@@ -66,12 +68,14 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         courseDetailsFragment = new CourseDetailsFragment();
         bundle.putInt("tag", ONE);
         bundle.putSerializable("course",course);
+        bundle.putBoolean("mycourse",mycourse);
         courseDetailsFragment.setArguments(bundle);
 
         courseComentsFragment = new CourseComentsFragment();
         bundle = new Bundle();
         bundle.putInt("tag", TWO);
         bundle.putSerializable("course",course);
+
         courseComentsFragment.setArguments(bundle);
         viewPager = (CantScrollViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
@@ -145,9 +149,21 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         AppAction.submitCourseRating(this, course.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-//                course.getCourseInfo().setRating(Integer.parseInt(rating+""));
-//                ratingBar.setRating(rating);
                 ratingBar.setRating(rating);
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }
@@ -174,6 +190,20 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 CourseRoot courseRoot = (CourseRoot) response;
                     ratingBar.setRating(courseRoot.getCourse().getRating());
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }

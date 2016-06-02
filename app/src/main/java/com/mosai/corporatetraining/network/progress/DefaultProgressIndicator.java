@@ -2,9 +2,13 @@ package com.mosai.corporatetraining.network.progress;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.widget.HintDialog;
+import com.mosai.ui.render.LevelLoadingRenderer;
+import com.mosai.ui.render.LoadingDrawable;
 
 /**
  * Created by Rays on 16/5/12.
@@ -34,7 +38,13 @@ public class DefaultProgressIndicator extends Dialog implements IProgressIndicat
         this.context = context;
 //        View view = LayoutInflater.from(context).inflate(R.layout.dialog_loading, null);
 //        messages = ViewUtil.findViewById(view, R.id.messages);
-        this.setContentView(R.layout.dialog_loading);
+        View view = View.inflate(context,R.layout.dialog_loading,null);
+        ImageView iv = (ImageView) view.findViewById(R.id.iv_progress);
+
+        LoadingDrawable loadingDrawable = new LoadingDrawable(new LevelLoadingRenderer(context).setCircleColor(context.getResources().getColor(R.color.colorPrimary)));
+        iv.setImageDrawable(loadingDrawable);
+        loadingDrawable.start();
+        this.setContentView(view);
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
     }

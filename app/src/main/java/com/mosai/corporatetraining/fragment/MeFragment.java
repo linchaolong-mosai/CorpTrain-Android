@@ -104,7 +104,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private void initData() {
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
         mldgSignout = new MaterialDialog(mContext)
-                .setTitle("Tips")
+//                .setTitle("Tips")
                 .setMessage("Do you want to Sign out?")
                 .setPositiveButton("OK", new View.OnClickListener() {
                     @Override

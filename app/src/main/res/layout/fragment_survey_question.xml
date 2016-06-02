@@ -3,19 +3,19 @@
     android:layout_height="match_parent"
     >
     <TextView
-        android:background="@color/pressed_bgcolor"
+        android:background="@color/quiz_question"
         android:id="@+id/tv_question"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="50dp"
-        android:paddingBottom="50dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="question"
         android:textColor="@color/black"
         android:textSize="16sp"
         />
-    <include layout="@layout/layout_horizontalline"></include>
+    <!--<include layout="@layout/layout_horizontalline"></include>-->
     <ListView
 
         android:id="@+id/lv"

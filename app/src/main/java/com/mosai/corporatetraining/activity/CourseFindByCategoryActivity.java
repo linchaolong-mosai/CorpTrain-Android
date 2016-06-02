@@ -75,18 +75,20 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
                     CourseFindByCategoryActivity.this.courseFindByCategories.clear();
                     CourseFindByCategoryActivity.this.courseFindByCategories.addAll(categories.getCourses());
                     courseFindByCategoryAdapter.notifyDataSetChanged();
-                    dismissProgressDialog();
             }
             @Override
-            public void onStart() {
+            public void onResponeseStart() {
                 showProgressDialog();
             }
 
             @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message.toString());
+            public void onResponesefinish() {
                 dismissProgressDialog();
+            }
 
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }

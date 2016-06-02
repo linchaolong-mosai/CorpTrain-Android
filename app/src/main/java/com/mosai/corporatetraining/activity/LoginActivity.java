@@ -165,25 +165,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 userInfoResponse.password = etPassword.getText().toString();
 				UserPF.getInstance().saveUserInfo(userInfoResponse);
                 getCurrentCtUser();
-//                getTokenInfo();
-//                getCompanyInfo();
-//				AppManager.getAppManager().finishActivity(RegisterActivity.class);
-//				AppManager.getAppManager().finishActivity(SelectLoginActivity.class);
-//				startActivity(new Intent(context, MainActivity.class));
-//				finish();
+			}
+			@Override
+			public void onResponeseStart() {
+				showProgressDialog();
 			}
 
-            @Override
-            public void onStart() {
-                showProgressDialog();
-            }
+			@Override
+			public void onResponesefinish() {
+				dismissProgressDialog();
+			}
 
-            @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message);
-                dismissProgressDialog();
-            }
-        });
+			@Override
+			public void onResponeseFail(int statusCode, HttpResponse response) {
+				showHintDialog(response.message);
+			}
+		});
 	}
 
     private void getCurrentCtUser() {
@@ -194,19 +191,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 UserPF.getInstance().saveCtUser(currentCtUserResponse);
 //                startActivity(new Intent(context, MainActivity.class));
 //				finish();
-            }
-
-            @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message);
-            }
-
-            @Override
-            public void onResponesefinish() {
-                dismissProgressDialog();
 				startActivity(new Intent(context, MainActivity.class));
 				finish();
             }
+
+			@Override
+			public void onResponeseStart() {
+				showProgressDialog();
+			}
+
+			@Override
+			public void onResponesefinish() {
+				dismissProgressDialog();
+			}
+
+			@Override
+			public void onResponeseFail(int statusCode, HttpResponse response) {
+				showHintDialog(response.message);
+			}
         });
     }
 

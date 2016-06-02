@@ -11,6 +11,7 @@ import com.mosai.corporatetraining.broadcast.TokenExpireReceiver;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AsyncHttp;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
+import com.mosai.corporatetraining.network.progress.TextProgressIndicator;
 import com.mosai.corporatetraining.util.AppManager;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.corporatetraining.widget.HintDialog;
@@ -23,6 +24,7 @@ import com.mosai.utils.SwitchingAnim;
  *
  */
 public class BaseActivity extends AppCompatActivity {
+    private TextProgressIndicator textProgressIndicator;
 	protected Context context;
 	private Toast toast;
     private HintDialog hintDialog;
@@ -35,6 +37,7 @@ public class BaseActivity extends AppCompatActivity {
         context = this;
         AppManager.getAppManager().addActivity(this);
         register();
+        textProgressIndicator = TextProgressIndicator.newInstance(this);
 	}
 
 	@Override

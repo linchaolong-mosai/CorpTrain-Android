@@ -68,6 +68,20 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
                 UserPF.getInstance().putString(UserPF.USER_NAME, name);
                 finish();
             }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
         });
     }
 }

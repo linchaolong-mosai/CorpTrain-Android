@@ -77,6 +77,20 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 showHintDialog(R.string.forgot_success_hint).setTitles(R.string.success);
             }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
         });
     }
 }

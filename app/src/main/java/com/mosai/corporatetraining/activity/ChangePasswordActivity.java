@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.entity.HttpResponse;
-import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
@@ -70,6 +69,20 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 finish();
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
+
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
             }
         });
     }

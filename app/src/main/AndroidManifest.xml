@@ -115,10 +115,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:name=".activity.SearchCourseMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
@@ -147,7 +147,21 @@
             android:name=".activity.QuizSummaryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
-        <activity android:name=".activity.SurveyQuestionsActivity"></activity>
+        <activity
+            android:name=".activity.SurveyQuestionsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+        <activity
+            android:name=".activity.VideoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/MainTheme" />
+        <activity android:name=".activity.ShowImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme"></activity>
     </application>
 
 </manifest>
