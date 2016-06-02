@@ -2,6 +2,7 @@ package com.mosai.corporatetraining.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,15 +16,21 @@ import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.activity.ChangePasswordActivity;
 import com.mosai.corporatetraining.activity.FeedbackActivity;
 import com.mosai.corporatetraining.activity.LoginActivity;
+import com.mosai.corporatetraining.activity.MainActivity;
 import com.mosai.corporatetraining.activity.PersonalInfoActivity;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.AppManager;
+import com.mosai.corporatetraining.util.DeleteDirectory;
 import com.mosai.corporatetraining.util.LogUtils;
+import com.mosai.corporatetraining.util.Utils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.CircleImageView;
+import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
+import java.io.File;
 
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -34,7 +41,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private MaterialDialog mldgSignout;
     private Context mContext;
     private Button btnSignout;
-    private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback;
+    private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback,tvClearMaterials;
     private CircleImageView ivHeadpotrait;
     private DisplayImageOptions options;
 
@@ -89,6 +96,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tvFeedback = ViewUtil.findViewById(view, R.id.tvFeedback);
         ivHeadpotrait = ViewUtil.findViewById(view,R.id.ivHeadpotrait);
         btnSignout = ViewUtil.findViewById(view,R.id.btn_signout);
+        tvClearMaterials = ViewUtil.findViewById(view,R.id.tvClearOffline);
         setImageloaderOptions();
         initListener();
         initData();
@@ -99,6 +107,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tvChangePassword.setOnClickListener(this);
         tvFeedback.setOnClickListener(this);
         btnSignout.setOnClickListener(this);
+        tvClearMaterials.setOnClickListener(this);
     }
 
     private void initData() {
@@ -189,7 +198,51 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             case R.id.btn_signout:
                 mldgSignout.show();
                 break;
+            case R.id.tvClearOffline:
+                clearMaterials();
+                break;
+            default:
+                break;
         }
+    }
+
+    private void clearMaterials() {
+        final MaterialDialog dialog = new MaterialDialog(mContext);
+        dialog.setMessage(mContext.getString(R.string.clear_offline_course_materials_tips))
+                .setPositiveButton(mContext.getString(R.string.ok), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AsyncTask<Void,Void,Boolean>(){
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                ((MainActivity)mContext).showTextProgressDialog(mContext.getString(R.string.clearing));
+                            }
+
+                            @Override
+                            protected void onPostExecute(Boolean aVoid) {
+                                super.onPostExecute(aVoid);
+                                ((MainActivity)mContext).dismissTextProgressDialog();
+                                ToastUtils.showToast(mContext,mContext.getString(aVoid?R.string.delete_success:R.string.delete_fail));
+                            }
+
+                            @Override
+                            protected Boolean doInBackground(Void... params) {
+
+                                return DeleteDirectory.deleteDir(new File(Utils.getMaterialsDir(mContext)));
+                            }
+                        }.execute();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(mContext.getString(R.string.cancel), new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+
     }
 
     @Override

@@ -64,6 +64,7 @@
         <TextView
             android:id="@+id/tvClearOffline"
             style="@style/TextView_Me_Item"
+            android:drawableRight="@drawable/mini_right_arrow"
             android:text="@string/clear_offline_course_materials"/>
 
         <TextView

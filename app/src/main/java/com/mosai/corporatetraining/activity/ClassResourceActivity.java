@@ -145,6 +145,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         openFile(filepath);
                     }else{
                         Intent intent = new Intent(context,WebViewActivity.class);
+                        intent.putExtra("filename",resource.getName());
                         intent.putExtra("url",url);
                         startActivity(intent);
                         downloadFile(ClassResourceActivity.this.resources.get(position),position);

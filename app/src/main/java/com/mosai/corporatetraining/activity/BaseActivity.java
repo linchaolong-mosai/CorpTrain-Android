@@ -160,4 +160,10 @@ public class BaseActivity extends AppCompatActivity {
 
         }
     }
+    public void showTextProgressDialog(String message){
+       textProgressIndicator.showDialog(message);
+    }
+    public void dismissTextProgressDialog(){
+        textProgressIndicator.dismissDialg();
+    }
 }

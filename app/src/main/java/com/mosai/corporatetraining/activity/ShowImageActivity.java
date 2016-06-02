@@ -26,16 +26,19 @@ public class ShowImageActivity extends ABaseToolbarActivity {
         final String filepath = getIntent().getStringExtra("filepath");
         final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
         if (!TextUtils.isEmpty(url)) {
+            showProgressDialog();
             Picasso.with(this)
                     .load(url)
                     .into(photoView, new Callback() {
                         @Override
                         public void onSuccess() {
                             attacher.update();
+                            dismissProgressDialog();
                         }
 
                         @Override
                         public void onError() {
+                            dismissProgressDialog();
                         }
                     });
         } else {

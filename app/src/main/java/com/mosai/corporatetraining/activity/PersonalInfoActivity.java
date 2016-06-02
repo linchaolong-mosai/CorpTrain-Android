@@ -128,6 +128,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
             public void onCanceled(EasyImage.ImageSource imageSource, int i) {
                 //Cancel handling, you might wanna remove taken photo if it was canceled
                 LogUtils.e("onCanceled");
+
             }
         });
 

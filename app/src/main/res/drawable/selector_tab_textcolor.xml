@@ -4,7 +4,7 @@
         android:color="@color/colorPrimary">
     </item>
     <item android:state_selected="false"
-         android:color="@color/line_color_gray">
+         android:color="@color/navigation_unchecked_color">
     </item>
-    <item android:color="@color/line_color_gray"/>
+    <item android:color="@color/navigation_unchecked_color"/>
 </selector>

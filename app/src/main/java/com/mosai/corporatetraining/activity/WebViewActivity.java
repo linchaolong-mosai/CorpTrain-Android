@@ -1,22 +1,23 @@
 package com.mosai.corporatetraining.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.ui.HorizontalProgressBarWithNumber;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WebViewActivity extends ABaseToolbarActivity {
     @BindView(R.id.hprogressbar)
     HorizontalProgressBarWithNumber hprogressbar;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private String url;
     @BindView(R.id.ib_back)
     ImageButton ibBack;
@@ -30,7 +31,7 @@ public class WebViewActivity extends ABaseToolbarActivity {
 //        webview.getSettings().setSupportZoom(true);
 //        webview.getSettings().setBuiltInZoomControls(true);
 
-        webview.setWebChromeClient(new WebChromeClient(){
+        webview.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -43,6 +44,7 @@ public class WebViewActivity extends ABaseToolbarActivity {
                 view.loadUrl(url);
                 return true;
             }
+
             public void onPageFinished(WebView view, String url) {
                 hprogressbar.setVisibility(View.GONE);
             }
@@ -51,7 +53,7 @@ public class WebViewActivity extends ABaseToolbarActivity {
         String fileUrl = String.format("https://docs.google.com/gview?embedded=true&url=%s", url);
 
         webview.loadUrl(fileUrl);
-
+        tvTitle.setText(getIntent().getStringExtra("filename"));
     }
 
     @Override
@@ -75,10 +77,4 @@ public class WebViewActivity extends ABaseToolbarActivity {
         back();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 }

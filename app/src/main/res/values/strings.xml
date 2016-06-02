@@ -14,7 +14,7 @@
     <string name="create_an_account">CREATE AN ACCOUNT</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="forgot_password_hint">Enter your email address. You will receive a confirmation email with instruction to reset your password.</string>
-    <string name="send">SEND</string>
+    <string name="send">Send</string>
     <string name="return_to_login">Return to Login</string>
     <string name="name">Name</string>
     <string name="first_name">First Name</string>
@@ -33,6 +33,7 @@
     <string name="personal_info">Personal Info</string>
     <string name="change_password">Change Password</string>
     <string name="clear_offline_course_materials">Clear Offline Course Materials</string>
+    <string name="clear_offline_course_materials_tips">Do you want to clear offline course materials</string>
     <string name="rate_h2h">Rate H2H</string>
     <string name="feedback">Feedback</string>
     <string name="photo">Photo</string>
@@ -87,4 +88,7 @@
     <string name="sorry">Sorry</string>
     <string name="sorry_tips">You Didn\'t Pass</string>
     <string name="congratulationtips">You have Passed</string>
+    <string name="clearing">clearing...</string>
+    <string name="delete_success">clear success</string>
+    <string name="delete_fail">clear fail</string>
 </resources>

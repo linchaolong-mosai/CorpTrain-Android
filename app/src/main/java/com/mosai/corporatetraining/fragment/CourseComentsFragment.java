@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.activity.CourseDetailActivity;
 import com.mosai.corporatetraining.adpter.CourseCommentAdapter;
 import com.mosai.corporatetraining.bean.coursecomment.Comments;
 import com.mosai.corporatetraining.bean.coursecomment.CourseCommentRoot;
@@ -73,6 +77,16 @@ public class CourseComentsFragment extends Fragment {
                 }
             }
         });
+        etReply.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_SEND){
+                    view.findViewById(R.id.btn_send).performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
     private void submitComment(String comment){
         AppAction.submitCourseComment(context, course.getCourseInfo().getCourseId(), comment, new HttpResponseHandler(HttpResponse.class) {
@@ -83,12 +97,17 @@ public class CourseComentsFragment extends Fragment {
 
             @Override
             public void onResponeseStart() {
-                super.onResponeseStart();
+                ((CourseDetailActivity)context).showProgressDialog();
             }
 
             @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
-                super.onResponeseFail(statusCode, response);
+                ((CourseDetailActivity)context).showHintDialog(response.message);
+            }
+
+            @Override
+            public void onResponesefinish() {
+                ((CourseDetailActivity)context).dismissProgressDialog();
             }
         });
     }
