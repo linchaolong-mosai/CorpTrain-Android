@@ -65,23 +65,33 @@ public class CourseListFragment extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("course",courses.get(position));
-                intent.putExtra("mycourse",true);
                 startActivity(intent);
             }
         });
     }
 
-    private void getDatas(){
-        int type = getArguments().getInt("type",0);
+    public void getDatas(){
+        final int type = getArguments().getInt("type",0);
         AppAction.getUserCourseByType(context,type, new HttpResponseHandler(UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
                 CourseListFragment.this.courses.clear();
+                if(type!=AppAction.SEARCH_COURSE_FILTER_TYPE_ALL){
                 CourseListFragment.this.courses.addAll(courses);
+                }else{
+                    for(Courses courses1:courses){
+                        int completePercent = courses1.getAttendeeInfo().getCompletePercent();
+                        boolean isMandatory = courses1.getInviteeInfo().getMandatory();
+                        if(!isMandatory&&(completePercent>0&&completePercent<100)){
+                            CourseListFragment.this.courses.add(courses1);
+                        }
+                    }
+                }
                 adapter.notifyDataSetChanged();
             }
         });

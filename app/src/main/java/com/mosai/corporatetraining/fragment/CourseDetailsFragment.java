@@ -27,6 +27,7 @@ import com.mosai.corporatetraining.util.ViewUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
@@ -44,6 +45,20 @@ public class CourseDetailsFragment extends Fragment {
     private Button btnJoinCourse;
     private View view;
     private ListView lv;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,7 +84,11 @@ public class CourseDetailsFragment extends Fragment {
 
     }
     private void addListener(){
-        btnJoinCourse.setVisibility(getArguments().getBoolean("mycourse",false)?View.GONE:View.VISIBLE);
+        if(!courses.getInviteeInfo().getMandatory()&&courses.getAttendeeInfo().getCompletePercent()==0){
+            btnJoinCourse.setVisibility(View.VISIBLE);
+        }else{
+            btnJoinCourse.setVisibility(View.GONE);
+        }
         btnJoinCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +107,14 @@ public class CourseDetailsFragment extends Fragment {
         });
 
     }
+    public void onEventMainThread(boolean flag)
+    {
+//        enrolled.getDatas();
+
+    }
+    private void updateMycourse(){
+        EventBus.getDefault().post(courses);
+    }
     MaterialDialog dialog;
     private void joinCourse(){
         AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(HttpResponse.class) {
@@ -97,7 +124,6 @@ public class CourseDetailsFragment extends Fragment {
 //                        .setTitle("Tips")
                         .setMessage(context.getResources().getString(R.string.enrolled_success))
                         .setCanceledOnTouchOutside(false)
-
                         .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -106,6 +132,7 @@ public class CourseDetailsFragment extends Fragment {
                         });
                     dialog.show();
                     btnJoinCourse.setVisibility(View.GONE);
+                updateMycourse();
             }
 
         });

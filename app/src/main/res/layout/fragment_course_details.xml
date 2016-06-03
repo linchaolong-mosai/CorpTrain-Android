@@ -29,6 +29,7 @@
         android:layout_width="match_parent"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_joincourse"
         android:textColor="@color/white"
         android:text="@string/join_course"

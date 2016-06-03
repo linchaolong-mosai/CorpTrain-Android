@@ -13,9 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.ui.CantScrollViewPager;
 import com.mosai.ui.SegmentedControlView;
+
+import de.greenrobot.event.EventBus;
+
 
 /**
  * me
@@ -28,8 +32,28 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
     private Context context;
     private View view;
     private CourseListFragment mandatory,enrolled,completed;
+
     private SegmentedControlView scv;
     private CantScrollViewPager viewPager;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    //加入课程成功后调用
+    public void onEventMainThread(Courses courses)
+    {
+        enrolled.getDatas();
+
+    }
     public MyCoursesFragment() {
         // Required empty public constructor
     }
@@ -125,7 +149,7 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
         bundle = new Bundle();
         enrolled = new CourseListFragment();
         bundle.putInt("tag",TWO);
-        bundle.putInt("type", AppAction.SEARCH_USER_COURSE_FILTER_TYPE_FAVORITE);
+        bundle.putInt("type", AppAction.SEARCH_COURSE_FILTER_TYPE_ALL);
         enrolled.setArguments(bundle);
 
         bundle = new Bundle();
