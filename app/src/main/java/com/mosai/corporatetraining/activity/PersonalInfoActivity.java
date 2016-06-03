@@ -80,6 +80,12 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
         ivMyicon.setOnClickListener(this);
         rlName.setOnClickListener(this);
         rlPhone.setOnClickListener(this);
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
     }
 
     private void initData() {

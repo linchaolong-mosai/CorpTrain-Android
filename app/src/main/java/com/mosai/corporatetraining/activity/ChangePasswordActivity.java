@@ -3,12 +3,14 @@ package com.mosai.corporatetraining.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
@@ -37,6 +39,12 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
 
     private void initListener() {
         etConfirmNewPassword.setOnEditorActionListener(this);
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
     }
 
     private void initData() {
@@ -65,9 +73,21 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
             showHintDialog(R.string.incorrect_password);
             return;
         }
+        if(!currentPassword.equals(UserPF.getInstance().getString(UserPF.PASSWORD,""))){
+            showHintDialog(R.string.incorrect_current_password);
+            return;
+        }
+
+
+        if(newPassword.length()>20||newPassword.length()<5){
+            showHintDialog(R.string.password_format);
+            return;
+        }
         AppAction.changePassword(context, currentPassword, newPassword, new HttpResponseHandler(HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                UserPF.getInstance().putString(UserPF.PASSWORD,etNewPassword.getText().toString());
+
                 finish();
             }
             @Override

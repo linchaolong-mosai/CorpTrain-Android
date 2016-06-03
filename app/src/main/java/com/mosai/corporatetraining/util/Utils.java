@@ -17,9 +17,6 @@ import java.io.File;
  * 邮箱：zhounianbin@mastercom.cn
  */
 public class Utils {
-    public static boolean checkLocalFile(Context context,String filename){
-        return new File(getLocalFile(context,filename)).exists();
-    }
     public static String getMaterialsDir(Context context){
         return Environment.getExternalStorageDirectory()+File.separator + context.getPackageName();
     }

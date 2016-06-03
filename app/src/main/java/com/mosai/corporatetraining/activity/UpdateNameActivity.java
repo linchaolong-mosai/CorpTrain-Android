@@ -3,6 +3,7 @@ package com.mosai.corporatetraining.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +38,12 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
 
     private void initListener() {
         etLastName.setOnEditorActionListener(this);
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
     }
 
     private void initData() {

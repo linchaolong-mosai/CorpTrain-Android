@@ -40,6 +40,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         btnSend.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
         ViewUtil.setEdittextLabelVisibility(etEmail, tvEmail);
+
     }
 
     private void initData() {

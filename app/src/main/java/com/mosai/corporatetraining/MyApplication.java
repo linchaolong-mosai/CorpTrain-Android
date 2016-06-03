@@ -1,11 +1,11 @@
 package com.mosai.corporatetraining;
 
 import android.app.Application;
-import android.os.Environment;
 
 import com.mosai.corporatetraining.common.AbnormalHandler;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AsyncHttp;
+import com.mosai.corporatetraining.util.Utils;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -51,8 +51,7 @@ public class MyApplication extends Application {
         ImageLoader.getInstance().init(config);
     }
     private void initDirs(){
-        File file = new File(Environment.getExternalStorageDirectory()+File.separator
-                + this.getPackageName() + File.separator);
+        File file = new File(Utils.getMaterialsDir(this));
         if(!file.exists()){
             file.mkdirs();
         }

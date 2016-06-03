@@ -59,6 +59,8 @@
     <string name="last_name_cannot_be_empty">Last name cannot be empty</string>
     <string name="re_enter_password_cannot_be_empty">Confirm password cannot be empty</string>
     <string name="incorrect_password">Incorrect password, please check again</string>
+    <string name="incorrect_current_password">Incorrect current password, please check again</string>
+    <string name="password_format">Password length should be from 5 to 20</string>
     <string name="forgot_success_hint">Please check your email for the new password.</string>
 
     <string name="phone_number">Phone Number</string>

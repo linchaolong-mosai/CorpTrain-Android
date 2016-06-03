@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleheight"
         >
+        <include layout="@layout/layout_ib_titile_back"></include>
         <TextView
             style="@style/titletext"
             android:layout_centerInParent="true"

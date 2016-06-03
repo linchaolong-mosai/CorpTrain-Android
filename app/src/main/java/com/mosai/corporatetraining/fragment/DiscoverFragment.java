@@ -123,13 +123,9 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
                     .empty(R.drawable.bg_course_default_cover)
                     .error(R.drawable.bg_course_default_cover)
                     .description(name)
-
-
                     .image(imgurl)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);
-
-
 
             //add your extra information
             textSliderView.bundle(new Bundle());
@@ -205,6 +201,11 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
     @Override
     public void onSliderClick(BaseSliderView slider) {
 //        ToastUtils.showToast(mContext,slider.getBundle().get("extra") + "");
+        Courses courses = (Courses) slider.getBundle().get("extra");
+        Intent intent = new Intent(mContext, CourseDetailActivity.class);
+        intent.putExtra("course",courses);
+        startActivity(intent);
+
     }
 
     @Override
