@@ -118,7 +118,7 @@
             android:name=".activity.SearchCourseMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"

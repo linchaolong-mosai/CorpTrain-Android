@@ -44,9 +44,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback,tvClearMaterials;
     private CircleImageView ivHeadpotrait;
     private DisplayImageOptions options;
-
-
-
     public MeFragment() {
         // Required empty public constructor
     }

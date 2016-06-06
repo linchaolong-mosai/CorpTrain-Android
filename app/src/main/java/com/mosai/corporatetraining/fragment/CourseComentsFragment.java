@@ -42,7 +42,6 @@ public class CourseComentsFragment extends Fragment {
         this.context = context;
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,16 +73,6 @@ public class CourseComentsFragment extends Fragment {
                 }
             }
         });
-//        etReply.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if(actionId== EditorInfo.IME_ACTION_SEND||(event!=null&&event.getKeyCode()== KeyEvent.KEYCODE_ENTER)){
-//                    view.findViewById(R.id.btn_send).performClick();
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
     private void submitComment(String comment){
         AppAction.submitCourseComment(context, course.getCourseInfo().getCourseId(), comment, new HttpResponseHandler(HttpResponse.class) {
