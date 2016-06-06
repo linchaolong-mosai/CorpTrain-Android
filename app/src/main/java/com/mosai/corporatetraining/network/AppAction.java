@@ -157,7 +157,7 @@ public class AppAction {
         try {
             params.put("file",new File(path));
             AsyncHttp.getInstance().getClient().removeAllHeaders();
-            AsyncHttp.getInstance().execute(context, BASE_URL+"tutormeetupload/changeavatar.do",
+            AsyncHttp.getInstance().execute(context, "https://train-qa.liveh2h.com/tutormeetupload/changeavatar.do",
                     params, AsyncHttp.METHOD_POST,"multipart/form-data;boundary=----WebKitFormBoundarytl61TC9tokeItvRA;image/JPEG", responseHandler);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -207,6 +207,16 @@ public class AppAction {
           getUserCourseByType(context,SEARCH_COURSE_FILTER_TYPE_ALL,responseHandler);
     }
 
+    /**
+     * 通过关键字获取课程
+     * @param context
+     * @param filter
+     * @param responseHandler
+     */
+    public static void getAllUserCoursesByFilter(Context context,String filter,AsyncHttpResponseHandler responseHandler){
+        AsyncHttp.getInstance().execute(context,BASE_URL+"api/course/user?filter_type=1&offset=0&limit=100&filter_string="+filter,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+//        getUserCourseByType(context,SEARCH_COURSE_FILTER_TYPE_ALL,responseHandler);
+    }
     /**
      * 获取自己的课程类型
      * @param context

@@ -111,15 +111,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
         mldgSignout = new MaterialDialog(mContext)
 //                .setTitle("Tips")
-                .setMessage("Do you want to Sign out?")
-                .setPositiveButton("OK", new View.OnClickListener() {
+                .setMessage(getString(R.string.signout_message))
+                .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mldgSignout.dismiss();
                         signout();
                     }
                 })
-                .setNegativeButton("Cancel", new View.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mldgSignout.dismiss();

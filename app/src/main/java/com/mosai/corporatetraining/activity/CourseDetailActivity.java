@@ -38,7 +38,6 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     private Courses course;
     private RatingBar ratingBar;
     private TextView tvTitle;
-    private boolean mycourse;
     @Override
     protected void initDatas() {
         ratingBar.setRating(course.getCourseInfo().getRating());
@@ -60,7 +59,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     @Override
     protected void initView() {
         course = (Courses) getIntent().getSerializableExtra("course");
-        mycourse = getIntent().getBooleanExtra("mycourse",false);
+//        mycourse = getIntent().getBooleanExtra("mycourse",false);
         starRatingDialog = new StarRatingDialog(context);
         ivIcon = ViewUtil.findViewById(this, R.id.iv_icon);
 
@@ -68,7 +67,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         courseDetailsFragment = new CourseDetailsFragment();
         bundle.putInt("tag", ONE);
         bundle.putSerializable("course",course);
-        bundle.putBoolean("mycourse",mycourse);
+//        bundle.putBoolean("mycourse",mycourse);
         courseDetailsFragment.setArguments(bundle);
 
         courseComentsFragment = new CourseComentsFragment();
@@ -81,11 +80,11 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         viewPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
         scv = (SegmentedControlView) findViewById(R.id.scv);
         scv.setColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.white));
-
+        scv.setEqualWidth(true);
         scv.setStretch(true);
 
         try {
-            scv.setItems(new String[]{"Details", "Comments"}, new String[]{"one", "two"});
+            scv.setItems(new String[]{getString(R.string.course_details), getString(R.string.course_comments)}, new String[]{"one", "two"});
             scv.setDefaultSelection(0);
         } catch (Exception e) {
             // TODO Auto-generated catch block

@@ -79,7 +79,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         super.onCreate(savedInstanceState);
         /*if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            question = getArguments().getString(ARG_PARAM2);
         }*/
     }
 
@@ -252,34 +252,4 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
             }
         });
     }
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFratListenerQuizQuestion) {
-            mListener = (OnFratListenerQuizQuestion) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFratListenerQuizQuestion");
-        }
-    }*/
-
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   /* public interface OnFratListenerQuizQuestion {
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

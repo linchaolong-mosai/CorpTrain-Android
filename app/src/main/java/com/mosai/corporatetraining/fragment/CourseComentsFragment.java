@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.activity.CourseDetailActivity;
@@ -71,6 +74,16 @@ public class CourseComentsFragment extends Fragment {
                     Tools.hideSoftInput(etReply);
                     etReply.setText("");
                 }
+            }
+        });
+        etReply.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_SEND){
+                    view.findViewById(R.id.btn_send).performClick();
+                    return true;
+                }
+                return false;
             }
         });
     }

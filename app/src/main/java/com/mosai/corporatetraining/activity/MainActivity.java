@@ -155,6 +155,7 @@ public class MainActivity extends BaseToolbarActivity {
     }
 
     private void show(String tag) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -194,8 +195,7 @@ public class MainActivity extends BaseToolbarActivity {
     public void onBackPressed() {
         long nowtime = SystemClock.elapsedRealtime();
         if (lastKeyBackTime == 0 || nowtime - lastKeyBackTime > 1500) {
-//            GV.showToast(this, "再按一次 退出晋信", 15);
-            ToastUtils.showToast(this,"Press again to exit app");
+            ToastUtils.showToast(this,getString(R.string.press_exit_message));
             lastKeyBackTime = nowtime;
         } else {
             lastKeyBackTime = 0;

@@ -43,7 +43,7 @@ public class StarRatingDialog {
         mMaterialDialog = new MaterialDialog(context)
 //                .setTitle("Rating")
                 .setContentView(view)
-                .setPositiveButton("Submit", new View.OnClickListener() {
+                .setPositiveButton(context.getString(R.string.submit), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mMaterialDialog.dismiss();

@@ -3,6 +3,8 @@ package com.mosai.corporatetraining.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -165,5 +167,14 @@ public class BaseActivity extends AppCompatActivity {
     }
     public void dismissTextProgressDialog(){
         textProgressIndicator.dismissDialg();
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config=new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config,res.getDisplayMetrics() );
+        return res;
     }
 }
