@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.local.UserPF;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,14 +26,18 @@ public class SplashActivity extends BaseActivity {
                     return;
                 }
                 Intent intent = new Intent();
-//                if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
-//                    intent.setClass(context, MainActivity.class);
-//                } else {
-//                    intent.setClass(context, LoginActivity.class);
-//                }
-                intent.setClass(context, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                String email = UserPF.getInstance().getString(UserPF.USER_EMAIL, "");
+                String password = UserPF.getInstance().getString(UserPF.PASSWORD, "");
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    intent.setClass(context, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    intent.setClass(context, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }, 1500);
     }
