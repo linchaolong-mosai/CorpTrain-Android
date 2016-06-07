@@ -118,7 +118,7 @@
             android:name=".activity.SearchCourseMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme"
-            android:windowSoftInputMode="adjustUnspecified|stateAlwaysVisible" />
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
@@ -148,7 +148,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
-            android:name=".activity.SurveyQuestionsActivity"
+            android:name=".activity.SurveyQuestionsActivity2"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
