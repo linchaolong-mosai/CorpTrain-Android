@@ -40,6 +40,8 @@
 
     <!--</FrameLayout>-->
     <com.mosai.corporatetraining.ui.CustomScrollView
+
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -67,7 +69,7 @@
             <com.mosai.ui.HorizontalListView
                 android:layout_marginLeft="1dp"
                 android:id="@+id/hlv_newcourses"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/course_hlistview_height"
                 android:layout_width="match_parent">
 
 
@@ -96,7 +98,7 @@
             <com.mosai.ui.HorizontalListView
                 android:layout_marginLeft="1dp"
                 android:id="@+id/hlv_recommended"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/course_hlistview_height"
                 android:layout_width="match_parent">
 
             </com.mosai.ui.HorizontalListView>

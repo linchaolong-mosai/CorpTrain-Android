@@ -10,20 +10,24 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
-import com.mosai.corporatetraining.bean.CourseRoot;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
+import com.mosai.corporatetraining.bean.usercourse.UserCourseRoot;
 import com.mosai.corporatetraining.entity.HttpResponse;
 import com.mosai.corporatetraining.fragment.CourseComentsFragment;
 import com.mosai.corporatetraining.fragment.CourseDetailsFragment;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
-import com.mosai.corporatetraining.ui.StarRatingDialog;
+import com.mosai.corporatetraining.ui.RatingDialog;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.CantScrollViewPager;
 import com.mosai.ui.SegmentedControlView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
+import java.util.List;
+
+import butterknife.BindView;
 
 public class CourseDetailActivity extends ABaseToolbarActivity implements SegmentedControlView.OnSelectionChangedListener {
     private DisplayImageOptions options;
@@ -38,7 +42,8 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     private Courses course;
     private RatingBar ratingBar;
     private TextView tvTitle;
-    private boolean mycourse;
+    @BindView(R.id.iv_favorite)
+    ImageView ivFavorite;
     @Override
     protected void initDatas() {
         ratingBar.setRating(course.getCourseInfo().getRating());
@@ -49,7 +54,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
         String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL, course.getCourseInfo().getCourseId(), course.getCourseInfo().getImageName());
         ImageLoader.getInstance().displayImage(imgurl, ivIcon);
-        getCourseByCourseId();
+        getCourseByName();
     }
 
     @Override
@@ -60,15 +65,16 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
     @Override
     protected void initView() {
         course = (Courses) getIntent().getSerializableExtra("course");
-        mycourse = getIntent().getBooleanExtra("mycourse",false);
-        starRatingDialog = new StarRatingDialog(context);
+//        mycourse = getIntent().getBooleanExtra("mycourse",false);
+//        starRatingDialog = new StarRatingDialog(context);
+        ratingDialog = new RatingDialog(context);
         ivIcon = ViewUtil.findViewById(this, R.id.iv_icon);
 
         Bundle bundle = new Bundle();
         courseDetailsFragment = new CourseDetailsFragment();
         bundle.putInt("tag", ONE);
         bundle.putSerializable("course",course);
-        bundle.putBoolean("mycourse",mycourse);
+//        bundle.putBoolean("mycourse",mycourse);
         courseDetailsFragment.setArguments(bundle);
 
         courseComentsFragment = new CourseComentsFragment();
@@ -81,11 +87,11 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         viewPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
         scv = (SegmentedControlView) findViewById(R.id.scv);
         scv.setColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.white));
-
+        scv.setEqualWidth(true);
         scv.setStretch(true);
 
         try {
-            scv.setItems(new String[]{"Details", "Comments"}, new String[]{"one", "two"});
+            scv.setItems(new String[]{getString(R.string.course_details), getString(R.string.course_comments)}, new String[]{"one", "two"});
             scv.setDefaultSelection(0);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -131,17 +137,35 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
                 back();
             }
         });
-        starRatingDialog.setOnSubmitCallback(new StarRatingDialog.onSubmitCallback() {
+        ratingDialog.setCallback(new RatingDialog.Callback() {
             @Override
-            public void submitCallback(float rating) {
-//                ToastUtils.showToast(context,rating+"");
-//                ratingBar.setRating(rating);
-                submitRating(rating);
-//                course.getCourseInfo().setRating((int) rating);
+            public void callback(float rate) {
+                submitRating(rate);
+            }
+        });
+        ivFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppAction.updateCourseFavorite(context,course.getCourseInfo().getCourseId(),!ivFavorite.isSelected(),new HttpResponseHandler(HttpResponse.class) {
+                    @Override
+                    public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                        ivFavorite.setSelected(!ivFavorite.isSelected());
+                    }
+                    @Override
+                    public void onResponeseStart() {
+                        showProgressDialog();
+                    }
 
+                    @Override
+                    public void onResponesefinish() {
+                        dismissProgressDialog();
+                    }
 
-
-
+                    @Override
+                    public void onResponeseFail(int statusCode, HttpResponse response) {
+                        showHintDialog(response.message);
+                    }
+                });
             }
         });
     }
@@ -177,19 +201,52 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         }
     }
 
-    private StarRatingDialog starRatingDialog;
+//    private StarRatingDialog starRatingDialog;
+    private RatingDialog ratingDialog;
 
     public void rating(View view) {
-        starRatingDialog.show();
+//        starRatingDialog.show();
+        if(!ratingDialog.isShowing()){
+
+        ratingDialog.show();
+        }
     }
 
-    private void getCourseByCourseId(){
+    private void getCourseByName(){
 
-        AppAction.getCourseByCourseId(this, course.getCourseInfo().getCourseId(), new HttpResponseHandler(CourseRoot.class) {
+//        AppAction.getCourseByName(this, course.getCourseInfo().getCourseId(), new HttpResponseHandler(CourseRoot.class) {
+//            @Override
+//            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+//                CourseRoot courseRoot = (CourseRoot) response;
+//                    ratingBar.setRating(courseRoot.getCourse().getRating());
+//            }
+//            @Override
+//            public void onResponeseStart() {
+//                showProgressDialog();
+//            }
+//
+//            @Override
+//            public void onResponesefinish() {
+//                dismissProgressDialog();
+//            }
+//
+//            @Override
+//            public void onResponeseFail(int statusCode, HttpResponse response) {
+//                showHintDialog(response.message);
+//            }
+//        });
+        AppAction.getAllUserCoursesByFilter(context, course.getCourseInfo().getSubject(), new HttpResponseHandler(UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                CourseRoot courseRoot = (CourseRoot) response;
-                    ratingBar.setRating(courseRoot.getCourse().getRating());
+                UserCourseRoot userCourseRoot = (UserCourseRoot) response;
+                List<Courses> courses = userCourseRoot.getCourses();
+                for(Courses courses1:courses){
+                    if(courses1.getCourseInfo().getCourseId().equals(course.getCourseInfo().getCourseId())){
+                        ratingBar.setRating(courses1.getCourseInfo().getRating());
+                        ivFavorite.setSelected(courses1.getAttendeeInfo().getFavorite());
+                        break;
+                    }
+                }
             }
             @Override
             public void onResponeseStart() {
@@ -201,9 +258,12 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
                 dismissProgressDialog();
             }
 
+
             @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message);
+                showHintDialog(response.message.toString());
+
+
             }
         });
     }

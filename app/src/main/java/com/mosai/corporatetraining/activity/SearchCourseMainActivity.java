@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.adpter.SearchCourseResultAdapter;
@@ -17,6 +20,7 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.ClearEditText;
+import com.mosai.utils.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +75,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
+
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
@@ -78,19 +83,19 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
                 filter(cetCourses.getText().toString());
             }
         });
-//        cetCourses.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    //过滤
-//                    filter(v.getText().toString());
-//                    Tools.hideSoftInput(cetCourses);
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        cetCourses.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                    //过滤
+                    filter(v.getText().toString());
+                    Tools.hideSoftInput(cetCourses);
+                    return true;
+                }
+                return false;
+            }
+        });
         getDatas();
     }
 
@@ -102,6 +107,8 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
                     coursesTemp.add(course);
                 }
             }
+        }else{
+            Tools.hideSoftInput(cetCourses);
         }
 
         adapter.notifyDataSetChanged();
@@ -114,6 +121,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
                 SearchCourseMainActivity.this.courses = courses;
+                Tools.showSoftInput(cetCourses);
             }
 
             @Override

@@ -18,7 +18,7 @@
             android:id="@+id/tv_title"
             android:layout_centerInParent="true"
             style="@style/titletext"
-            android:text="Survey"
+            android:text="@string/survey"
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
         <TextView

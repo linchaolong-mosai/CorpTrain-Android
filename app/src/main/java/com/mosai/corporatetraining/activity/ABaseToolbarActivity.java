@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 public abstract class ABaseToolbarActivity extends BaseToolbarActivity{
     protected void beforeSetContent(){
 
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {

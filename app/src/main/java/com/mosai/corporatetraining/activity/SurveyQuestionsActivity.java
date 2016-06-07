@@ -1,5 +1,6 @@
 package com.mosai.corporatetraining.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
@@ -17,69 +20,49 @@ import com.mosai.corporatetraining.fragment.SurveyQuestionFragment;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.utils.MyLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SurveyQuestionsActivity extends ABaseToolbarActivity implements SurveyQuestionFragment.OnSurveyQuetsionFragmentInteractionListener {
+public class SurveyQuestionsActivity extends ABaseToolbarActivity implements SurveyQuestionFragment.OnSurveyQuetsionFragmentInteractionListener{
     private ViewPager viewPager;
-    private TextView tvPage, tvTitle;
+    private TextView tvPage,tvTitle;
+    private LinearLayout llNext;
+    private ImageView ivLast;
     private List<SurveyQuestion> questions;
     private Resources resources;
-    private int count, index;
+    private int count;
+    private int index;
     private List<SurveyQuestionFragment> fragments = new ArrayList<>();
-
     @Override
     protected void initDatas() {
-
+        resources = (Resources) getIntent().getSerializableExtra("resource");
+        questions = (List<SurveyQuestion>) getIntent().getSerializableExtra("questions");
+        count = questions.size();
+        viewPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
+        for(SurveyQuestion question : questions){
+            SurveyQuestionFragment fragment = SurveyQuestionFragment.newInstance(questions.indexOf(question), question);
+            fragments.add(fragment);
+        }
+        tvPage.setText(String.format("%d/%d",index+1,count));
     }
 
     @Override
     protected int setContent() {
-        return R.layout.activity_survey_questions;
+        return R.layout.activity_quiz_questions;
     }
 
     @Override
     protected void initView() {
-        questions = (List<SurveyQuestion>) getIntent().getSerializableExtra("questions");
-        resources = (Resources) getIntent().getSerializableExtra("resource");
-        count = questions.size();
-        tvPage = ViewUtil.findViewById(this,R.id.tv_page);
-
         viewPager = ViewUtil.findViewById(this,R.id.viewPager);
-        viewPager.setAdapter(new TabAdapter(getSupportFragmentManager()));
-        for (SurveyQuestion question : questions) {
-            SurveyQuestionFragment fragment = SurveyQuestionFragment.newInstance(questions.indexOf(question), question);
-            fragments.add(fragment);
-
-
-        }
-        tvPage.setText(String.format("%d/%d", index + 1, count));
-        viewPager.setCurrentItem(index);
+        tvPage = ViewUtil.findViewById(this,R.id.tv_page);
+        tvTitle = ViewUtil.findViewById(this,R.id.tv_title);
+        llNext = ViewUtil.findViewById(this,R.id.ll_next);
+        ivLast = ViewUtil.findViewById(this,R.id.iv_last_step);
+        ivLast.setVisibility(View.GONE);
+//        llNext.setVisibility(count==0?View.GONE:View.VISIBLE);
     }
-
-    @Override
-    protected void addListener() {
-        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                back();
-            }
-        });
-    }
-
-    @Override
-    public void onFragmentInteraction(int index, int answer) {
-        questions.get(index).answer = answer;
-        if (index < count - 1) {
-            this.index = index + 1;
-            tvPage.setText(String.format("%d/%d", this.index + 1, count));
-            viewPager.setCurrentItem(this.index);
-        }else{
-            submitServeyAnwsers();
-        }
-    }
-
     private int submitCount;
     private Handler handler = new Handler(){
         @Override
@@ -91,14 +74,15 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
 //                Intent intent = new Intent(context,QuizSummaryActivity.class);
 //                intent.putExtra("resource",resources);
 //                startActivityForResult(intent,0);
-                back();
+                finish();
             }
         }
     };
-    private void submitServeyAnwsers(){
-        for (SurveyQuestion question:questions){
 
-            AppAction.submitSurveyAnswer(context, resources.getClassId(), question.questionId, question.answer, new HttpResponseHandler(HttpResponse.class) {
+    private void submitSurveyAnwsers(){
+        for (SurveyQuestionFragment fragment:fragments){
+
+            AppAction.submitSurveyAnswer(context, resources.getClassId(), fragment.question.questionId, fragment.adapter.index, new HttpResponseHandler(HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                     handler.sendEmptyMessage(0);
@@ -122,6 +106,65 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             });
         }
     }
+    private void checkIndex(){
+        if(index>=count){
+            if(count==index){
+                submitSurveyAnwsers();
+                MyLog.e("znb","submitQuizAnswers");
+            }else{
+                index-=1;
+            }
+            return;
+        }
+        String page = String.format("%d/%d",index+1,count);
+        tvPage.setText(page);
+        viewPager.setCurrentItem(index);
+        if(index==0){
+            ivLast.setVisibility(View.GONE);
+            llNext.setVisibility(View.VISIBLE);
+        }else if(index==count-1){
+            ivLast.setVisibility(View.VISIBLE);
+            llNext.setVisibility(View.VISIBLE);
+        }else{
+            ivLast.setVisibility(View.VISIBLE);
+            llNext.setVisibility(View.VISIBLE);
+        }
+    }
+    private void nextPage(){
+        index+=1;
+        checkIndex();
+    }
+    private void lastPage(){
+        index-=1;
+        checkIndex();
+    }
+    @Override
+    protected void addListener() {
+        llNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nextPage();
+            }
+        });
+        ivLast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastPage();
+            }
+        });
+        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
+    }
+
+    @Override
+    public void onFragmentInteraction(int index, int answer) {
+
+    }
+
     private class TabAdapter extends FragmentPagerAdapter {
         public TabAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -140,5 +183,21 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             return count;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            back();
+        }else{
+
+            //重做
+//            index-=1;
+            index =0;
+            submitCount=0;
+            checkIndex();
+//            viewPager.setCurrentItem(index);
+        }
     }
 }

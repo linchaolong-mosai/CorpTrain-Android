@@ -35,7 +35,10 @@ import com.mosai.ui.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * me
@@ -77,10 +80,25 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+        EventBus.getDefault().register(this);
+    }
+    //加入课程成功后调用
+    public void onEventMainThread(Courses courses)
+    {
+        Iterator<Courses> coursesIterator = recommendCourses.iterator();
+        while(coursesIterator.hasNext()){
+            Courses temp = coursesIterator.next();
+            if(temp.getCourseInfo().getCourseId().equals(courses.getCourseInfo().getCourseId())){
+                recommendCourses.remove(temp);
+                recommendedCourseCoverAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -252,34 +270,4 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
             }
         });
     }
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFratListenerQuizQuestion) {
-            mListener = (OnFratListenerQuizQuestion) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFratListenerQuizQuestion");
-        }
-    }*/
-
-    /*@Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }*/
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   /* public interface OnFratListenerQuizQuestion {
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

@@ -3,6 +3,8 @@ package com.mosai.corporatetraining.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -127,6 +129,7 @@ public class BaseActivity extends AppCompatActivity {
     }
     public void back() {
         SwitchingAnim.backward(this);
+        unregister();
     }
 
     public void forword() {
@@ -157,7 +160,11 @@ public class BaseActivity extends AppCompatActivity {
     }
     private void unregisterTokenExpireBroadcast(){
         if(openTokenExpireBroadcast()){
-
+                if(tokenexpireIntentFilter!=null && tokenExpireReceiver!=null){
+                    unregisterReceiver(tokenExpireReceiver);
+                    tokenexpireIntentFilter=null;
+                    tokenExpireReceiver=null;
+                }
         }
     }
     public void showTextProgressDialog(String message){
@@ -165,5 +172,14 @@ public class BaseActivity extends AppCompatActivity {
     }
     public void dismissTextProgressDialog(){
         textProgressIndicator.dismissDialg();
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        Configuration config=new Configuration();
+        config.setToDefaults();
+        res.updateConfiguration(config,res.getDisplayMetrics() );
+        return res;
     }
 }

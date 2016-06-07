@@ -32,7 +32,7 @@ public class SurveyQuestionFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private int mParam1;
-    private SurveyQuestion mParam2;
+    public SurveyQuestion question;
 
     private OnSurveyQuetsionFragmentInteractionListener mListener;
 
@@ -63,21 +63,21 @@ public class SurveyQuestionFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getInt(ARG_PARAM1);
-            mParam2 = (SurveyQuestion) getArguments().getSerializable(ARG_PARAM2);
+            question = (SurveyQuestion) getArguments().getSerializable(ARG_PARAM2);
         }
     }
     private View view;
-    private SurveyQuestionAdapter adapter;
+    public SurveyQuestionAdapter adapter;
     private List<String> answers = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if(firstLoad){
-        view = inflater.inflate(R.layout.fragment_survey_question, container, false);
+        view = inflater.inflate(R.layout.fragment_quiz_question, container, false);
         tvQuestion = ViewUtil.findViewById(view,R.id.tv_question);
         lv = ViewUtil.findViewById(view,R.id.lv);
-        btn_submit = ViewUtil.findViewById(view,R.id.btn_submit);
+//        btn_submit = ViewUtil.findViewById(view,R.id.btn_submit);
 
         }
         return view;
@@ -88,32 +88,33 @@ public class SurveyQuestionFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(firstLoad){
-        btn_submit.setSelected(false);
+//        btn_submit.setSelected(false);
         answers = Arrays.asList(context.getResources().getStringArray(R.array.survey_level));
-        adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_survey_question);
+        adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_quiz_question);
         lv.setAdapter(adapter);
-        tvQuestion.setText(mParam2.text);
+        tvQuestion.setText(question.text);
         addListener();
             firstLoad=false;
         }
     }
 
     private void addListener() {
-        adapter.setClickCallback(new SurveyQuestionAdapter.ClickCallback() {
-            @Override
-            public void callback(int index) {
-                btn_submit.setSelected(true);
-            }
-        });
-            btn_submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(btn_submit.isSelected()){
-//                        btn_submit.setSelected(false);
-                        onButtonPressed(adapter.index);
-                    }
-                }
-            });
+//        adapter.setClickCallback(new SurveyQuestionAdapter.ClickCallback() {
+//            @Override
+//            public void callback(int index) {
+//                btn_submit.setSelected(true);
+//            }
+//        });
+//            btn_submit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(btn_submit.isSelected()){
+////                        btn_submit.setSelected(false);
+//                        onButtonPressed(adapter.index);
+//                    }
+//                }
+//            });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -85,11 +85,11 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
         viewPager = (CantScrollViewPager) view.findViewById(R.id.viewPager);
         scv = (SegmentedControlView) view.findViewById(R.id.scv);
         scv.setColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.white));
-
+        scv.setEqualWidth(true);
         scv.setStretch(true);
 
         try {
-            scv.setItems(new String[]{"Mandatory", "Enrolled","Completed"}, new String[]{"one", "two","three"});
+            scv.setItems(new String[]{getString(R.string.mandatory_courses), getString(R.string.enrolled_courses),getString(R.string.completed_courses)}, new String[]{"one", "two","three"});
             scv.setDefaultSelection(0);
         } catch (Exception e) {
             // TODO Auto-generated catch block
