@@ -293,7 +293,12 @@ public class AppAction {
         AsyncHttp.getInstance().execute(context,getUrl("api/course/comment/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandler);
 
     }
-
+    public static void updateCourseFavorite(Context context,String courseId,boolean isFavorite,AsyncHttpResponseHandler responseHandler){
+        HashMap<String,Object> hashmap = new HashMap<>();
+        hashmap.put("courseId",courseId);
+        hashmap.put("favorite",isFavorite?1:0);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/favorite"),hashmap,AsyncHttp.METHOD_PUT,responseHandler);
+    }
     /**
      * 通过CourseId获取课程内容
      * @param context

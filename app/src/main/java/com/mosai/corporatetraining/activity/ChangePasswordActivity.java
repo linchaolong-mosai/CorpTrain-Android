@@ -68,6 +68,9 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
                 || TextUtils.isEmpty(confirmNewPassword)) {
             showHintDialog(R.string.password_cannot_be_empty);
             return;
+
+
+
         }
         if (!TextUtils.equals(newPassword, confirmNewPassword)) {
             showHintDialog(R.string.incorrect_password);

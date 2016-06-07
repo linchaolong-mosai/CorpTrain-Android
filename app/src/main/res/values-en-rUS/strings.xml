@@ -48,7 +48,7 @@
 
     <string name="loading_text">loading&#8230;</string>
     <string name="ok">OK</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">Cancel</string>
     <string name="error">Error</string>
     <string name="success">Success</string>
     <string name="email_format_error">Email format error</string>

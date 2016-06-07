@@ -38,14 +38,6 @@
             android:label="@string/discover"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".activity.SplashActivity"
@@ -118,7 +110,7 @@
             android:name=".activity.SearchCourseMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme"
-            android:windowSoftInputMode="stateVisible" />
+            android:windowSoftInputMode="stateAlwaysVisible" />
         <activity
             android:name=".activity.CourseDetailActivity"
             android:screenOrientation="portrait"
@@ -148,7 +140,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity
-            android:name=".activity.SurveyQuestionsActivity2"
+            android:name=".activity.SurveyQuestionsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainTheme" />
         <activity

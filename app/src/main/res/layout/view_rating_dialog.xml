@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
     <TextView
+        android:textSize="18sp"
         android:textStyle="bold"
         android:padding="5dp"
         android:gravity="center"
@@ -23,7 +28,9 @@
     </RatingBar>
 
     <TextView
-        android:textColor="@drawable/selector_textcolor_grey"
+        android:background="@drawable/bg_imagebutton"
+        android:textSize="16sp"
+        android:id="@+id/tv_submit"
         android:padding="5dp"
         android:gravity="center"
         android:layout_width="wrap_content"
