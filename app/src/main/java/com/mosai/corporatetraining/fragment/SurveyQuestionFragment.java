@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
-import com.mosai.corporatetraining.adpter.SurveyQuestionAdapter2;
+import com.mosai.corporatetraining.adpter.SurveyQuestionAdapter;
 import com.mosai.corporatetraining.bean.survey.SurveyQuestion;
 import com.mosai.corporatetraining.util.ViewUtil;
 
@@ -67,7 +67,7 @@ public class SurveyQuestionFragment extends Fragment {
         }
     }
     private View view;
-    public SurveyQuestionAdapter2 adapter;
+    public SurveyQuestionAdapter adapter;
     private List<String> answers = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +90,7 @@ public class SurveyQuestionFragment extends Fragment {
         if(firstLoad){
 //        btn_submit.setSelected(false);
         answers = Arrays.asList(context.getResources().getStringArray(R.array.survey_level));
-        adapter = new SurveyQuestionAdapter2(context,answers,R.layout.item_listformat_quiz_question);
+        adapter = new SurveyQuestionAdapter(context,answers,R.layout.item_listformat_quiz_question);
         lv.setAdapter(adapter);
         tvQuestion.setText(question.text);
         addListener();
