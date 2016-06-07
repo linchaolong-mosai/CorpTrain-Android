@@ -12,7 +12,7 @@
     android:id="@+id/iv_courseicon"/>
     
     <TextView
-        android:lines="2"
+        android:lines="3"
         android:textSize="14sp"
         android:gravity="left|center_vertical"
         android:ellipsize="end"

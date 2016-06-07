@@ -12,5 +12,5 @@
     <dimen name="divider_height">1dp</dimen>
     <dimen name="titleheight">48dp</dimen>
     <dimen name="iv_quiz_summary">50dp</dimen>
-    <dimen name="course_hlistview_height">165dp</dimen>
+    <dimen name="course_hlistview_height">180dp</dimen>
 </resources>

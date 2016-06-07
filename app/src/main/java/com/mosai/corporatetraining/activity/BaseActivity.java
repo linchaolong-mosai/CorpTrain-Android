@@ -129,6 +129,7 @@ public class BaseActivity extends AppCompatActivity {
     }
     public void back() {
         SwitchingAnim.backward(this);
+        unregister();
     }
 
     public void forword() {
@@ -159,7 +160,11 @@ public class BaseActivity extends AppCompatActivity {
     }
     private void unregisterTokenExpireBroadcast(){
         if(openTokenExpireBroadcast()){
-
+                if(tokenexpireIntentFilter!=null && tokenExpireReceiver!=null){
+                    unregisterReceiver(tokenExpireReceiver);
+                    tokenexpireIntentFilter=null;
+                    tokenExpireReceiver=null;
+                }
         }
     }
     public void showTextProgressDialog(String message){
