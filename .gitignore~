@@ -14,4 +14,3 @@
 .gradle/
 *.log
 /.gradle/
-**/.DS_Store
