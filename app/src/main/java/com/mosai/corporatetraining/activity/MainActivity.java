@@ -1,6 +1,12 @@
 package com.mosai.corporatetraining.activity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -15,26 +21,41 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.fragment.DiscoverFragment;
 import com.mosai.corporatetraining.fragment.MeFragment;
 import com.mosai.corporatetraining.fragment.MyCoursesFragment;
+import com.mosai.corporatetraining.util.LogUtils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
 
+import de.greenrobot.event.EventBus;
+
 public class MainActivity extends BaseToolbarActivity {
-    private Menu menu;
     private Fragment currentFragment;
     private ImageView ivDiscover, ivLearn, ivMe;
     private TextView tvDisicover, tvLearn, tvMe;
     private LinearLayout llDiscover, llLearn, llMe;
+
+    @Override
+    protected boolean openTokenExpireBroadcast() {
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        initTabLayout();
         initViews();
         initListener();
-//        initData();
+        /////////动态注册广播
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(myNetReceiver, mFilter);
+        EventBus.getDefault().register(this);
+    }
+    public void onEventMainThread(boolean flag){
+        
     }
     private void initBottomlayout() {
         llDiscover = (LinearLayout) findViewById(R.id.ll_discover);
@@ -65,7 +86,6 @@ public class MainActivity extends BaseToolbarActivity {
                 ViewUtil.setStatusBarBg(((Activity)context), getResources().getColor(R.color.colorPrimaryDark));
                 tvDisicover.setSelected(true);
                 ivDiscover.setSelected(true);
-//                getSupportActionBar().setTitle(R.string.discover);
                 show(DiscoverFragment.class.getSimpleName());
             }
         });
@@ -76,7 +96,6 @@ public class MainActivity extends BaseToolbarActivity {
                 ViewUtil.setStatusBarBg(((Activity)context), getResources().getColor(R.color.colorPrimaryDark));
                 tvLearn.setSelected(true);
                 ivLearn.setSelected(true);
-//                getSupportActionBar().setTitle(R.string.my_courses);
                 show(MyCoursesFragment.class.getSimpleName());
             }
         });
@@ -87,59 +106,10 @@ public class MainActivity extends BaseToolbarActivity {
                 ViewUtil.setStatusBarBg(((Activity)context), getResources().getColor(R.color.colorPrimary));
                 tvMe.setSelected(true);
                 ivMe.setSelected(true);
-//                getSupportActionBar().setTitle(R.string.me);
                 show(MeFragment.class.getSimpleName());
             }
         });
     }
-//    private void initTabLayout() {
-//        TabLayout tabLayout = ViewUtil.findViewById(this, R.id.tabLayout);
-//        tabLayout.addTab(tabLayout.newTab().setTag(0).setIcon(R.drawable.main_tab_discover_selector));
-//        tabLayout.addTab(tabLayout.newTab().setTag(1).setIcon(R.drawable.main_tab_learn_selector));
-//        tabLayout.addTab(tabLayout.newTab().setTag(2).setIcon(R.drawable.main_tab_me_selector));
-//        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                switch ((int) tab.getTag()) {
-//                    case 1:
-//                        menu.findItem(R.id.search).setVisible(false);
-//                        menu.findItem(R.id.category).setVisible(false);
-//                        menu.findItem(R.id.calendar).setVisible(true);
-//                        menu.findItem(R.id.dropCourse).setVisible(true);
-//                        getSupportActionBar().setTitle(R.string.my_courses);
-//                        show(MyCoursesFragment.class.getSimpleName());
-//
-//                        break;
-//                    case 2:
-//                        menu.findItem(R.id.search).setVisible(false);
-//                        menu.findItem(R.id.category).setVisible(false);
-//                        menu.findItem(R.id.calendar).setVisible(false);
-//                        menu.findItem(R.id.dropCourse).setVisible(false);
-//                        getSupportActionBar().setTitle(R.string.me);
-//                        show(MeFragment.class.getSimpleName());
-//                        break;
-//                    default:
-//                        menu.findItem(R.id.dropCourse).setVisible(false);
-//                        menu.findItem(R.id.calendar).setVisible(false);
-//                        menu.findItem(R.id.search).setVisible(true);
-//                        menu.findItem(R.id.category).setVisible(true);
-//                        getSupportActionBar().setTitle(R.string.discover);
-//                        show(DiscoverFragment.class.getSimpleName());
-//                        break;
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//    }
 
     private void initViews() {
         initBottomlayout();
@@ -201,6 +171,36 @@ public class MainActivity extends BaseToolbarActivity {
             lastKeyBackTime = 0;
             finish();
 //            moveTaskToBack(true);
+        }
+    }
+    /////////////监听网络状态变化的广播接收器
+    private ConnectivityManager mConnectivityManager;
+    private NetworkInfo netInfo;
+    public BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            LogUtils.e("net changed");
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                mConnectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+                netInfo = mConnectivityManager.getActiveNetworkInfo();
+                if(netInfo != null && netInfo.isAvailable()) {
+                    Event.NetChange netChange = new Event.NetChange();
+                    netChange.netChange=true;
+                    EventBus.getDefault().post(netChange);
+                }
+            }
+
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        /////////解除广播
+        if(myNetReceiver!=null){
+            unregisterReceiver(myNetReceiver);
         }
     }
 }

@@ -13,3 +13,4 @@
 /photoviewlibrary/build/
 .gradle/
 *.log
+/.gradle/

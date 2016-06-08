@@ -75,7 +75,7 @@ public class CourseListFragment extends Fragment{
 
     public void getDatas(){
         final int type = getArguments().getInt("type",0);
-        AppAction.getUserCourseByType(context,type, new HttpResponseHandler(UserCourseRoot.class) {
+        AppAction.getUserCourseByType(context,type, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;

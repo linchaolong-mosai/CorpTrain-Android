@@ -14,6 +14,7 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.utils.ToastUtils;
 
 /**
  * Created by Rays on 16/5/16.
@@ -69,9 +70,10 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
             showHintDialog(R.string.feedback_cannot_be_empty);
             return;
         }
-        AppAction.submitFeedback(context, subject, text, new HttpResponseHandler(HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
+        AppAction.submitFeedback(context, subject, text, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                ToastUtils.showToast(context,getString(R.string.feedback_successfully));
                 finish();
             }
             @Override

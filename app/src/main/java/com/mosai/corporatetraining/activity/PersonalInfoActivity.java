@@ -91,6 +91,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
     private void initData() {
         tvCompanyName.setText(userPF.getString(UserPF.CT_COMPANY_NAME, getString(R.string.unbound)));
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivMyicon,options);
+        LogUtils.e(UserPF.getInstance().getAvatarUrl());
     }
 
     @Override
@@ -174,7 +175,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
     }
     private void uploadFile(String path){
-        AppAction.uploadMyicon(this, path, new HttpResponseHandler(HttpResponse.class) {
+        AppAction.uploadMyicon(this, path, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
 

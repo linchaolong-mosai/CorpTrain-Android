@@ -65,7 +65,7 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
 //                Intent intent = new Intent(context, CourseDetailActivity.class);
 //                intent.putExtra("course",courseFindByCategories.get(position));
 //                startActivity(intent);
-                AppAction.getAllUserCoursesByFilter(context, courseFindByCategories.get(position).getSubject(), new HttpResponseHandler(UserCourseRoot.class) {
+                AppAction.getAllUserCoursesByFilter(context, courseFindByCategories.get(position).getSubject(), new HttpResponseHandler(context,UserCourseRoot.class) {
                     @Override
                     public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                         UserCourseRoot userCourseRoot = (UserCourseRoot) response;
@@ -103,7 +103,7 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
     }
 
         private void getDatas(){
-        AppAction.getCourselist(context, categoryId,new HttpResponseHandler(CoursesFindByCategory.class) {
+        AppAction.getCourselist(context, categoryId,new HttpResponseHandler(context,CoursesFindByCategory.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 CoursesFindByCategory categories = (CoursesFindByCategory) response;

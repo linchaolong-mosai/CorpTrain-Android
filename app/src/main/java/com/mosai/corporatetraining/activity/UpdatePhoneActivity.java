@@ -15,6 +15,7 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.utils.ToastUtils;
 
 /**
  * Created by Rays on 16/5/16.
@@ -64,10 +65,11 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
             showHintDialog(R.string.phone_cannot_be_empty);
             return;
         }
-        AppAction.changePhoneNumber(context, phone, new HttpResponseHandler(HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
+        AppAction.changePhoneNumber(context, phone, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserPF.getInstance().putString(UserPF.PHONE, phone);
+                ToastUtils.showToast(context,getString(R.string.change_phone_successfully));
                 finish();
             }
             @Override

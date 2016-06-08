@@ -19,7 +19,7 @@ import java.util.List;
  * 邮箱：nianbin@mosainet.com
  */
 public class SurveyQuestionAdapter extends CommonAdapter<String> {
-    public int index = 0;
+    public int index = -1;
 
     public SurveyQuestionAdapter(Context context, List<String> listDatas, int layoutId) {
         super(context, listDatas, layoutId);

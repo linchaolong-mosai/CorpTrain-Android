@@ -1,10 +1,13 @@
 package com.mosai.corporatetraining.network;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.mosai.corporatetraining.MyApplication;
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.broadcast.TokenExpireReceiver;
 import com.mosai.corporatetraining.entity.HttpResponse;
 import com.mosai.corporatetraining.network.progress.IProgressIndicator;
 import com.mosai.corporatetraining.util.FastJsonUtils;
@@ -17,15 +20,16 @@ import cz.msebera.android.httpclient.Header;
 public abstract class HttpResponseHandler extends TextHttpResponseHandler{
     private Class<? extends HttpResponse> mClass;
     private IProgressIndicator progressIndicator;
-
-    public HttpResponseHandler(Class<? extends HttpResponse> mClass) {
-        this(mClass, null);
+	private Context context;
+    public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass) {
+        this(context,mClass, null);
     }
 
-    public HttpResponseHandler(Class<? extends HttpResponse> mClass, IProgressIndicator progressIndicator) {
+    public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass, IProgressIndicator progressIndicator) {
         super();
         this.mClass = mClass == null ? HttpResponse.class : mClass;
         this.progressIndicator = progressIndicator;
+		this.context = context.getApplicationContext();
     }
 
 	@Override
@@ -41,7 +45,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 					}
 					//token_expire
 					else if(response != null && response.returnCode==HttpResponse.CODE_TOKEN_EXPIRE){
-
+							context.sendBroadcast(new Intent(TokenExpireReceiver.action));
 					}
 					else {
 						onResponeseFail(statusCode, response);

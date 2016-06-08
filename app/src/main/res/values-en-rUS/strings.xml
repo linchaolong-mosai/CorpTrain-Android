@@ -102,4 +102,13 @@
     <string name="survey">Survey</string>
     <string name="reply">Reply</string>
     <string name="rate_course">Rate the course</string>
+    <string name="change_password_success">Change Password Successfully</string>
+    <string name="change_name_successfully">Change Name Successfully</string>
+    <string name="change_number_successfully">Change Number Successfully</string>
+    <string name="change_phone_successfully">Change Phone Successfully</string>
+    <string name="feedback_successfully">Feedback Successfully</string>
+    <string name="quiz_answer_unfinished">Exists Unfinished Quiz</string>
+    <string name="survey_answer_unfinished">Exists Unfinished Survey</string>
+    <string name="submit_message">Do you want to submit?</string>
+    <string name="search_noresult">No Search found</string>
 </resources>

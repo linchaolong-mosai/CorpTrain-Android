@@ -82,7 +82,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
     private void submitSurveyAnwsers(){
         for (SurveyQuestionFragment fragment:fragments){
 
-            AppAction.submitSurveyAnswer(context, resources.getClassId(), fragment.question.questionId, fragment.adapter.index, new HttpResponseHandler(HttpResponse.class) {
+            AppAction.submitSurveyAnswer(context, resources.getClassId(), fragment.question.questionId, fragment.adapter.index, new HttpResponseHandler(context,HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                     handler.sendEmptyMessage(0);

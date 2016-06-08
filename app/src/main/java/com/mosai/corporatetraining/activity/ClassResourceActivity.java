@@ -158,7 +158,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
 
     private void getSurvey(final Resources resource) {
-        AppAction.getQuestionslistBySurveyId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
+        AppAction.getQuestionslistBySurveyId(this, resource.getResourceId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {
@@ -195,7 +195,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
 
     private void getQuiz(final Resources resource) {
-        AppAction.getQuizByQuizId(this, resource.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
+        AppAction.getQuizByQuizId(this, resource.getResourceId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {
@@ -227,7 +227,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
 
     private void getClassResource() {
-        AppAction.getResourceByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(ResourcesRoot.class) {
+        AppAction.getResourceByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(context,ResourcesRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 ResourcesRoot root = (ResourcesRoot) response;

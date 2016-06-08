@@ -24,7 +24,8 @@ public class AppAction {
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
 //    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
-    private static final String BASE_URL = "https://train-qa.liveh2h.com/corptraining/";
+    public static final String URL = "https://train-qa.liveh2h.com/";
+    private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
 

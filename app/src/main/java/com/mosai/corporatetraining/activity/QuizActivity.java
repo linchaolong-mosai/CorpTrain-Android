@@ -61,7 +61,7 @@ public class QuizActivity extends ABaseToolbarActivity {
     }
 
     private void getQuestions() {
-        AppAction.getQuestionslistByQuizId(context, resource.getResourceId(), new HttpResponseHandler(Questions.class) {
+        AppAction.getQuestionslistByQuizId(context, resource.getResourceId(), new HttpResponseHandler(context,Questions.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 Questions questions = (Questions) response;

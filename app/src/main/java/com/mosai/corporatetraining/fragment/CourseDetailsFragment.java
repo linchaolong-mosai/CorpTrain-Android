@@ -117,7 +117,7 @@ public class CourseDetailsFragment extends Fragment {
     }
     MaterialDialog dialog;
     private void joinCourse(){
-        AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(HttpResponse.class) {
+        AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 dialog = new MaterialDialog(context)
@@ -138,7 +138,7 @@ public class CourseDetailsFragment extends Fragment {
         });
     }
     private void getClasses(){
-        AppAction.getClassesByCourseId(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(ClassesRoot.class) {
+        AppAction.getClassesByCourseId(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,ClassesRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 ClassesRoot classesRoot = (ClassesRoot) response;

@@ -21,6 +21,11 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
     private EditText etEmail;
 
     @Override
+    protected boolean openTokenExpireBroadcast() {
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
@@ -73,7 +78,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
             showHintDialog(R.string.email_format_error);
             return;
         }
-        AppAction.forgotPassword(context, email, new HttpResponseHandler(HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
+        AppAction.forgotPassword(context, email, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 showHintDialog(R.string.forgot_success_hint).setTitles(R.string.success);

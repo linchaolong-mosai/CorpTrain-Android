@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			showHintDialog(R.string.password_cannot_be_empty);
 			return;
 		}
-		AppAction.login(context, email, password, new HttpResponseHandler(UserInfoResponse.class) {
+		AppAction.login(context, email, password, new HttpResponseHandler(context,UserInfoResponse.class) {
 			@Override
 			public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
 				UserInfoResponse userInfoResponse = (UserInfoResponse) response;
@@ -184,7 +184,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	}
 
     private void getCurrentCtUser() {
-        AppAction.getCurrentCtUser(context, new HttpResponseHandler(CurrentCtUserResponse.class) {
+        AppAction.getCurrentCtUser(context, new HttpResponseHandler(context,CurrentCtUserResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 CurrentCtUserResponse currentCtUserResponse = (CurrentCtUserResponse) response;

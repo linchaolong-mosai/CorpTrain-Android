@@ -98,7 +98,7 @@ public class SurveyQuestionsActivity2 extends ABaseToolbarActivity implements Su
     private void submitServeyAnwsers(){
         for (SurveyQuestion question:questions){
 
-            AppAction.submitSurveyAnswer(context, resources.getClassId(), question.questionId, question.answer, new HttpResponseHandler(HttpResponse.class) {
+            AppAction.submitSurveyAnswer(context, resources.getClassId(), question.questionId, question.answer, new HttpResponseHandler(context,HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                     handler.sendEmptyMessage(0);

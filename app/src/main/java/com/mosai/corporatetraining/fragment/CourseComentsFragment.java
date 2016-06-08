@@ -88,7 +88,7 @@ public class CourseComentsFragment extends Fragment {
         });
     }
     private void submitComment(String comment){
-        AppAction.submitCourseComment(context, course.getCourseInfo().getCourseId(), comment, new HttpResponseHandler(HttpResponse.class) {
+        AppAction.submitCourseComment(context, course.getCourseInfo().getCourseId(), comment, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                         getCommentlist(true);
@@ -112,7 +112,7 @@ public class CourseComentsFragment extends Fragment {
     }
     private void getCommentlist(final boolean fresh){
         if(course!=null){
-            AppAction.getCommentsByCourseId(context, course.getCourseInfo().getCourseId(), new HttpResponseHandler(CourseCommentRoot.class) {
+            AppAction.getCommentsByCourseId(context, course.getCourseInfo().getCourseId(), new HttpResponseHandler(context,CourseCommentRoot.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                     CourseCommentRoot courseCommentRoot = (CourseCommentRoot) response;

@@ -72,7 +72,7 @@ public class CategoryActivity extends BaseToolbarActivity {
         getDatas();
     }
     private void getDatas(){
-        AppAction.getTopCategoryList(context, new HttpResponseHandler(CategoryRoot.class) {
+        AppAction.getTopCategoryList(context, new HttpResponseHandler(context,CategoryRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 CategoryRoot categoryRoot = (CategoryRoot) response;

@@ -15,6 +15,7 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.utils.ToastUtils;
 
 /**
  * Created by Rays on 16/5/16.
@@ -69,10 +70,11 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
             return;
         }
         final String name = etFirstName.getText().toString() + " " + etLastName.getText().toString();
-        AppAction.changeName(context, name, new HttpResponseHandler(HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
+        AppAction.changeName(context, name, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserPF.getInstance().putString(UserPF.USER_NAME, name);
+                ToastUtils.showToast(context,getString(R.string.change_name_successfully));
                 finish();
             }
             @Override

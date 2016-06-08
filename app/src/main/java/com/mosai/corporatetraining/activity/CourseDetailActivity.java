@@ -146,7 +146,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppAction.updateCourseFavorite(context,course.getCourseInfo().getCourseId(),!ivFavorite.isSelected(),new HttpResponseHandler(HttpResponse.class) {
+                AppAction.updateCourseFavorite(context,course.getCourseInfo().getCourseId(),!ivFavorite.isSelected(),new HttpResponseHandler(context,HttpResponse.class) {
                     @Override
                     public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                         ivFavorite.setSelected(!ivFavorite.isSelected());
@@ -170,7 +170,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
         });
     }
     private void submitRating(final float rating){
-        AppAction.submitCourseRating(this, course.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(HttpResponse.class) {
+        AppAction.submitCourseRating(this, course.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 ratingBar.setRating(rating);
@@ -214,28 +214,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Segmen
 
     private void getCourseByName(){
 
-//        AppAction.getCourseByName(this, course.getCourseInfo().getCourseId(), new HttpResponseHandler(CourseRoot.class) {
-//            @Override
-//            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-//                CourseRoot courseRoot = (CourseRoot) response;
-//                    ratingBar.setRating(courseRoot.getCourse().getRating());
-//            }
-//            @Override
-//            public void onResponeseStart() {
-//                showProgressDialog();
-//            }
-//
-//            @Override
-//            public void onResponesefinish() {
-//                dismissProgressDialog();
-//            }
-//
-//            @Override
-//            public void onResponeseFail(int statusCode, HttpResponse response) {
-//                showHintDialog(response.message);
-//            }
-//        });
-        AppAction.getAllUserCoursesByFilter(context, course.getCourseInfo().getSubject(), new HttpResponseHandler(UserCourseRoot.class) {
+        AppAction.getAllUserCoursesByFilter(context, course.getCourseInfo().getSubject(), new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;

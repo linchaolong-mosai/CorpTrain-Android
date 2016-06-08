@@ -43,7 +43,7 @@ public class AsyncHttp {
 	}
 
 	public void init(Context context) {
-        client.setTimeout(10000); // 设置链接超时，如果不设置，默认为30s
+        client.setTimeout(15000); // 设置链接超时，如果不设置，默认为15s
         client.setCookieStore(new PersistentCookieStore(context.getApplicationContext()));
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -122,11 +122,12 @@ public class AsyncHttp {
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE, contentType);
         }
 
-        if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
+//        if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
             client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-        } else {
-            client.removeHeader("apiToken");
-        }
+//        } else {
+//            client.removeHeader("apiToken");
+//        }
+
         switch (method) {
             case METHOD_POST:
                 client.post(context, url, params, responseHandler);

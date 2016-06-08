@@ -76,12 +76,26 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
                 back();
             }
         });
-        getSummary();
+//        getSummary();
+        setSummary();
     }
-
+    private void setSummary(){
+        int correctcount=getIntent().getIntExtra("correctcount",0);
+        int incorrectcount=getIntent().getIntExtra("incorrectcount",0);
+        int accuracy=getIntent().getIntExtra("accuracy",0);
+        tvTips.setTextColor(getResources().getColor(accuracy>=60?R.color.colorPrimary:R.color.red));
+        tvIsPass.setTextColor(getResources().getColor(accuracy>=60?R.color.colorPrimary:R.color.red));
+        tvTips.setText(accuracy>=60?getString(R.string.congratulation):getString(R.string.sorry));
+        tvIsPass.setText(accuracy>=60?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
+        tvIsPass.setText(accuracy>=60?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
+        tvCorrect.setText(correctcount+"");
+        tvIncorrect.setText(incorrectcount+"");
+        tvAccuracy.setText(accuracy+"%");
+        donutProgress.setProgress(accuracy);
+    }
     private void getSummary() {
 
-        AppAction.getQuizSummary(context, "user", resources.getClassId(), resources.getResourceId(), new HttpResponseHandler(HttpResponse.class) {
+        AppAction.getQuizSummary(context, "user", resources.getClassId(), resources.getResourceId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {

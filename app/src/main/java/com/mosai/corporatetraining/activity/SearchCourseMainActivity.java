@@ -20,6 +20,7 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.ClearEditText;
+import com.mosai.utils.ToastUtils;
 import com.mosai.utils.Tools;
 
 import java.util.ArrayList;
@@ -110,12 +111,14 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
         }else{
             Tools.hideSoftInput(cetCourses);
         }
-
         adapter.notifyDataSetChanged();
+        if(coursesTemp.size()==0&&!TextUtils.isEmpty(cetCourses.getText().toString())){
+            ToastUtils.showToast(context,getString(R.string.search_noresult));
+        }
     }
 
     private void getDatas() {
-        AppAction.getUserCourses(this, new HttpResponseHandler(UserCourseRoot.class) {
+        AppAction.getUserCourses(this, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;

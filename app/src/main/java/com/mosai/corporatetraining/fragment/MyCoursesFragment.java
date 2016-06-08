@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.ui.CantScrollViewPager;
 import com.mosai.ui.SegmentedControlView;
@@ -53,6 +54,14 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
     {
         enrolled.getDatas();
 
+    }
+    //网络恢复
+    public void onEventMainThread(Event.NetChange netChange){
+        if(netChange.netChange){
+            mandatory.getDatas();
+            enrolled.getDatas();
+            completed.getDatas();
+        }
     }
     public MyCoursesFragment() {
         // Required empty public constructor

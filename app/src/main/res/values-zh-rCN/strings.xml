@@ -69,7 +69,7 @@
     <string name="confirm_new_password">确认新密码</string>
     <string name="subject">主题</string>
     <string name="subject_cannot_be_empty">主题不能为空</string>
-    <string name="feedback_text_hint">点击填写内容</string>
+    <string name="feedback_text_hint">请填写内容</string>
     <string name="feedback_cannot_be_empty">反馈信息不能为空</string>
     <string name="photo_album">相册</string>
     <string name="photograph">拍照</string>
@@ -100,4 +100,13 @@
     <string name="reply">回复</string>
     <string name="rate_course">课程评分</string>
     <string name="forgot_password_hint">输入电子邮箱地址后,你会收到一封关于重置密码的说明邮件</string>
+    <string name="change_name_successfully">更改名称成功</string>
+    <string name="change_number_successfully">更改号码成功</string>
+    <string name="change_password_success">更改密码成功</string>
+    <string name="change_phone_successfully">更改电话号码成功</string>
+    <string name="feedback_successfully">反馈内容提交成功</string>
+    <string name="quiz_answer_unfinished">存在未完成的题目</string>
+    <string name="survey_answer_unfinished">存在未完成的题目</string>
+    <string name="submit_message">是否提交答案?</string>
+    <string name="search_noresult">搜索结果为空</string>
 </resources>

@@ -28,6 +28,7 @@ import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.bean.usercourse.UserCourseRoot;
 import com.mosai.corporatetraining.comparotor.ViewCountComparator;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.LogUtils;
@@ -47,7 +48,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
     private View view;
     private HorizontalListView hlvNewcourses,hlvRecommended;
     private TextView tvNewcourses,tvRecommended;
-    private Context mContext;
+    private Context context;
     private SliderLayout mDemoSlider;
     private CourseCoverAdapter newCourseCoverAdapter, recommendedCourseCoverAdapter;
     public DiscoverFragment() {
@@ -74,13 +75,19 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        mContext = activity;
+        context = activity;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+    }
+    //网络恢复
+    public void onEventMainThread(Event.NetChange netChange){
+        if(netChange.netChange){
+           getDatas();
+        }
     }
     //加入课程成功后调用
     public void onEventMainThread(Courses courses)
@@ -93,6 +100,12 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
                 recommendedCourseCoverAdapter.notifyDataSetChanged();
                 break;
             }
+        }
+    }
+    //断网之后重新加载数据
+    public void onEventMainThread(boolean flag){
+        if(flag){
+            getDatas();
         }
     }
     @Override
@@ -135,7 +148,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         for(Courses course : hotCourses){
             String imgurl = String.format("%s%s/%s",AppAction.IMG_RESOURSE_COURSE_URL,course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
             String name = course.getCourseInfo().getSubject();
-            TextSliderView textSliderView = new TextSliderView(mContext);
+            TextSliderView textSliderView = new TextSliderView(context);
             // initialize a SliderLayout
             textSliderView
                     .empty(R.drawable.bg_course_default_cover)
@@ -160,7 +173,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         getDatas();
     }
     private void getDatas(){
-        AppAction.getUserCourses(mContext, new HttpResponseHandler(UserCourseRoot.class) {
+        AppAction.getUserCourses(context, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
@@ -190,18 +203,18 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
             }
             @Override
             public void onResponeseStart() {
-                ((MainActivity)mContext).showProgressDialog();
+                ((MainActivity) context).showProgressDialog();
             }
 
             @Override
             public void onResponesefinish() {
-                ((MainActivity)mContext).dismissProgressDialog();
+                ((MainActivity) context).dismissProgressDialog();
             }
 
 
             @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
-                ((MainActivity)mContext).showHintDialog(response.message.toString());
+                ((MainActivity) context).showHintDialog(response.message.toString());
 
 
             }
@@ -209,8 +222,8 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         });
     }
     private void initSroller(){
-        newCourseCoverAdapter = new CourseCoverAdapter(mContext,newCourses,R.layout.item_listformat_course);
-        recommendedCourseCoverAdapter = new CourseCoverAdapter(mContext,recommendCourses,R.layout.item_listformat_course);
+        newCourseCoverAdapter = new CourseCoverAdapter(context,newCourses,R.layout.item_listformat_course);
+        recommendedCourseCoverAdapter = new CourseCoverAdapter(context,recommendCourses,R.layout.item_listformat_course);
         hlvNewcourses.setAdapter(newCourseCoverAdapter);
         hlvRecommended.setAdapter(recommendedCourseCoverAdapter);
         }
@@ -218,9 +231,9 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
     //广告栏点击回调
     @Override
     public void onSliderClick(BaseSliderView slider) {
-//        ToastUtils.showToast(mContext,slider.getBundle().get("extra") + "");
+//        ToastUtils.showToast(context,slider.getBundle().get("extra") + "");
         Courses courses = (Courses) slider.getBundle().get("extra");
-        Intent intent = new Intent(mContext, CourseDetailActivity.class);
+        Intent intent = new Intent(context, CourseDetailActivity.class);
         intent.putExtra("course",courses);
         startActivity(intent);
 
@@ -244,7 +257,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         hlvRecommended.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("course",recommendCourses.get(position));
                 startActivity(intent);
             }
@@ -252,7 +265,7 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         hlvNewcourses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(mContext, CourseDetailActivity.class);
+                Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("course",newCourses.get(position));
                 startActivity(intent);
             }
@@ -260,13 +273,13 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
         view.findViewById(R.id.tv_category).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext, CategoryActivity.class));
+                startActivity(new Intent(context, CategoryActivity.class));
             }
         });
         view.findViewById(R.id.iv_search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(mContext, SearchCourseMainActivity.class));
+                startActivity(new Intent(context, SearchCourseMainActivity.class));
             }
         });
     }

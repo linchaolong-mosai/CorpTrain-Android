@@ -137,7 +137,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean openTokenExpireBroadcast(){
-        return true;
+        return false;
     }
     private void registerTokenExpireBroadcast(){
         if(openTokenExpireBroadcast()){
@@ -179,7 +179,7 @@ public class BaseActivity extends AppCompatActivity {
         Resources res = super.getResources();
         Configuration config=new Configuration();
         config.setToDefaults();
-        res.updateConfiguration(config,res.getDisplayMetrics() );
+        res.updateConfiguration(config,res.getDisplayMetrics());
         return res;
     }
 }
