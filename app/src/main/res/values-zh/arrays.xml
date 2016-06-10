@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="survey_level">
+        <item>非常同意</item>
+        <item>有点同意</item>
+        <item>中立</item>
+        <item>不太同意</item>
+        <item>强烈反对</item>
+    </string-array>
+</resources>

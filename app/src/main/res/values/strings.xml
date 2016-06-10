@@ -29,11 +29,11 @@
     <string name="my_courses">My Courses</string>
     <string name="me">Me</string>
     <string name="drop_course">Drop Course</string>
-    <string name="search_course">Search fo courses</string>
+    <string name="search_course">Search For Courses</string>
     <string name="personal_info">Personal Info</string>
     <string name="change_password">Change Password</string>
     <string name="clear_offline_course_materials">Clear Offline Course Materials</string>
-    <string name="clear_offline_course_materials_tips">Do you want to clear offline course materials</string>
+    <string name="clear_offline_course_materials_tips">Do you want to clear offline course material?</string>
     <string name="rate_h2h">Rate H2H</string>
     <string name="feedback">Feedback</string>
     <string name="photo">Photo</string>
@@ -41,11 +41,9 @@
     <string name="phone">Phone</string>
     <string name="unbound">Unbound</string>
     <string name="to_bind">to bind</string>
-
     <string name="network_request_timeout">Network request timeout, please check the network settings</string>
     <string name="parse_data_error">Parse data error</string>
     <string name="server_response_value_error">Server response value error, the error code is %1$s</string>
-
     <string name="loading_text">loading&#8230;</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -57,19 +55,16 @@
     <string name="first_name_cannot_be_empty">First name cannot be empty</string>
     <string name="last_name_cannot_be_empty">Last name cannot be empty</string>
     <string name="re_enter_password_cannot_be_empty">Confirm password cannot be empty</string>
-    <string name="incorrect_password">New Password and Confirm Password do not match</string>
-    <string name="incorrect_current_password">Incorrect current password, please check again</string>
-    <string name="password_format">Password length should be from 5 to 20</string>
-    <string name="forgot_success_hint">Please check your email for the new password.</string>
-
+    <string name="incorrect_password">Passwords do not match</string>
+    <string name="incorrect_current_password">Password and username don\'t match, please check again</string>
+    <string name="password_format">Password length should be between 5 to 20</string>
+    <string name="forgot_success_hint">Please check your email to reset your password.</string>
     <string name="phone_number">Phone Number</string>
     <string name="Mobile_number">Mobile Number</string>
     <string name="phone_cannot_be_empty">Phone cannot be empty</string>
-
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>
-
     <string name="subject">Subject</string>
     <string name="subject_cannot_be_empty">Subject cannot be empty</string>
     <string name="feedback_text_hint">Tap to provide feedback</string>
@@ -78,7 +73,7 @@
     <string name="photograph">Photograph</string>
     <string name="new_course">NEW COURSES</string>
     <string name="recommended">RECOMMENDED</string>
-    <string name="crash">Sorry,the program appears unusual,be about to exit.</string>
+    <string name="crash">Sorry,the program appears unusual, about to exit.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="join_course">Join Course</string>
     <string name="enrolled_success">You have successfully enrolled in this course</string>
@@ -89,8 +84,8 @@
     <string name="sorry_tips">You Didn\'t Pass</string>
     <string name="congratulationtips">You have Passed</string>
     <string name="clearing">clearing...</string>
-    <string name="delete_success">clear success</string>
-    <string name="delete_fail">clear fail</string>
+    <string name="delete_success">Clear cache success</string>
+    <string name="delete_fail">Clear cache failed</string>
     <string name="mandatory_courses">Mandatory</string>
     <string name="enrolled_courses">Enrolled</string>
     <string name="completed_courses">Completed</string>
@@ -102,13 +97,13 @@
     <string name="survey">Survey</string>
     <string name="reply">Reply</string>
     <string name="rate_course">Rate the course</string>
-    <string name="change_password_success">Change Password Successfully</string>
-    <string name="change_name_successfully">Change Name Successfully</string>
-    <string name="change_number_successfully">Change Number Successfully</string>
-    <string name="change_phone_successfully">Change Phone Successfully</string>
+    <string name="change_password_success">Password Changed</string>
+    <string name="change_name_successfully">Name Changed</string>
+    <string name="change_phone_successfully">Phone Number Changed</string>
     <string name="feedback_successfully">Feedback Successfully</string>
-    <string name="quiz_answer_unfinished">Exists Unfinished Quiz</string>
-    <string name="survey_answer_unfinished">Exists Unfinished Survey</string>
+    <string name="quiz_answer_unfinished">Please fill all the questions</string>
+    <string name="survey_answer_unfinished">Please fill all the questions</string>
     <string name="submit_message">Do you want to submit?</string>
-    <string name="search_noresult">No Search found</string>
+    <string name="search_noresult">No Result Found</string>
+    <string name="change_number_successfully">Phone Number Changed</string>
 </resources>

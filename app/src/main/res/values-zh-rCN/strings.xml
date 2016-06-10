@@ -40,12 +40,10 @@
     <string name="phone">电话号码</string>
     <string name="unbound">未绑定</string>
     <string name="to_bind">绑定</string>
-
     <string name="network_request_timeout">网络请求超时，请检查网络连接设置</string>
     <string name="parse_data_error">数据解析错误</string>
     <string name="server_response_value_error">请求结果出错,错误代码为%1$s</string>
     <string name="loading_text">加载中&#8230;</string>
-
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
     <string name="error">错误</string>
@@ -60,7 +58,6 @@
     <string name="incorrect_current_password">当前密码不正确,请检查</string>
     <string name="password_format">密码长度为5-20个字符</string>
     <string name="forgot_success_hint">请检查你的电子邮件获取新密码</string>
-
     <string name="phone_number">电话号码</string>
     <string name="Mobile_number">手机号码</string>
     <string name="phone_cannot_be_empty">电话号码不能为空</string>
@@ -81,7 +78,7 @@
     <string name="enrolled_success">你已经成功加入该课程</string>
     <string name="has_downloaded">文件可能已经下载完毕</string>
     <string name="quiz">测验</string>
-    <string name="congratulation">祝贺</string>
+    <string name="congratulation">恭喜</string>
     <string name="sorry">抱歉</string>
     <string name="sorry_tips">你没有通过.</string>
     <string name="congratulationtips">你成功通过!</string>
