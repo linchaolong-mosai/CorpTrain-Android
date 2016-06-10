@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.MeFragment">
-<ScrollView
-    android:layout_weight="1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:overScrollMode="never"
-    android:scrollbars="none"
-   >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,18 +14,16 @@
 
         <RelativeLayout
             android:id="@+id/rlTopPanel"
-
-
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="180dp"
             android:background="@color/default_blue">
 
             <com.mosai.ui.CircleImageView
                 android:scaleType="centerCrop"
                 app:border_color="@android:color/transparent"
                 android:id="@+id/ivHeadpotrait"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
                 android:layout_centerInParent="true"
                 android:src="@drawable/blank_user_big"/>
 
@@ -43,7 +34,7 @@
                 android:layout_below="@id/ivHeadpotrait"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/standard_margin"
-                android:text="seaef"
+                android:text=""
                 android:textColor="@android:color/white"
                 android:textSize="18sp"/>
         </RelativeLayout>
@@ -79,13 +70,15 @@
             android:drawableRight="@drawable/mini_right_arrow"
             android:text="@string/feedback"/>
 
-
     </LinearLayout>
-</ScrollView>
+
     <Button
         android:id="@+id/btn_signout"
         android:background="@drawable/bg_imagebutton_grey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
         android:text="@string/sign_out"/>
-</LinearLayout>
+
+</RelativeLayout>
