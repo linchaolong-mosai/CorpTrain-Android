@@ -238,8 +238,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         dialog.dismiss();
                     }
                 }).show();
-
-
     }
 
     @Override
