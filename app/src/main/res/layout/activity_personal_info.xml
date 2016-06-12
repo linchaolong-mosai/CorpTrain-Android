@@ -39,7 +39,7 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/blank_user_small"/>
+            android:src="@drawable/ic_blank_user_small"/>
     </RelativeLayout>
 
     <RelativeLayout

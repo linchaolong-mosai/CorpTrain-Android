@@ -1,5 +1,7 @@
 package com.mosai.corporatetraining.activity;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,8 +46,8 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
     protected void initDatas() {
         resources = (Resources) getIntent().getSerializableExtra("resource");
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.drawable.blank_user_small)
-                .showImageOnFail(R.drawable.blank_user_small)
+                .showImageForEmptyUri(R.drawable.ic_blank_user_small)
+                .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),civAvator,options);
 
@@ -79,15 +81,17 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
 //        getSummary();
         setSummary();
     }
+    private int accuracy;
     private void setSummary(){
         int correctcount=getIntent().getIntExtra("correctcount",0);
         int incorrectcount=getIntent().getIntExtra("incorrectcount",0);
-        int accuracy=getIntent().getIntExtra("accuracy",0);
-        tvTips.setTextColor(getResources().getColor(accuracy>=60?R.color.colorPrimary:R.color.red));
-        tvIsPass.setTextColor(getResources().getColor(accuracy>=60?R.color.colorPrimary:R.color.red));
-        tvTips.setText(accuracy>=60?getString(R.string.congratulation):getString(R.string.sorry));
-        tvIsPass.setText(accuracy>=60?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
-        tvIsPass.setText(accuracy>=60?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
+        accuracy=getIntent().getIntExtra("accuracy",0);
+        int passingGrade = getIntent().getIntExtra("passingGrade",0);
+        tvTips.setTextColor(getResources().getColor(accuracy>=passingGrade?R.color.colorPrimary:R.color.red));
+        tvIsPass.setTextColor(getResources().getColor(accuracy>=passingGrade?R.color.colorPrimary:R.color.red));
+        tvTips.setText(accuracy>=passingGrade?getString(R.string.congratulation):getString(R.string.sorry));
+        tvIsPass.setText(accuracy>=passingGrade?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
+        tvIsPass.setText(accuracy>=passingGrade?getString(R.string.congratulationtips):getString(R.string.sorry_tips));
         tvCorrect.setText(correctcount+"");
         tvIncorrect.setText(incorrectcount+"");
         tvAccuracy.setText(accuracy+"%");
@@ -115,6 +119,7 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
                     tvIncorrect.setText(String.valueOf(summary.totalAnswer-summary.passCount));
                     tvAccuracy.setText(((int)(summary.passRatio*100))+"%");
                     donutProgress.setProgress(((int)(summary.passRatio*100)));
+                    tvAccuracy.setVisibility(View.INVISIBLE);
                 } catch (JSONException e) {
 
                     e.printStackTrace();
@@ -145,5 +150,50 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
         setResult(RESULT_OK);
         back();
     }
-
+    private boolean firstCome=true;
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if(hasFocus){
+            if(firstCome){
+                startAnimation();
+                firstCome=false;
+            }
+        }
+        super.onWindowFocusChanged(hasFocus);
+    }
+    private int tempProgress;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(tempProgress<accuracy){
+                tempProgress+=1;
+                donutProgress.setProgress(tempProgress);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.sendEmptyMessage(0);
+                    }
+                },dTime);
+            }else{
+                tvAccuracy.setVisibility(View.VISIBLE);
+            }
+        }
+    };
+    private int dTime;
+    private void startAnimation(){
+        if(accuracy==0){
+            tvAccuracy.setVisibility(View.VISIBLE);
+        }else{
+            tvAccuracy.setVisibility(View.INVISIBLE);
+            dTime = 1000/accuracy;
+            donutProgress.setProgress(0);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    handler.sendEmptyMessage(0);
+                }
+            },dTime);
+        }
+    }
 }

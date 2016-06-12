@@ -14,7 +14,7 @@
 
         <include layout="@layout/layout_ib_titile_back_close"></include>
 
-        <TextView
+        <com.mosai.ui.MarqueeTextView
             android:id="@+id/tv_title"
             android:layout_centerInParent="true"
             style="@style/titletext"

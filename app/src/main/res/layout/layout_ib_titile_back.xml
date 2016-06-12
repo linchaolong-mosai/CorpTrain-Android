@@ -7,5 +7,5 @@
     android:background="@drawable/bg_imagebutton"
     android:contentDescription="@string/app_name"
     android:paddingLeft="10dp"
-    android:paddingRight="25dp"
+    android:paddingRight="10dp"
     android:src="@drawable/ic_back_black" />

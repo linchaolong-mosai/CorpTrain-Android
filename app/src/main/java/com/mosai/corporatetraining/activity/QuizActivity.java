@@ -68,6 +68,7 @@ public class QuizActivity extends ABaseToolbarActivity {
                 Intent intent = new Intent(context, QuizQuestionsActivity.class);
                 intent.putExtra("questions", questions);
                 intent.putExtra("resource", resource);
+                intent.putExtra("quiz",quiz);
                 startActivity(intent);
                 finish();
             }

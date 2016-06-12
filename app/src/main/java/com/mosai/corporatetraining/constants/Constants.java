@@ -13,4 +13,5 @@ public interface Constants {
     int ResourceTypeImage = 5;
     int ResourceTypeQuiz = 1;
     int ResourceTypeSurvey = 2;
+    String ChartSet = "ISO-8859-1";
 }

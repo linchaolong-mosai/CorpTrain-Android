@@ -8,6 +8,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
+import com.mosai.corporatetraining.constants.Constants;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.LogUtils;
 
@@ -138,7 +139,9 @@ public class AsyncHttp {
             case METHOD_PUT:
                 JSONObject json = new JSONObject(map);
                 try {
+
                     StringEntity body = new StringEntity(json.toString());
+                    body.setContentEncoding(Constants.ChartSet);
                     client.put(context, url, body, ContentType.APPLICATION_JSON.toString(), responseHandler);
                 }catch (Exception e){
                     e.printStackTrace();

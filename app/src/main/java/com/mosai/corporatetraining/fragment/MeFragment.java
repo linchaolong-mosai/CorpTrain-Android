@@ -49,8 +49,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
     private void setImageloaderOptions(){
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.drawable.blank_user_small)
-                .showImageOnFail(R.drawable.blank_user_small)
+                .showImageForEmptyUri(R.drawable.ic_blank_user_small)
+                .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
     }
     public static MeFragment newInstance() {

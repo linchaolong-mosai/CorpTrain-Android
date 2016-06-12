@@ -16,14 +16,11 @@
 
         <include layout="@layout/layout_ib_titile_back"></include>
 
-        <TextView
-            android:id="@+id/tv_title"
-            style="@style/titletext"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-             />
+        <include layout="@layout/layout_title_marqueetextview"/>
         <ImageView
+            android:scaleType="centerInside"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:id="@+id/iv_favorite"
             android:background="@drawable/bg_imagebutton"
             android:src="@drawable/selector_favorite"

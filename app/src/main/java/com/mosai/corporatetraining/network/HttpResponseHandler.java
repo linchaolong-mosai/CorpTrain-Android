@@ -35,6 +35,11 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 	@Override
 	public void onSuccess(int statusCode, Header[] headers,
 			String responseString) {
+//		try {
+//			responseString = new String(responseString.getBytes("utf-8"));
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
 		LogUtils.i("状态码：" + statusCode + " 返回值：" + responseString);
 		if (statusCode == HttpURLConnection.HTTP_OK ||statusCode == HttpURLConnection.HTTP_CREATED) {
 			try {

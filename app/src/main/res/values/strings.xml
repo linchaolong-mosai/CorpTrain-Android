@@ -106,4 +106,5 @@
     <string name="submit_message">Do you want to submit?</string>
     <string name="search_noresult">No Result Found</string>
     <string name="change_number_successfully">Phone Number Changed</string>
+    <string name="submit_successfully">Submit Successfully</string>
 </resources>

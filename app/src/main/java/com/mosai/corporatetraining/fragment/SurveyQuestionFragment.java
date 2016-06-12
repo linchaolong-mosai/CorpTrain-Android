@@ -150,7 +150,7 @@ public class SurveyQuestionFragment extends Fragment {
      * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * >Communicating with Other Fragments</a> for ic_more information.
      */
     public interface OnSurveyQuetsionFragmentInteractionListener {
         // TODO: Update argument type and name

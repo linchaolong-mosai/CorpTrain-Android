@@ -21,9 +21,12 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.utils.MyLog;
+import com.mosai.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 public class SurveyQuestionsActivity extends ABaseToolbarActivity implements SurveyQuestionFragment.OnSurveyQuetsionFragmentInteractionListener{
     private ViewPager viewPager;
@@ -61,7 +64,6 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
         llNext = ViewUtil.findViewById(this,R.id.ll_next);
         ivLast = ViewUtil.findViewById(this,R.id.iv_last_step);
         ivLast.setVisibility(View.GONE);
-//        llNext.setVisibility(count==0?View.GONE:View.VISIBLE);
     }
     private int submitCount;
     private Handler handler = new Handler(){
@@ -70,10 +72,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             super.handleMessage(msg);
             submitCount+=1;
             if(submitCount>=count){
-//                getSummary();
-//                Intent intent = new Intent(context,QuizSummaryActivity.class);
-//                intent.putExtra("resource",resources);
-//                startActivityForResult(intent,0);
+                ToastUtils.showToast(context,getString(R.string.submit_successfully));
                 finish();
             }
         }
@@ -101,31 +100,58 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
 
                 @Override
                 public void onResponeseFail(int statusCode, HttpResponse response) {
+
                     showHintDialog(response.message);
                 }
             });
         }
     }
-    private void checkIndex(){
-        if(index>=count){
-            if(count==index){
-                submitSurveyAnwsers();
-                MyLog.e("znb","submitQuizAnswers");
-            }else{
-                index-=1;
+    private MaterialDialog submitDialog;
+    private void checkIndex() {
+        if (index >= count) {
+            if (count == index) {
+                //提交答案
+                for (SurveyQuestionFragment fragment : fragments) {
+                    if (fragment.adapter.index == -1) {
+                        index -= 1;
+                        ToastUtils.showToast(context, getString(R.string.quiz_answer_unfinished));
+                        return;
+                    }
+                }
+                submitDialog = new MaterialDialog(context)
+                        .setMessage(R.string.submit_message)
+                        .setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MyLog.e("znb", "submitQuizAnswers");
+//                                submitQuizAnswers();
+                                submitSurveyAnwsers();
+                                submitDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                submitDialog.dismiss();
+                                index-=1;
+                            }
+                        });
+                submitDialog.show();
+            } else {
+                index -= 1;
             }
             return;
         }
-        String page = String.format("%d/%d",index+1,count);
+        String page = String.format("%d/%d", index + 1, count);
         tvPage.setText(page);
         viewPager.setCurrentItem(index);
-        if(index==0){
+        if (index == 0) {
             ivLast.setVisibility(View.GONE);
             llNext.setVisibility(View.VISIBLE);
-        }else if(index==count-1){
+        } else if (index == count - 1) {
             ivLast.setVisibility(View.VISIBLE);
             llNext.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             ivLast.setVisibility(View.VISIBLE);
             llNext.setVisibility(View.VISIBLE);
         }

@@ -15,13 +15,8 @@
 
         <include layout="@layout/layout_ib_titile_back"></include>
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_centerInParent="true"
-            style="@style/titletext"
-            android:text="title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+
+        <include layout="@layout/layout_title_marqueetextview"/>
 
     </RelativeLayout>
     <include layout="@layout/layout_horizontalline"></include>

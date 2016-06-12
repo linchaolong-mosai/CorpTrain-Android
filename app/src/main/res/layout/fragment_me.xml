@@ -25,7 +25,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/blank_user_big"/>
+                android:src="@drawable/ic_blank_user_big"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -43,31 +43,31 @@
             android:id="@+id/tvPersonalInfo"
             style="@style/TextView_Me_Item"
             android:layout_marginTop="@dimen/standard_padding"
-            android:drawableRight="@drawable/mini_right_arrow"
+            android:drawableRight="@drawable/ic_mini_right_arrow"
             android:text="@string/personal_info"/>
 
         <TextView
             android:id="@+id/tvChangePassword"
             style="@style/TextView_Me_Item"
-            android:drawableRight="@drawable/mini_right_arrow"
+            android:drawableRight="@drawable/ic_mini_right_arrow"
             android:text="@string/change_password"/>
 
         <TextView
             android:id="@+id/tvClearOffline"
             style="@style/TextView_Me_Item"
-            android:drawableRight="@drawable/mini_right_arrow"
+            android:drawableRight="@drawable/ic_mini_right_arrow"
             android:text="@string/clear_offline_course_materials"/>
 
         <TextView
             android:id="@+id/tvRateH2H"
             style="@style/TextView_Me_Item"
-            android:drawableRight="@drawable/mini_right_arrow"
+            android:drawableRight="@drawable/ic_mini_right_arrow"
             android:text="@string/rate_h2h"/>
 
         <TextView
             android:id="@+id/tvFeedback"
             style="@style/TextView_Me_Item"
-            android:drawableRight="@drawable/mini_right_arrow"
+            android:drawableRight="@drawable/ic_mini_right_arrow"
             android:text="@string/feedback"/>
 
     </LinearLayout>

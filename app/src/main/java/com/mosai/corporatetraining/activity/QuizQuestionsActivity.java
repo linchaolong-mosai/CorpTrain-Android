@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.quiz.Question;
 import com.mosai.corporatetraining.bean.quiz.Questions;
+import com.mosai.corporatetraining.bean.quiz.Quiz;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
 import com.mosai.corporatetraining.entity.HttpResponse;
 import com.mosai.corporatetraining.fragment.QuizQuestionFragment;
@@ -78,9 +79,6 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             submitCount += 1;
             if (submitCount >= count) {
                 getSummary();
-//                Intent intent = new Intent(context,QuizSummaryActivity.class);
-//                intent.putExtra("resource",resources);
-//                startActivityForResult(intent,0);
             }
         }
     };
@@ -90,7 +88,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         int correctcount = 0;
         int incorrectcount = 0;
         for (int i = 0; i < count; i++) {
-            if (questions.getQuestions().get(i).getCorrectAnswer() == fragments.get(i).adapter.index) {
+            if (questions.getQuestions().get(i).getCorrectAnswer()-1 == fragments.get(i).adapter.index) {
                 correctcount += 1;
             } else {
                 incorrectcount += 1;
@@ -101,6 +99,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         intent.putExtra("correctcount", correctcount);
         intent.putExtra("incorrectcount", incorrectcount);
         intent.putExtra("accuracy", accuracy);
+        intent.putExtra("passingGrade", ((Quiz)getIntent().getSerializableExtra("quiz")).passingGrade);
         startActivityForResult(intent, 0);
 
     }
@@ -110,8 +109,8 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             AppAction.submitQuizAnswer(context, resources.getClassId(), fragment.question.getQuestionId(), fragment.adapter.index, new HttpResponseHandler(context, HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-
                     handler.sendEmptyMessage(0);
+
                 }
 
                 @Override
@@ -121,6 +120,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
 
                 @Override
                 public void onResponesefinish() {
+
                     dismissProgressDialog();
                 }
 

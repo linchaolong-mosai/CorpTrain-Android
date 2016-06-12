@@ -170,8 +170,8 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
     }
     private void setImageloaderOptions(){
          options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-                .showImageForEmptyUri(R.drawable.blank_user_small)
-                .showImageOnFail(R.drawable.blank_user_small)
+                .showImageForEmptyUri(R.drawable.ic_blank_user_small)
+                .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
     }
     private void uploadFile(String path){

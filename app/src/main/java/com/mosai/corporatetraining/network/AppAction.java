@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mosai.corporatetraining.util.ConverStr;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -73,27 +75,6 @@ public class AppAction {
         AsyncHttp.getInstance().execute(context, getUrl("api/ctUser"), AsyncHttp.METHOD_GET, responseHandler);
     }
 
-    /**
-     * 修改用户信息
-     * @param context
-     * @param name
-     * @param phone
-     * @param responseHandler
-     */
-    /*public static void updateUserInfo(Context context, String name, String phone, AsyncHttpResponseHandler responseHandler) {
-        UserPF userPF = UserPF.getInstance();
-        RequestParams params = new RequestParams();
-        params.put("name", name == null ? userPF.getString(UserPF.USER_NAME, "") : name);
-        params.put("phone", phone == null ? userPF.getString(UserPF.PHONE, "") : phone);
-        params.put("email", userPF.getString(UserPF.USER_EMAIL, ""));
-        params.put("userSn", userPF.getInt(UserPF.USER_ID, 0));
-        params.put("ctUserId", userPF.getString(UserPF.CT_USER_ID, ""));
-        params.put("ctCompanyId", userPF.getString(UserPF.CT_COMPANY_ID, ""));
-        params.put("ctRole", userPF.getInt(UserPF.CT_ROLE, 0));
-        params.put("timeZone", userPF.getString(UserPF.TIME_ZONE, ""));
-        params.put("ctGroupIds", userPF.getString(UserPF.CT_GROUPS, ""));
-        AsyncHttp.getInstance().execute(context, "api/ctUser/update", params, AsyncHttp.METHOD_PUT, responseHandler);
-    }*/
 
     /**
      * 修改密码
@@ -290,6 +271,11 @@ public class AppAction {
      */
     public static void submitCourseComment(Context context,String courseId,String comment,AsyncHttpResponseHandler responseHandler){
         HashMap<String,Object> hashmap = new HashMap<>();
+        try {
+            comment = ConverStr.toISO_8859_1(comment);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         hashmap.put("comment",comment);
         AsyncHttp.getInstance().execute(context,getUrl("api/course/comment/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandler);
 

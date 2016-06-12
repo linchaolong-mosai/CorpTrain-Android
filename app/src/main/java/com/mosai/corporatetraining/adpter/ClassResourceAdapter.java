@@ -2,6 +2,7 @@ package com.mosai.corporatetraining.adpter;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
@@ -39,7 +40,7 @@ public class ClassResourceAdapter extends CommonAdapter<Resources>{
         TextView tvClassName = holder.getView(R.id.tv_classname);
 //        TextView tvDuedate = holder.getView(R.id.tv_duedate);
         tvClassName.setText(resources.getName());
-
+        ImageView ivIcon = holder.getView(R.id.iv_class);
         HorizontalProgressBarWithNumber horizontalProgressBarWithNumber = holder.getView(R.id.hprogressbar);
 
         if(resources.getResourceType()== Constants.ResourceTypeQuiz||resources.getResourceType()==Constants.ResourceTypeSurvey){
@@ -54,6 +55,17 @@ public class ClassResourceAdapter extends CommonAdapter<Resources>{
                 horizontalProgressBarWithNumber.setVisibility(View.GONE);
             }
 
+        }
+        if(resources.getResourceType()== Constants.ResourceTypeSurvey){
+                ivIcon.setImageResource(R.drawable.ic_survey);
+        }else if(resources.getResourceType()== Constants.ResourceTypeVideo){
+            ivIcon.setImageResource(R.drawable.ic_video);
+        }else if(resources.getResourceType()== Constants.ResourceTypeQuiz){
+            ivIcon.setImageResource(R.drawable.ic_quiz);
+        }else if(resources.getResourceType()== Constants.ResourceTypeImage){
+            ivIcon.setImageResource(R.drawable.ic_img);
+        }else {
+            ivIcon.setImageResource(R.drawable.ic_class);
         }
     }
 }

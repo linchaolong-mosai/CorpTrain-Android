@@ -30,7 +30,7 @@
 
     <style name="LoginTheme" parent="SplashTheme">
         <item name="colorPrimary">@android:color/transparent</item>
-        <item name="android:windowBackground">@drawable/login_bg</item>
+        <item name="android:windowBackground">@drawable/bg_login_bg</item>
     </style>
 
     <style name="dialog" parent="android:style/Theme.Dialog">
@@ -93,7 +93,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">100dp</item>
-        <item name="android:src">@drawable/logo</item>
+        <item name="android:src">@drawable/bg_logo</item>
         <item name="android:layout_centerHorizontal">true</item>
     </style>
 

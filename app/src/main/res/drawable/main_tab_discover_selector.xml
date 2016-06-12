@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true" android:drawable="@drawable/ic_discover_green">
-        <!--<bitmap android:src="@drawable/discover_white" android:tint="@color/colorPrimary"/>-->
+        <!--<bitmap android:src="@drawable/ic_discover_white" android:tint="@color/colorPrimary"/>-->
     </item>
     <item android:state_selected="false" android:drawable="@drawable/ic_discover_grey">
-        <!--<bitmap android:src="@drawable/discover_white" android:tint="@color/line_color_gray"/>-->
+        <!--<bitmap android:src="@drawable/ic_discover_white" android:tint="@color/line_color_gray"/>-->
     </item>
     <item android:drawable="@drawable/ic_discover_grey">
-        <!--<bitmap android:src="@drawable/discover_white" android:tint="@color/line_color_gray"/>-->
+        <!--<bitmap android:src="@drawable/ic_discover_white" android:tint="@color/line_color_gray"/>-->
     </item>
-    <!--<item android:state_selected="false" android:drawable="@drawable/discover_white"/>-->
-    <!--<item android:drawable="@drawable/discover_white"/>-->
+    <!--<item android:state_selected="false" android:drawable="@drawable/ic_discover_white"/>-->
+    <!--<item android:drawable="@drawable/ic_discover_white"/>-->
 </selector>

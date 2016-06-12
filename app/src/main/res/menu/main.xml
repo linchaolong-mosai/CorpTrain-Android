@@ -8,13 +8,13 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/calendar"
-        android:icon="@drawable/calendar"
+        android:icon="@drawable/ic_calendar"
         android:title="@string/calendar"
         android:visible="false"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/notification"
-        android:icon="@drawable/notification"
+        android:icon="@drawable/ic_notification"
         android:title="@string/notification"
         app:showAsAction="ifRoom"/>
     <item
@@ -24,7 +24,7 @@
         android:visible="false"/>
     <item
         android:id="@+id/category"
-        android:icon="@drawable/category_white"
+        android:icon="@drawable/ic_category_white"
         android:title="@string/category"
         app:showAsAction="ifRoom"/>
 </menu>
