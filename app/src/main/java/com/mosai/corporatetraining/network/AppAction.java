@@ -252,7 +252,7 @@ public class AppAction {
         //corptraining/api/course/join/
         //https://train-qa.liveh2h.com/tutormeetweb/api/course/completePercent/<course_id>
         HashMap<String,Object> hashmap = new HashMap<>();
-        hashmap.put("completePercent",2);
+        hashmap.put("completePercent",1);
         AsyncHttp.getInstance().execute(context,getUrl("api/course/completePercent/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandle);
 //        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/completePercent/")+courseId,null,responseHandle);
     }

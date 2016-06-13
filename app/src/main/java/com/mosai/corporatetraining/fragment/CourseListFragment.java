@@ -74,6 +74,7 @@ public class CourseListFragment extends Fragment{
     }
 
     public void getDatas(){
+
         final int type = getArguments().getInt("type",0);
         AppAction.getUserCourseByType(context,type, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
@@ -81,9 +82,20 @@ public class CourseListFragment extends Fragment{
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
                 CourseListFragment.this.courses.clear();
-                if(type!=AppAction.SEARCH_COURSE_FILTER_TYPE_ALL){
-                CourseListFragment.this.courses.addAll(courses);
-                }else{
+                if(type == AppAction.SEARCH_USER_COURSE_FILTER_TYPE_MANDATORY){
+                    //Mandatory courses
+                    for(Courses courses1:courses){
+                        int completePercent = courses1.getAttendeeInfo().getCompletePercent();
+                        if (completePercent<100){
+                            CourseListFragment.this.courses.add(courses1);
+                        }
+                    }
+                }else if (type == AppAction.SEARCH_USER_COURSE_FILTER_TYPE_FINISHED) {
+                    //Completed courses
+                    CourseListFragment.this.courses.addAll(courses);
+                }
+                else if (type == AppAction.SEARCH_COURSE_FILTER_TYPE_ALL){
+                    //Enrolled courses
                     for(Courses courses1:courses){
                         int completePercent = courses1.getAttendeeInfo().getCompletePercent();
                         boolean isMandatory = courses1.getInviteeInfo().getMandatory();

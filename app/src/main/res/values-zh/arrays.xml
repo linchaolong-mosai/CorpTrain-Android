@@ -2,9 +2,9 @@
 <resources>
     <string-array name="survey_level">
         <item>非常同意</item>
-        <item>有点同意</item>
+        <item>有點同意</item>
         <item>中立</item>
         <item>不太同意</item>
-        <item>强烈反对</item>
+        <item>強烈反對</item>
     </string-array>
 </resources>

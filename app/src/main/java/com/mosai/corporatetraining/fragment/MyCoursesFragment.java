@@ -154,7 +154,6 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
         bundle.putInt("type", AppAction.SEARCH_USER_COURSE_FILTER_TYPE_MANDATORY);
         mandatory.setArguments(bundle);
 
-
         bundle = new Bundle();
         enrolled = new CourseListFragment();
         bundle.putInt("tag",TWO);
