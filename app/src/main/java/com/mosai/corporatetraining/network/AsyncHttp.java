@@ -8,7 +8,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
-import com.mosai.corporatetraining.constants.Constants;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.LogUtils;
 
@@ -114,7 +113,7 @@ public class AsyncHttp {
 
     }
     protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
-                           AsyncHttpResponseHandler responseHandler){
+                           AsyncHttpResponseHandler responseHandler,String charset){
         params = getRequestParams(params, map);
         LogUtils.i(url + (params == null?"":("?" + params.toString())));
         if (contentType == null) {
@@ -122,12 +121,7 @@ public class AsyncHttp {
         } else {
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE, contentType);
         }
-
-//        if (UserPF.getInstance().getBoolean(UserPF.IS_LOGIN, false)) {
-            client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-//        } else {
-//            client.removeHeader("apiToken");
-//        }
+        client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
 
         switch (method) {
             case METHOD_POST:
@@ -139,9 +133,8 @@ public class AsyncHttp {
             case METHOD_PUT:
                 JSONObject json = new JSONObject(map);
                 try {
-
                     StringEntity body = new StringEntity(json.toString());
-                    body.setContentEncoding(Constants.ChartSet);
+//                    body.setContentEncoding(charset==null?"utf-8":charset);
                     client.put(context, url, body, ContentType.APPLICATION_JSON.toString(), responseHandler);
                 }catch (Exception e){
                     e.printStackTrace();
@@ -151,6 +144,10 @@ public class AsyncHttp {
                 client.put(context, url, params, responseHandler);
                 break;
         }
+    }
+    protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
+                           AsyncHttpResponseHandler responseHandler){
+       execute(context,url,params,map,method,contentType,responseHandler,null);
     }
 
     private RequestParams getRequestParams(RequestParams params, Map<String, Object> map) {

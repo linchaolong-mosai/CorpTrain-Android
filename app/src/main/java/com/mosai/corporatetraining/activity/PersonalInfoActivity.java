@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.LogUtils;
+import com.mosai.corporatetraining.util.NetworkUtils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.ui.ActionSheetDialog;
 import com.mosai.ui.CircleImageView;
@@ -25,6 +27,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import pl.aprilapps.easyphotopicker.EasyImage;
 
@@ -144,7 +147,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 Uri uri = UCrop.getOutput(data);
                 final String path = new File(new URI(uri.toString())).getAbsolutePath();
                 LogUtils.e(String.format("Ucop Success,filepath:%s",path));
-                uploadFile(path);
+                uploadFile2(path);
 //                ivMyicon.setImageBitmap(BitmapFactory.decodeFile(path));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -173,6 +176,39 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 .showImageForEmptyUri(R.drawable.ic_blank_user_small)
                 .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+    }
+    private void uploadFile2(final String path){
+        new AsyncTask<Void,Void,Boolean>(){
+            @Override
+            protected void onPreExecute() {
+                showTextProgressDialog(getString(R.string.uploading));
+                super.onPreExecute();
+            }
+
+
+            @Override
+            protected Boolean doInBackground(Void... params) {
+                HashMap<String,String> textMap = new HashMap<String, String>();
+                textMap.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0)+"");
+                HashMap<String,String> filetMap = new HashMap<String, String>();
+                textMap.put("file",path);
+                return NetworkUtils.formUpload(AppAction.AVATAR_URL,textMap,filetMap);
+            }
+
+            @Override
+            protected void onPostExecute(Boolean aBoolean) {
+                super.onPostExecute(aBoolean);
+                dismissTextProgressDialog();
+                LogUtils.e(aBoolean+"");
+                if (aBoolean){
+                    String ivurl = UserPF.getInstance().getAvatarUrl();
+                    ImageLoader.getInstance().getDiskCache().remove(ivurl);
+                    ImageLoader.getInstance().getMemoryCache().remove(ivurl);
+                    ImageLoader.getInstance().displayImage(ivurl, ivMyicon, options);
+                }
+
+            }
+        }.execute();
     }
     private void uploadFile(String path){
         AppAction.uploadMyicon(this, path, new HttpResponseHandler(context,HttpResponse.class) {

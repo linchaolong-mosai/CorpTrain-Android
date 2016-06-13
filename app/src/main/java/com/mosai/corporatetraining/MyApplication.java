@@ -29,13 +29,17 @@ public class MyApplication extends Application {
         initAbnormalHandler();
         initDirs();
     }
-    private void initAbnormalHandler(){
-        if(BuildConfig.DEBUG){
+
+    private void initAbnormalHandler() {
+        if (BuildConfig.DEBUG) {
             AbnormalHandler crashHandler = AbnormalHandler.getInstance();
             crashHandler.init(getApplicationContext());
+
         }
     }
-    private void initImageLoader(){
+
+    private void initImageLoader() {
+        //开始构建
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(this)
                 .threadPoolSize(3)//线程池内加载的数量
@@ -43,16 +47,19 @@ public class MyApplication extends Application {
                 .denyCacheImageMultipleSizesInMemory()
                 .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // You can pass your own memory cache implementation/你可以通过自己的内存缓存实现
                 .memoryCacheSize(2 * 1024 * 1024)
-
-
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                 .writeDebugLogs()
-                .build();//开始构建
+                .build();
         ImageLoader.getInstance().init(config);
+//        MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
+//        DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
+        ImageLoader.getInstance().getDiskCache().remove(UserPF.getInstance().getAvatarUrl());
+        ImageLoader.getInstance().getMemoryCache().remove(UserPF.getInstance().getAvatarUrl());
     }
-    private void initDirs(){
+
+    private void initDirs() {
         File file = new File(Utils.getMaterialsDir(this));
-        if(!file.exists()){
+        if (!file.exists()) {
             file.mkdirs();
         }
     }

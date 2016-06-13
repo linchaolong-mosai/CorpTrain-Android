@@ -105,6 +105,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
     }
 
     private void submitQuizAnswers() {
+        submitCount=0;
         for (QuizQuestionFragment fragment : fragments) {
             AppAction.submitQuizAnswer(context, resources.getClassId(), fragment.question.getQuestionId(), fragment.adapter.index, new HttpResponseHandler(context, HttpResponse.class) {
                 @Override
@@ -127,6 +128,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
                 @Override
                 public void onResponeseFail(int statusCode, HttpResponse response) {
                     showHintDialog(response.message);
+                    index=count-1;
                 }
             });
         }
@@ -232,7 +234,6 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             // TODO Auto-generated method stub
             return count;
         }
-
     }
 
     @Override
@@ -246,13 +247,9 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         if (resultCode == RESULT_OK) {
             back();
         } else {
-
-            //重做
-//            index-=1;
             index = 0;
             submitCount = 0;
             checkIndex();
-//            viewPager.setCurrentItem(index);
         }
     }
 }

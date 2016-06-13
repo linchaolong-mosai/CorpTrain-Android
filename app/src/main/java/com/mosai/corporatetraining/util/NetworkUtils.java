@@ -1,15 +1,18 @@
 package com.mosai.corporatetraining.util;
 
+import com.mosai.corporatetraining.local.UserPF;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.UUID;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 描述:
@@ -20,70 +23,133 @@ import java.util.UUID;
 public class NetworkUtils {
     private static int TIME_OUT = 3000;
     private static String CHARSET = "utf-8";
-    public static boolean uploadFile(File file, String RequestURL) {
-        String BOUNDARY = UUID.randomUUID().toString(); // 边界标识 随机生成
-        String PREFIX = "--", LINE_END = "\r\n";
-        String CONTENT_TYPE = "multipart/form-data"; // 内容类型
+    /**
+     * 上传图片
+     *
+     * @param urlStr
+     * @param textMap
+     * @param fileMap
+     * @return
+     */
+    public static boolean formUpload(String urlStr, Map<String, String> textMap,
+                                    Map<String, String> fileMap) {
+        String res = "";
+        HttpURLConnection conn = null;
+        String BOUNDARY = "---------------------------123821742118716"; //boundary就是request头和上传文件内容的分隔符
         try {
-            URL url = new URL(RequestURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(TIME_OUT);
-            conn.setConnectTimeout(TIME_OUT);
-            conn.setDoInput(true); // 允许输入流
-            conn.setDoOutput(true); // 允许输出流
-            conn.setUseCaches(false); // 不允许使用缓存
-            conn.setRequestMethod("POST"); // 请求方式
-            conn.setRequestProperty("Charset", CHARSET);
-            // 设置编码
-            conn.setRequestProperty("connection", "keep-alive");
-            conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-                    + BOUNDARY);
-            if (file != null) {
-                /** * 当文件不为空，把文件包装并且上传 */
-                OutputStream outputSteam = conn.getOutputStream();
-                DataOutputStream dos = new DataOutputStream(outputSteam);
-                StringBuffer sb = new StringBuffer();
-                sb.append(PREFIX);
-                sb.append(BOUNDARY);
-                sb.append(LINE_END);
-                /**
-                 * 这里重点注意： name里面的值为服务器端需要key 只有这个key 才可以得到对应的文件
-                 */
-                sb.append("Content-Disposition: form-data; name=\"img\"; filename=\""
-                        + file.getName() + "\"" + LINE_END);
-                sb.append("Content-Type: application/octet-stream; charset="
-                        + CHARSET + LINE_END);
-                sb.append(LINE_END);
-                dos.write(sb.toString().getBytes());
-                InputStream is = new FileInputStream(file);
-                byte[] bytes = new byte[1024];
-                int len = 0;
-                while ((len = is.read(bytes)) != -1) {
-                    dos.write(bytes, 0, len);
+            URL url = new URL(urlStr);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(30000);
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+            conn.setRequestProperty("Content-Type",
+                    "multipart/form-data; boundary=" + BOUNDARY);
+
+            OutputStream out = new DataOutputStream(conn.getOutputStream());
+            // text
+            if (textMap != null) {
+                StringBuffer strBuf = new StringBuffer();
+                Iterator iter = textMap.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iter.next();
+                    String inputName = (String) entry.getKey();
+                    String inputValue = (String) entry.getValue();
+                    if (inputValue == null) {
+                        continue;
+                    }
+                    strBuf.append("\r\n").append("--").append(BOUNDARY).append(
+                            "\r\n");
+                    strBuf.append("Content-Disposition: form-data; name=\""
+                            + inputName + "\"\r\n\r\n");
+                    strBuf.append(inputValue);
                 }
-                is.close();
-                dos.write(LINE_END.getBytes());
-                byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END)
-                        .getBytes();
-                dos.write(end_data);
-                dos.flush();
-                dos.close();
-                /**
-                 * 获取响应码 200=成功 当响应成功，获取响应的流
-                 */
-                int res = conn.getResponseCode();
+                out.write(strBuf.toString().getBytes());
+            }
 
-                if (res == 200) {
+            // file
+            if (fileMap != null) {
+                Iterator iter = fileMap.entrySet().iterator();
+                while (iter.hasNext()) {
+                    Map.Entry entry = (Map.Entry) iter.next();
+                    String inputName = (String) entry.getKey();
+                    String inputValue = (String) entry.getValue();
+                    if (inputValue == null) {
+                        continue;
+                    }
+                    File file = new File(inputValue);
+                    String filename = file.getName();
+                    String contentType = "image/jpeg";
+//                            .getContentType(file);
+//                    if (filename.endsWith(".png")) {
+//                        contentType = "image/png";
+//                    }
+//                    if (contentType == null || contentType.equals("")) {
+//                        contentType = "application/octet-stream";
+//                    }
 
-                    return true;
+
+                    StringBuffer strBuf = new StringBuffer();
+                    strBuf.append("\r\n").append("--").append(BOUNDARY).append(
+                            "\r\n");
+                    strBuf.append("Content-Disposition: form-data; name=\""
+                            + inputName + "\"; filename=\"" + filename
+                            + "\"\r\n");
+                    strBuf.append("Content-Type:" + contentType + "\r\n\r\n");
+
+                    out.write(strBuf.toString().getBytes());
+
+                    LogUtils.e(strBuf.toString());
+
+                    DataInputStream in = new DataInputStream(
+                            new FileInputStream(file));
+                    int bytes = 0;
+                    byte[] bufferOut = new byte[1024];
+                    while ((bytes = in.read(bufferOut)) != -1) {
+                        out.write(bufferOut, 0, bytes);
+                    }
+                    in.close();
                 }
 
             }
-        } catch (MalformedURLException e) {
+
+            byte[] endData = ("\r\n--" + BOUNDARY + "--\r\n").getBytes();
+            LogUtils.e(new String(endData));
+            out.write(endData);
+            out.flush();
+            out.close();
+            int resCode = conn.getResponseCode();
+
+            if (resCode == 200) {
+                // 读取返回数据
+                StringBuffer strBuf = new StringBuffer();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(
+                        conn.getInputStream()));
+
+                String line = null;
+                while ((line = reader.readLine()) != null) {
+                    strBuf.append(line).append("\n");
+                }
+                res = strBuf.toString();
+                System.out.println("发送POST请求成功。" + res);
+                reader.close();
+                reader = null;
+                return true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("发送POST请求出错。" + urlStr);
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+                conn = null;
+            }
         }
         return false;
     }
+
 }

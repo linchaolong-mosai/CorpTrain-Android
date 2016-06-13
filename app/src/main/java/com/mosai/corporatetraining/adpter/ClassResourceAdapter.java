@@ -22,40 +22,48 @@ import java.util.List;
  */
 public class ClassResourceAdapter extends CommonAdapter<Resources>{
 //    private DisplayImageOptions options;
-
+    private Context mContext;
     public ClassResourceAdapter(Context context, List<Resources> listDatas, int layoutId) {
         super(context, listDatas, layoutId);
-//        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
-//                .showImageForEmptyUri(R.drawable.ic_class)
-//                .showImageOnFail(R.drawable.ic_class)
-//                .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+        mContext = context;
     }
 
     @Override
-    protected void fillData(CommonViewHolder holder, int position) {
-        Resources resources = listDatas.get(position);
-//        ImageView ivIcon = holder.getView(R.id.iv_class);
-//        Utils.displayImage(classes.getClassInfo().getClassId(),classes.getClassInfo().getImageName(),ivIcon,options);
-//        ImageLoader.getInstance().displayImage(Utils.getClassImgUrl(classes.getClassInfo().getClassId(),classes.getClassInfo().getImageName()),ivIcon);
+    protected void fillData(CommonViewHolder holder, final int position) {
+        final Resources resources = listDatas.get(position);
         TextView tvClassName = holder.getView(R.id.tv_classname);
-//        TextView tvDuedate = holder.getView(R.id.tv_duedate);
         tvClassName.setText(resources.getName());
         ImageView ivIcon = holder.getView(R.id.iv_class);
         HorizontalProgressBarWithNumber horizontalProgressBarWithNumber = holder.getView(R.id.hprogressbar);
-
+        TextView tvState = holder.getView(R.id.tv_state);
         if(resources.getResourceType()== Constants.ResourceTypeQuiz||resources.getResourceType()==Constants.ResourceTypeSurvey){
+            if(resources.getResourceType()== Constants.ResourceTypeQuiz){
+                tvState.setText(mContext.getString(R.string.start_quiz));
+            }else{
+                tvState.setText(mContext.getString(R.string.open_survey));
+            }
             horizontalProgressBarWithNumber.setVisibility(View.GONE);
         }else{
-            if(resources.showProgress){
-                horizontalProgressBarWithNumber.setVisibility(View.VISIBLE);
-                horizontalProgressBarWithNumber.setMax(100);
-                int progress = (int)((resources.currentcount*0.01f)/(resources.totalcount*0.01f)*100);
-                horizontalProgressBarWithNumber.setProgress(progress);
-            }else{
+            if(resources.exist){
+                tvState.setText(mContext.getString(R.string.open));
                 horizontalProgressBarWithNumber.setVisibility(View.GONE);
+            }else{
+
+                if(resources.showProgress){
+                    horizontalProgressBarWithNumber.setMax(100);
+                    int progress = (int)((resources.currentcount*0.01f)/(resources.totalcount*0.01f)*100);
+                    tvState.setText(mContext.getString(R.string.downloading));
+                    horizontalProgressBarWithNumber.setVisibility(View.VISIBLE);
+                    horizontalProgressBarWithNumber.setProgress(progress);
+                }else{
+                    tvState.setText(mContext.getString(R.string.download));
+                    horizontalProgressBarWithNumber.setVisibility(View.GONE);
+                }
             }
 
         }
+
+        //判断图标类型
         if(resources.getResourceType()== Constants.ResourceTypeSurvey){
                 ivIcon.setImageResource(R.drawable.ic_survey);
         }else if(resources.getResourceType()== Constants.ResourceTypeVideo){
@@ -67,5 +75,22 @@ public class ClassResourceAdapter extends CommonAdapter<Resources>{
         }else {
             ivIcon.setImageResource(R.drawable.ic_class);
         }
+        tvState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickStateTextViewCallback!=null){
+                    clickStateTextViewCallback.callback(resources,position);
+                }
+            }
+        });
+    }
+
+    public void setClickStateTextViewCallback(ClickStateTextViewCallback clickStateTextViewCallback) {
+        this.clickStateTextViewCallback = clickStateTextViewCallback;
+    }
+
+    private ClickStateTextViewCallback clickStateTextViewCallback;
+    public interface ClickStateTextViewCallback{
+        void callback(Resources resources,int position);
     }
 }

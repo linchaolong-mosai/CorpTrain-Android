@@ -48,6 +48,7 @@ public class TextProgressIndicator extends Dialog{
     }
     public void showDialog(String message){
         if(!isShowing()){
+            tv.setText(message);
             show();
         }
     }

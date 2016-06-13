@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.coursecomment.Comments;
+import com.mosai.ui.CircleImageView;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -31,6 +32,7 @@ public class CourseCommentAdapter extends CommonAdapter<Comments>{
 
     @Override
     protected void fillData(CommonViewHolder holder, int position) {
+        CircleImageView circleImageView = holder.getView(R.id.civ_avator);
         TextView tvCreater = holder.getView(R.id.tv_creater);
         TextView tvComment = holder.getView(R.id.tv_comment);
         Comments comments = listDatas.get(position);

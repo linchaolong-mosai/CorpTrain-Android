@@ -107,4 +107,10 @@
     <string name="search_noresult">No Result Found</string>
     <string name="change_number_successfully">Phone Number Changed</string>
     <string name="submit_successfully">Submit Successfully</string>
+    <string name="download">Download</string>
+    <string name="downloading">Downloading</string>
+    <string name="open">Open</string>
+    <string name="open_quiz">Start Quiz</string>
+    <string name="open_survey">Start Survey</string>
+    <string name="uploading">uploading&#8230;</string>
 </resources>

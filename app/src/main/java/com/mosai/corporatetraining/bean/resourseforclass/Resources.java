@@ -3,6 +3,7 @@ package com.mosai.corporatetraining.bean.resourseforclass;
 import java.io.Serializable;
 
 public class Resources implements Serializable {
+//    public boolean exist;
     public boolean exist;
     public long totalcount;
     public long currentcount;

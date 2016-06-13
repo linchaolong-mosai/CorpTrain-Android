@@ -42,4 +42,10 @@ public class Utils {
         System.out.println("renameToNewFile is OK ? :" +isOk);
         return isOk;
     }
+    public static String getAvatar(int userId){
+        return getAvatar(userId,0);
+    }
+    public static String getAvatar(int userId,int version){
+        return String.format(AppAction.URL+"data/users/avatar/%d_medium.jpg?version=%d",userId,version);
+    }
 }

@@ -107,4 +107,10 @@
     <string name="submit_message">是否提交答案?</string>
     <string name="search_noresult">搜索结果为空</string>
     <string name="submit_successfully">提交成功</string>
+    <string name="download">下载</string>
+    <string name="downloading">正在下载</string>
+    <string name="open">打开</string>
+    <string name="open_quiz">开始测验</string>
+    <string name="open_survey">问卷调查</string>
+    <string name="uploading">上传中&#8230;</string>
 </resources>

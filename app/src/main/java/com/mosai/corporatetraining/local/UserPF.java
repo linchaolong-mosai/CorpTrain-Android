@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.alibaba.fastjson.JSON;
 import com.mosai.corporatetraining.entity.CurrentCtUserResponse;
 import com.mosai.corporatetraining.entity.UserInfoResponse;
-import com.mosai.corporatetraining.network.AppAction;
+import com.mosai.corporatetraining.util.Utils;
 
 /**
  * 用户本地缓存数据
@@ -126,8 +126,7 @@ public class UserPF {
 		putInt(LOGO, userInfoResponse.logo);
 		putInt(RECORDING_DEFAULT, userInfoResponse.recordingDefault);
 		putInt(UPLOAD_LIMIT, userInfoResponse.uploadLimit);
-		//https://train-qa.liveh2h.com/data/users/avatar/1947_medium.jpg?version=111
-		putString(AVATAR_URL,String.format(AppAction.URL+"data/users/avatar/%d_medium.jpg?version=%d",userInfoResponse.userId,0));
+		putString(AVATAR_URL, Utils.getAvatar(userInfoResponse.userId));
 	}
 	public String getAvatarUrl(){
 		return getString(AVATAR_URL,"");

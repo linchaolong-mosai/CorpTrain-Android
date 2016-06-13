@@ -2,8 +2,10 @@ package com.mosai.corporatetraining.network;
 
 import android.content.Context;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.ConverStr;
 
 import java.io.File;
@@ -24,9 +26,9 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_SUBSCRIBED = 4;
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
-
 //    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
     public static final String URL = "https://train-qa.liveh2h.com/";
+    public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
@@ -138,10 +140,13 @@ public class AppAction {
         RequestParams params = new RequestParams();
         try {
             params.put("file",new File(path));
+            params.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0));
             AsyncHttp.getInstance().getClient().removeAllHeaders();
-            AsyncHttp.getInstance().execute(context, "https://train-qa.liveh2h.com/tutormeetupload/changeavatar.do",
-                    params, AsyncHttp.METHOD_POST,"multipart/form-data;boundary=----WebKitFormBoundarytl61TC9tokeItvRA;image/JPEG", responseHandler);
+            AsyncHttp.getInstance().getClient().addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,"multipart/form-data;boundary=--WebKitFormBoundarytl61TC9tokeItvRA");
+            AsyncHttp.getInstance().getClient().addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+            AsyncHttp.getInstance().getClient().post(context,AVATAR_URL,params,responseHandler);
         } catch (FileNotFoundException e) {
+
             e.printStackTrace();
         }
     }

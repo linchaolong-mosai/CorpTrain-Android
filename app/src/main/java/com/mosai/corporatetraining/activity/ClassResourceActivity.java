@@ -103,6 +103,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogUtils.e("onitemclick");
                 Resources resource = ClassResourceActivity.this.resources.get(position);
                 String path = Utils.getLocalFile(context, resource.getResourceId() + "_" + resource.getName());
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
@@ -124,7 +125,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         intent.putExtra("path",path);
                         intent.putExtra("filepath",filepath);
                         startActivity(intent);
-                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
                     }
                 } else if(resource.getResourceType() == Constants.ResourceTypeVideo){
                     if(new File(filepath).exists()){
@@ -137,7 +138,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         intent.putExtra("resource",resource);
                         intent.putExtra("url",url);
                         startActivity(intent);
-                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
                     }
                 } else{
                     if(new File(filepath).exists()){
@@ -148,10 +149,45 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                         intent.putExtra("filename",resource.getName());
                         intent.putExtra("url",url);
                         startActivity(intent);
-                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
                     }
                 }
 
+            }
+        });
+        adapter.setClickStateTextViewCallback(new ClassResourceAdapter.ClickStateTextViewCallback() {
+            @Override
+            public void callback(Resources resource,int position) {
+                LogUtils.e("callback");
+                String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
+                if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
+                    getQuiz(resource);
+                } else if (resource.getResourceType() == Constants.ResourceTypeSurvey) {
+                    getSurvey(resource);
+                } else if(resource.getResourceType() == Constants.ResourceTypeImage){
+                    if(resource.exist){
+                        Intent intent = new Intent(context,ShowImageActivity.class);
+                        intent.putExtra("filepath",filepath);
+                        startActivity(intent);
+                    }else{
+                        downloadFile(resource,position);
+                    }
+                } else if(resource.getResourceType() == Constants.ResourceTypeVideo){
+                    if(resource.exist){
+                        Intent intent = new Intent(context,VideoActivity.class);
+                        intent.putExtra("resource",resource);
+                        intent.putExtra("path",filepath);
+                        startActivity(intent);
+                    }else{
+                        downloadFile(resource,position);
+                    }
+                } else{
+                    if(new File(filepath).exists()){
+                        openFile(filepath);
+                    }else{
+                        downloadFile(resource,position);
+                    }
+                }
             }
         });
         getClassResource();
@@ -233,6 +269,10 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                 ResourcesRoot root = (ResourcesRoot) response;
                 resources.clear();
                 resources.addAll(root.getResources());
+                for(Resources resource : resources){
+                    String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
+                    resource.exist=new File(filepath).exists();
+                }
                 adapter.notifyDataSetChanged();
             }
             @Override

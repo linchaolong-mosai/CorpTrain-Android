@@ -79,6 +79,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
     };
 
     private void submitSurveyAnwsers(){
+        submitCount=0;
         for (SurveyQuestionFragment fragment:fragments){
 
             AppAction.submitSurveyAnswer(context, resources.getClassId(), fragment.question.questionId, fragment.adapter.index, new HttpResponseHandler(context,HttpResponse.class) {
@@ -100,7 +101,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
 
                 @Override
                 public void onResponeseFail(int statusCode, HttpResponse response) {
-
+                    index=count-1;
                     showHintDialog(response.message);
                 }
             });
