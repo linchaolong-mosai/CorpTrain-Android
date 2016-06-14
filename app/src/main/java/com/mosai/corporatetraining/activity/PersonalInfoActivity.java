@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
@@ -22,6 +23,8 @@ import com.mosai.ui.CircleImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
@@ -29,6 +32,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 
+import de.greenrobot.event.EventBus;
 import pl.aprilapps.easyphotopicker.EasyImage;
 
 public class PersonalInfoActivity extends BaseToolbarActivity implements View.OnClickListener {
@@ -39,6 +43,15 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
     private ActionSheetDialog actionSheetDialog;
     private Activity mContext;
     private DisplayImageOptions options;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+   public void onEventMainThread(Event.UpdateAvatar updateAvatar){
+
+   }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +61,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
         initViews();
         initListener();
         initData();
+        EventBus.getDefault().register(this);
     }
 
     private void initViews() {
@@ -148,7 +162,6 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 final String path = new File(new URI(uri.toString())).getAbsolutePath();
                 LogUtils.e(String.format("Ucop Success,filepath:%s",path));
                 uploadFile2(path);
-//                ivMyicon.setImageBitmap(BitmapFactory.decodeFile(path));
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -191,7 +204,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 HashMap<String,String> textMap = new HashMap<String, String>();
                 textMap.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0)+"");
                 HashMap<String,String> filetMap = new HashMap<String, String>();
-                textMap.put("file",path);
+                filetMap.put("file",path);
                 return NetworkUtils.formUpload(AppAction.AVATAR_URL,textMap,filetMap);
             }
 
@@ -202,9 +215,10 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 LogUtils.e(aBoolean+"");
                 if (aBoolean){
                     String ivurl = UserPF.getInstance().getAvatarUrl();
-                    ImageLoader.getInstance().getDiskCache().remove(ivurl);
-                    ImageLoader.getInstance().getMemoryCache().remove(ivurl);
+                    MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
+                    DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
                     ImageLoader.getInstance().displayImage(ivurl, ivMyicon, options);
+                    EventBus.getDefault().post(new Event.UpdateAvatar());
                 }
 
             }
@@ -214,11 +228,11 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
         AppAction.uploadMyicon(this, path, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-
                 String ivurl = UserPF.getInstance().getAvatarUrl();
-                ImageLoader.getInstance().getDiskCache().remove(ivurl);
-                ImageLoader.getInstance().getMemoryCache().remove(ivurl);
+                MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
+                DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
                 ImageLoader.getInstance().displayImage(ivurl, ivMyicon, options);
+                EventBus.getDefault().post(new Event.UpdateAvatar());
 
             }
 

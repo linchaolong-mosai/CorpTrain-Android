@@ -142,7 +142,7 @@ public class AppAction {
             params.put("file",new File(path));
             params.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0));
             AsyncHttp.getInstance().getClient().removeAllHeaders();
-            AsyncHttp.getInstance().getClient().addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,"multipart/form-data;boundary=--WebKitFormBoundarytl61TC9tokeItvRA");
+            AsyncHttp.getInstance().getClient().addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,"multipart/form-data");
             AsyncHttp.getInstance().getClient().addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
             AsyncHttp.getInstance().getClient().post(context,AVATAR_URL,params,responseHandler);
         } catch (FileNotFoundException e) {
@@ -251,10 +251,11 @@ public class AppAction {
     public static void joinCourse(Context context,String courseId,AsyncHttpResponseHandler responseHandle){
         //corptraining/api/course/join/
         //https://train-qa.liveh2h.com/tutormeetweb/api/course/completePercent/<course_id>
-        HashMap<String,Object> hashmap = new HashMap<>();
-        hashmap.put("completePercent",1);
-        AsyncHttp.getInstance().execute(context,getUrl("api/course/completePercent/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandle);
+//        HashMap<String,Object> hashmap = new HashMap<>();
+//        hashmap.put("completePercent",1);
+//        AsyncHttp.getInstance().execute(context,getUrl("api/course/joinOptionalCourse/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandle);
 //        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/completePercent/")+courseId,null,responseHandle);
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/joinOptionalCourse/")+courseId,AsyncHttp.METHOD_POST,responseHandle);
     }
 
     /**

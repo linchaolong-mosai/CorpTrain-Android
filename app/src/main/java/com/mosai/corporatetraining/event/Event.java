@@ -10,4 +10,7 @@ public class Event {
     public static class NetChange{
         public boolean netChange;
     }
+    public static  class UpdateAvatar{
+        public boolean update;
+    }
 }

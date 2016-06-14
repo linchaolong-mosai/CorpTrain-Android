@@ -18,6 +18,7 @@ import com.mosai.corporatetraining.activity.FeedbackActivity;
 import com.mosai.corporatetraining.activity.LoginActivity;
 import com.mosai.corporatetraining.activity.MainActivity;
 import com.mosai.corporatetraining.activity.PersonalInfoActivity;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.util.AppManager;
 import com.mosai.corporatetraining.util.DeleteDirectory;
@@ -32,6 +33,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.io.File;
 
+import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
 /**
@@ -68,8 +70,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtils.i("onCreate");
+        EventBus.getDefault().register(this);
     }
-
+    public void onEventMainThread(Event.UpdateAvatar updateAvatar){
+        ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -160,6 +165,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         LogUtils.i("onDestroy");
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

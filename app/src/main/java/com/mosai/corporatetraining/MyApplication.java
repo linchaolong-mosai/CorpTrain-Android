@@ -10,6 +10,8 @@ import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemor
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.utils.DiskCacheUtils;
+import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 
 import java.io.File;
 
@@ -51,10 +53,10 @@ public class MyApplication extends Application {
                 .writeDebugLogs()
                 .build();
         ImageLoader.getInstance().init(config);
-//        MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
-//        DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
-        ImageLoader.getInstance().getDiskCache().remove(UserPF.getInstance().getAvatarUrl());
-        ImageLoader.getInstance().getMemoryCache().remove(UserPF.getInstance().getAvatarUrl());
+        MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
+        DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
+//        ImageLoader.getInstance().getDiskCache().remove(UserPF.getInstance().getAvatarUrl());
+//        ImageLoader.getInstance().getMemoryCache().remove(UserPF.getInstance().getAvatarUrl());
     }
 
     private void initDirs() {
