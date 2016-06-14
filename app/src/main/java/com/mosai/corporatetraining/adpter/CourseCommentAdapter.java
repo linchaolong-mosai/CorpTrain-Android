@@ -5,10 +5,12 @@ import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.coursecomment.Comments;
+import com.mosai.corporatetraining.util.Utils;
 import com.mosai.ui.CircleImageView;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.List;
@@ -38,5 +40,7 @@ public class CourseCommentAdapter extends CommonAdapter<Comments>{
         Comments comments = listDatas.get(position);
         tvComment.setText(comments.getCourseCommentInfo().getComment());
         tvCreater.setText(comments.getCreatorInfo().getCreator());
+
+        ImageLoader.getInstance().displayImage(Utils.getAvatar(comments.getCreatorInfo().getUserSn()),circleImageView,options);
     }
 }

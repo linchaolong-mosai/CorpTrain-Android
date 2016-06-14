@@ -42,6 +42,8 @@ public class ClassAdapter extends CommonAdapter<Classes>{
         TextView tvClassName = holder.getView(R.id.tv_classname);
         TextView tvDuedate = holder.getView(R.id.tv_duedate);
         tvClassName.setText(classes.getClassInfo().getSubject());
-        tvDuedate.setText("Due "+ DateTimeUtil.getFormatDate(new Date(classes.getClassInfo().getCreateTime())));
+        String desc = String.format("Due\t%s\t%d",DateTimeUtil.getFormatDate(new Date(classes.getClassInfo().getCreateTime()))
+        ,classes.getClassInfo().percent)+"%";
+        tvDuedate.setText(classes.getClassInfo().percent+"%");
     }
 }

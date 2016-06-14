@@ -28,34 +28,38 @@ import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
+import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
+import com.mosai.corporatetraining.network.AppAction;
+import com.mosai.corporatetraining.network.HttpResponseHandler;
+import com.mosai.corporatetraining.util.LogUtils;
 import com.universalvideoview.UniversalMediaController;
 import com.universalvideoview.UniversalVideoView;
+
+import de.greenrobot.event.EventBus;
 
 public class VideoActivity extends AppCompatActivity implements UniversalVideoView.VideoViewCallback{
 
     private static final String TAG = "VideoActivity";
     private static final String SEEK_POSITION_KEY = "SEEK_POSITION_KEY";
-    private static final String VIDEO_URL = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
-
     UniversalVideoView mVideoView;
     UniversalMediaController mMediaController;
 
-    View mBottomLayout;
     View mVideoLayout;
     TextView mStart;
 
     private int mSeekPosition;
     private int cachedHeight;
     private boolean isFullscreen;
-
+    private Resources resources;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_vedio);
+        EventBus.getDefault().register(this);
+        resources = (Resources) getIntent().getSerializableExtra("resource");
         mVideoLayout = findViewById(R.id.video_layout);
-//        mBottomLayout = findViewById(R.id.bottom_layout);
         mVideoView = (UniversalVideoView) findViewById(R.id.videoView);
         mMediaController = (UniversalMediaController) findViewById(R.id.media_controller);
         mVideoView.setMediaController(mMediaController);
@@ -63,34 +67,29 @@ public class VideoActivity extends AppCompatActivity implements UniversalVideoVi
         mVideoView.setVideoViewCallback(this);
         mStart = (TextView) findViewById(R.id.start);
 
-//        mStart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mSeekPosition > 0) {
-//                    mVideoView.seekTo(mSeekPosition);
-//                }
-//                mVideoView.start();
-//                mMediaController.setTitle("Big Buck Bunny");
-//            }
-//        });
-
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Log.d(TAG, "onCompletion ");
             }
         });
-//        findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-
         mVideoView.start();
         mMediaController.setTitle(((Resources)getIntent().getSerializableExtra("resource")).getName());
-//        TextView title = (TextView) findViewById(R.id.tv_title);
-//        title.setText(((Resources)getIntent().getSerializableExtra("resource")).getName());
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                LogUtils.e("onCompletion");
+                AppAction.submitResourcePercent(VideoActivity.this, resources.getClassId(), resources.getResourceId(), 100, new HttpResponseHandler(VideoActivity.this,HttpResponse.class) {
+                    @Override
+                    public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                        Event.SubmitPercent submitPercent = new Event.SubmitPercent();
+                        submitPercent.resources = resources;
+                        submitPercent.resources.percent = 100;
+                        EventBus.getDefault().post(submitPercent);
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -183,31 +182,56 @@ public class VideoActivity extends AppCompatActivity implements UniversalVideoVi
     @Override
     public void onPause(MediaPlayer mediaPlayer) {
         Log.d(TAG, "onPause UniversalVideoView callback");
+        LogUtils.e("onPause UniversalVideoView callback");
     }
 
     @Override
     public void onStart(MediaPlayer mediaPlayer) {
-        Log.d(TAG, "onStart UniversalVideoView callback");
+        LogUtils.d("onStart UniversalVideoView callback");
     }
 
     @Override
     public void onBufferingStart(MediaPlayer mediaPlayer) {
-        Log.d(TAG, "onBufferingStart UniversalVideoView callback");
+        LogUtils.d("onBufferingStart UniversalVideoView callback");
     }
 
     @Override
     public void onBufferingEnd(MediaPlayer mediaPlayer) {
-        Log.d(TAG, "onBufferingEnd UniversalVideoView callback");
+        LogUtils.d("onBufferingEnd UniversalVideoView callback");
+    }
+    public void onEventMainThread(Event.SubmitPercent submitPercent){
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        submitPercent();
+    }
+    private void submitPercent(){
+        if(resources.percent!=100){
+            int current = mVideoView.getCurrentPosition();
+            int duration = mVideoView.getDuration();
+            final int percent = (int) (current*0.01/duration*100*100);
+            AppAction.submitResourcePercent(this, resources.getClassId(), resources.getResourceId(), percent, new HttpResponseHandler(this,HttpResponse.class) {
+                @Override
+                public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                    Event.SubmitPercent submitPercent = new Event.SubmitPercent();
+                    submitPercent.resources = resources;
+                    submitPercent.resources.percent = percent;
+                    EventBus.getDefault().post(submitPercent);
+                    VideoActivity.super.onBackPressed();
 
-//    @Override
-//    public void onBackPressed() {
-//        if (this.isFullscreen) {
-//            mVideoView.setFullscreen(false);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
+                }
+            });
 
+        }else{
+            VideoActivity.super.onBackPressed();
+        }
+    }
 }

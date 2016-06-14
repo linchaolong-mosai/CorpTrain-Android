@@ -112,6 +112,24 @@ public class AsyncHttp {
         }
 
     }
+    protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
+        LogUtils.i(url);
+        client.addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+//        client.addHeader("Content-Type","application/json");
+        if(hashMap==null){
+            client.addHeader("Content-Type","application/json");
+            client.post(context,url,null,null,responseHandler);
+        }else{
+            JSONObject jsonObject = new JSONObject(hashMap);
+            try {
+                StringEntity stringEntity = new StringEntity(jsonObject.toString());
+                client.put(context,url,stringEntity,ContentType.APPLICATION_JSON.toString(),responseHandler);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
                            AsyncHttpResponseHandler responseHandler,String charset){
         params = getRequestParams(params, map);

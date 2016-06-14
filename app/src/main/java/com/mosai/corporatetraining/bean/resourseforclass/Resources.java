@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Resources implements Serializable {
 //    public boolean exist;
+    public int percent;
     public boolean exist;
     public long totalcount;
     public long currentcount;
@@ -68,4 +69,22 @@ public class Resources implements Serializable {
         return this.total;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resources resources = (Resources) o;
+
+        if (!classId.equals(resources.classId)) return false;
+        return resourceId.equals(resources.resourceId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = classId.hashCode();
+        result = 31 * result + resourceId.hashCode();
+        return result;
+    }
 }

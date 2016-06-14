@@ -16,6 +16,7 @@ import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
 import com.mosai.corporatetraining.bean.survey.SurveyQuestion;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.fragment.SurveyQuestionFragment;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
@@ -26,6 +27,7 @@ import com.mosai.utils.ToastUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
 public class SurveyQuestionsActivity extends ABaseToolbarActivity implements SurveyQuestionFragment.OnSurveyQuetsionFragmentInteractionListener{
@@ -72,12 +74,36 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             super.handleMessage(msg);
             submitCount+=1;
             if(submitCount>=count){
-                ToastUtils.showToast(context,getString(R.string.submit_successfully));
-                finish();
+                submitPercent();
             }
         }
     };
+    private void submitPercent(){
+        AppAction.submitResourcePercent(context, resources.getClassId(), resources.getResourceId(), 100, new HttpResponseHandler(context,HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                Event.SubmitPercent submitPercent = new Event.SubmitPercent();
+                submitPercent.resources = resources;
+                EventBus.getDefault().post(submitPercent);
+                ToastUtils.showToast(context,getString(R.string.submit_successfully));
+                finish();
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
 
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
+        });
+    }
     private void submitSurveyAnwsers(){
         submitCount=0;
         for (SurveyQuestionFragment fragment:fragments){
@@ -185,6 +211,15 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
                 back();
             }
         });
+        EventBus.getDefault().register(this);
+    }
+    public void onEventMainThread(Event.SubmitPercent submitPercent){
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -218,13 +253,9 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
         if(resultCode==RESULT_OK){
             back();
         }else{
-
-            //重做
-//            index-=1;
             index =0;
             submitCount=0;
             checkIndex();
-//            viewPager.setCurrentItem(index);
         }
     }
 }

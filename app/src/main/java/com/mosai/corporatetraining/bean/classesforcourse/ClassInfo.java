@@ -3,6 +3,7 @@ package com.mosai.corporatetraining.bean.classesforcourse;
 import java.io.Serializable;
 
 public class ClassInfo implements Serializable {
+    public int percent;
     private String classId;
 
     private String ctCompanyId;

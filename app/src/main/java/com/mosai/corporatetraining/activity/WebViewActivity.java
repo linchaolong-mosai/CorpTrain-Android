@@ -8,10 +8,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.bean.resourseforclass.Resources;
+import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
+import com.mosai.corporatetraining.network.AppAction;
+import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.ui.HorizontalProgressBarWithNumber;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 public class WebViewActivity extends ABaseToolbarActivity {
     @BindView(R.id.hprogressbar)
@@ -23,7 +29,7 @@ public class WebViewActivity extends ABaseToolbarActivity {
     ImageButton ibBack;
     @BindView(R.id.webview)
     WebView webview;
-
+    private Resources resources;
     @Override
     protected void initDatas() {
         webview.getSettings().setJavaScriptEnabled(true);
@@ -49,6 +55,7 @@ public class WebViewActivity extends ABaseToolbarActivity {
                 hprogressbar.setVisibility(View.GONE);
             }
         });
+        resources = (Resources) getIntent().getSerializableExtra("resource");
         url = (String) getIntent().getSerializableExtra("url");
         String fileUrl = String.format("https://docs.google.com/gview?embedded=true&url=%s", url);
 
@@ -68,13 +75,60 @@ public class WebViewActivity extends ABaseToolbarActivity {
 
     @Override
     protected void addListener() {
-
+        EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+    public void onEventMainThread(Event.SubmitPercent submitPercent){
 
+    }
     @OnClick(R.id.ib_back)
     public void onClick() {
         back();
     }
 
+    @Override
+    public void back() {
+       submitPercent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        back();
+    }
+    private void submitPercent(){
+        if(resources.percent!=100){
+            AppAction.submitResourcePercent(context, resources.getClassId(), resources.getResourceId(), 100, new HttpResponseHandler(context,HttpResponse.class) {
+                @Override
+                public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                    Event.SubmitPercent submitPercent = new Event.SubmitPercent();
+                    submitPercent.resources = resources;
+                    EventBus.getDefault().post(submitPercent);
+                    WebViewActivity.super.back();
+                }
+                @Override
+                public void onResponeseStart() {
+                    showProgressDialog();
+                }
+
+                @Override
+                public void onResponesefinish() {
+
+                    dismissProgressDialog();
+                }
+
+                @Override
+                public void onResponeseFail(int statusCode, HttpResponse response) {
+                    showHintDialog(response.message);
+                }
+            });
+
+        }else{
+            WebViewActivity.super.back();
+        }
+    }
 }

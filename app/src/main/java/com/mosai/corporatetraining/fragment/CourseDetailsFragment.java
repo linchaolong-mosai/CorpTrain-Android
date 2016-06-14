@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,11 @@ import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
 import com.mosai.corporatetraining.util.ViewUtil;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -144,7 +149,32 @@ public class CourseDetailsFragment extends Fragment {
                 ClassesRoot classesRoot = (ClassesRoot) response;
                 classes.clear();
                 classes.addAll(classesRoot.getClasses());
-                adapter.notifyDataSetChanged();
+                getClassesPercent();
+//                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+    private void getClassesPercent(){
+        AppAction.getClassesPercentByCourseId(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                try {
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    JSONObject ids = jsonObject.optJSONObject("completed_percent_list");
+                    Iterator<String> keys = ids.keys();
+                    while(keys.hasNext()){
+                        String key = keys.next();
+                        for(Classes classes1:classes){
+                            if(TextUtils.equals(key,classes1.getClassInfo().getClassId())){
+                                classes1.getClassInfo().percent = ids.optInt(key);
+                                continue;
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

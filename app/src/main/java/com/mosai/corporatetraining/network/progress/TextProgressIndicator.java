@@ -9,13 +9,13 @@ import android.widget.TextView;
 import com.mosai.corporatetraining.R;
 import com.mosai.ui.render.LevelLoadingRenderer;
 import com.mosai.ui.render.LoadingDrawable;
+import com.mosai.utils.ToastUtils;
 
 /**
  * Created by Rays on 16/5/12.
  */
-public class TextProgressIndicator extends Dialog{
+public class TextProgressIndicator extends Dialog implements IProgressIndicator{
     private Context context;
-
     public static TextProgressIndicator newInstance(Context context) {
         return new TextProgressIndicator(context);
     }
@@ -46,6 +46,11 @@ public class TextProgressIndicator extends Dialog{
         this.setCancelable(true);
         this.setCanceledOnTouchOutside(true);
     }
+    public void showDialog(){
+        if(!isShowing()){
+            show();
+        }
+    }
     public void showDialog(String message){
         if(!isShowing()){
             tv.setText(message);
@@ -56,5 +61,20 @@ public class TextProgressIndicator extends Dialog{
         if(isShowing()){
             dismiss();
         }
+    }
+
+    @Override
+    public void showErrorInfo(String message) {
+        ToastUtils.showToast(context,message);
+    }
+
+    @Override
+    public void showProgress() {
+        showDialog();
+    }
+
+    @Override
+    public void dismissProgress() {
+        dismissDialg();
     }
 }

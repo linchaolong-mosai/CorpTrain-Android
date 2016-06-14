@@ -11,6 +11,7 @@ import com.mosai.corporatetraining.R;
 import com.mosai.corporatetraining.bean.quiz.QuizSummary;
 import com.mosai.corporatetraining.bean.resourseforclass.Resources;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.local.UserPF;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import de.greenrobot.event.EventBus;
 
 public class QuizSummaryActivity extends ABaseToolbarActivity {
     @BindView(R.id.civ_avator)
@@ -52,6 +54,15 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),civAvator,options);
 
     }
+    public void onEventMainThread(Event.SubmitPercent submitPercent){
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected int setContent() {
@@ -62,14 +73,38 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
     protected void initView() {
 
     }
+    private void submitPercent(){
+        AppAction.submitResourcePercent(context, resources.getClassId(), resources.getResourceId(), 100, new HttpResponseHandler(context,HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                Event.SubmitPercent submitPercent = new Event.SubmitPercent();
+                submitPercent.resources = resources;
+                EventBus.getDefault().post(submitPercent);
+                setResult(RESULT_OK);
+                back();
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
 
+            @Override
+            public void onResponesefinish() {
+                dismissProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
+        });
+    }
     @Override
     protected void addListener() {
         findViewById(R.id.btn_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK);
-                back();
+                submitPercent();
             }
         });
         findViewById(R.id.btn_retake).setOnClickListener(new View.OnClickListener() {
@@ -80,6 +115,7 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
         });
 //        getSummary();
         setSummary();
+        EventBus.getDefault().register(this);
     }
     private int accuracy;
     private void setSummary(){
@@ -146,9 +182,7 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        setResult(RESULT_OK);
-        back();
+        submitPercent();
     }
     private boolean firstCome=true;
     @Override

@@ -431,4 +431,39 @@ public class AppAction {
         String url = String.format("%s%s/%s/%s",getUrl("api/basicSurvey/summary/"),user,classId,surveyId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
+
+    /**
+     * 获取class进度
+     * @param context
+     * @param courseId
+     * @param httpResponseHandler
+     */
+    public static void getClassesPercentByCourseId(Context context,String courseId,AsyncHttpResponseHandler httpResponseHandler){
+        AsyncHttp.getInstance().execute(context,getUrl("api/class/completePercentList/")+courseId,AsyncHttp.METHOD_GET,httpResponseHandler);
+    }
+
+    /**
+     * 获取resource进度
+     * @param context
+     * @param classId
+     * @param resourceId
+     * @param httpResponseHandler
+     */
+    public static void getResourcePercentById(Context context,String classId,String resourceId,AsyncHttpResponseHandler httpResponseHandler){
+        AsyncHttp.getInstance().execute(context,getUrl("api/resource/completePercent/")+resourceId+"/"+classId,AsyncHttp.METHOD_GET,httpResponseHandler);
+    }
+
+    /**
+     * 提交Resource进度
+     * @param context
+     * @param classId
+     * @param resourceId
+     * @param percent
+     * @param responseHandle
+     */
+    public static void submitResourcePercent(Context context,String classId,String resourceId,int percent,AsyncHttpResponseHandler responseHandle){
+        HashMap<String,Object> hashmap = new HashMap<>();
+        hashmap.put("completePercent",percent);
+        AsyncHttp.getInstance().putJsonBody(context,getUrl("api/resource/completePercent/")+resourceId+"/"+classId,hashmap,responseHandle);
+    }
 }

@@ -1,5 +1,7 @@
 package com.mosai.corporatetraining.event;
 
+import com.mosai.corporatetraining.bean.resourseforclass.Resources;
+
 /**
  * 描述:
  * 作者：周年斌
@@ -12,5 +14,8 @@ public class Event {
     }
     public static  class UpdateAvatar{
         public boolean update;
+    }
+    public static class SubmitPercent{
+        public Resources resources;
     }
 }

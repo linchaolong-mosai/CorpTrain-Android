@@ -79,9 +79,11 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             submitCount += 1;
             if (submitCount >= count) {
                 getSummary();
+                dismissProgressDialog();
             }
         }
     };
+
 
     private void getSummary() {
         int count = questions.getQuestions().size();
@@ -100,12 +102,15 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         intent.putExtra("incorrectcount", incorrectcount);
         intent.putExtra("accuracy", accuracy);
         intent.putExtra("passingGrade", ((Quiz)getIntent().getSerializableExtra("quiz")).passingGrade);
+        intent.putExtra("resource",resources);
         startActivityForResult(intent, 0);
 
     }
 
+
     private void submitQuizAnswers() {
         submitCount=0;
+        showProgressDialog();
         for (QuizQuestionFragment fragment : fragments) {
             AppAction.submitQuizAnswer(context, resources.getClassId(), fragment.question.getQuestionId(), fragment.adapter.index, new HttpResponseHandler(context, HttpResponse.class) {
                 @Override
@@ -215,6 +220,13 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
                 back();
             }
         });
+//        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
     }
 
     private class TabAdapter extends FragmentPagerAdapter {
