@@ -11,9 +11,7 @@
         android:layout_height="@dimen/titleheight"
         >
 
-
         <TextView
-
             android:id="@+id/tv_title"
             android:layout_centerInParent="true"
             style="@style/titletext"

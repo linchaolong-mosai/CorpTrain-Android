@@ -99,6 +99,7 @@
             <com.mosai.ui.HorizontalListView
                 android:layout_marginLeft="1dp"
                 android:id="@+id/hlv_recommended"
+                android:layout_marginStart="10dp"
                 android:layout_height="@dimen/course_hlistview_height"
                 android:layout_width="match_parent">
 

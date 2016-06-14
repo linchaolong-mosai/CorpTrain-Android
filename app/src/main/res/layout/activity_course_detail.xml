@@ -13,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleheight"
         android:background="@color/titlecolor">
-
         <include layout="@layout/layout_ib_titile_back"></include>
-
         <include layout="@layout/layout_title_marqueetextview"/>
+
         <ImageView
             android:scaleType="centerInside"
             android:paddingRight="10dp"
@@ -75,7 +74,7 @@
         android:id="@+id/scv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" >
+        android:layout_margin="15dp" >
     </com.mosai.ui.SegmentedControlView>
 
     <include layout="@layout/layout_horizontalline"></include>
