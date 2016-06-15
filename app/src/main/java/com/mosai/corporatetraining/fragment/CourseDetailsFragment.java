@@ -11,19 +11,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.mosai.corporatetraining.R;
+import com.mosai.corporatetraining.SelectedCallback;
 import com.mosai.corporatetraining.activity.ClassResourceActivity;
+import com.mosai.corporatetraining.activity.CourseDetailActivity;
 import com.mosai.corporatetraining.adpter.ClassAdapter;
 import com.mosai.corporatetraining.bean.classesforcourse.Classes;
 import com.mosai.corporatetraining.bean.classesforcourse.ClassesRoot;
 import com.mosai.corporatetraining.bean.usercourse.Courses;
 import com.mosai.corporatetraining.entity.HttpResponse;
+import com.mosai.corporatetraining.event.Event;
 import com.mosai.corporatetraining.network.AppAction;
 import com.mosai.corporatetraining.network.HttpResponseHandler;
+import com.mosai.corporatetraining.ui.RatingDialog;
 import com.mosai.corporatetraining.util.ViewUtil;
+import com.mosai.ui.SegmentedControlView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,16 +46,23 @@ import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
-public class CourseDetailsFragment extends Fragment {
+public class CourseDetailsFragment extends Fragment implements SegmentedControlView.OnSelectionChangedListener{
+    private ImageView ivIcon;
+    public RatingBar ratingBar;
     private List<Classes> classes = new ArrayList<>();
     private ClassAdapter adapter;
     private Courses courses;
     private Context context;
     private TextView tvSubject,tvDec;
+    private SegmentedControlView scv;
+    private SelectedCallback selectedCallback;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+        if(context instanceof SelectedCallback){
+            selectedCallback = (SelectedCallback) context;
+        }
     }
     private Button btnJoinCourse;
     private View view;
@@ -70,25 +87,50 @@ public class CourseDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_course_details, container, false);
         btnJoinCourse = ViewUtil.findViewById(view,R.id.btn_joincourse);
+        lv = ViewUtil.findViewById(view,R.id.lv);
         tvDec = ViewUtil.findViewById(view,R.id.tv_description);
         tvSubject = ViewUtil.findViewById(view,R.id.tv_title);
-        lv = ViewUtil.findViewById(view,R.id.lv);
+        tvDec.setVisibility(View.VISIBLE);
+        tvSubject.setVisibility(View.VISIBLE);
+        ivIcon = ViewUtil.findViewById(view, R.id.iv_icon);
+        ratingBar = (RatingBar) view.findViewById(R.id.ratingbar);
         courses = (Courses)getArguments().getSerializable("course");
+        ratingDialog = new RatingDialog(context);
+        scv = (SegmentedControlView) view.findViewById(R.id.scv);
+        scv.setColors(getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.white));
+        scv.setEqualWidth(true);
+        scv.setStretch(true);
+
+        try {
+            scv.setItems(new String[]{getString(R.string.course_details), getString(R.string.course_comments)}, new String[]{"one", "two"});
+            scv.setDefaultSelection(0);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
          return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
+                .showImageForEmptyUri(R.drawable.bg_course_default_cover)
+                .showImageOnFail(R.drawable.bg_course_default_cover)
+                .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
         tvSubject.setText(courses.getCourseInfo().getSubject());
         tvDec.setText(courses.getCourseInfo().getDescription());
         adapter = new ClassAdapter(context,classes,R.layout.item_listformat_class);
         lv.setAdapter(adapter);
+        ratingBar.setRating(courses.getCourseInfo().getRating());
+        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL, courses.getCourseInfo().getCourseId(), courses.getCourseInfo().getImageName());
+        ImageLoader.getInstance().displayImage(imgurl, ivIcon);
         addListener();
         getClasses();
 
     }
     private void addListener(){
+        scv.setOnSelectionChangedListener(this);
         if(!courses.getInviteeInfo().getMandatory()&&courses.getAttendeeInfo().getCompletePercent()==0){
             btnJoinCourse.setVisibility(View.VISIBLE);
         }else{
@@ -110,12 +152,26 @@ public class CourseDetailsFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        view.findViewById(R.id.rl_rating).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rating();
+            }
+        });
+        ratingDialog.setCallback(new RatingDialog.Callback() {
+            @Override
+            public void callback(float rate) {
+                submitRating(rate);
+            }
+        });
     }
     public void onEventMainThread(boolean flag)
     {
 //        enrolled.getDatas();
 
+    }
+    public void onEventMainThread(Event.SubmitRate submitRate){
+        ratingBar.setRating(submitRate.rate);
     }
     private void updateMycourse(){
         EventBus.getDefault().post(courses);
@@ -177,5 +233,50 @@ public class CourseDetailsFragment extends Fragment {
                 }
             }
         });
+    }
+    private RatingDialog ratingDialog;
+    public void rating() {
+        if(!ratingDialog.isShowing()){
+
+            ratingDialog.show();
+        }
+    }
+    private DisplayImageOptions options;
+    private void submitRating(final float rating){
+        AppAction.submitCourseRating(context, courses.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(context,HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                ratingBar.setRating(rating);
+                Event.SubmitRate submitRate = new Event.SubmitRate();
+                submitRate.rate = rating;
+                EventBus.getDefault().post(submitRate);
+            }
+            @Override
+            public void onResponeseStart() {
+                ((CourseDetailActivity)context).showProgressDialog();
+            }
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                ((CourseDetailActivity)context).showHintDialog(response.message);
+            }
+
+            @Override
+            public void onResponesefinish() {
+                ((CourseDetailActivity)context).dismissProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void newSelection(String identifier, String value) {
+        if ("two".equals(value)) {
+            selectedCallback.callback(1);
+            try {
+                scv.setDefaultSelection(0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

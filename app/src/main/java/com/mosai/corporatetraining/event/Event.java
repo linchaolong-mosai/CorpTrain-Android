@@ -18,4 +18,7 @@ public class Event {
     public static class SubmitPercent{
         public Resources resources;
     }
+    public static class SubmitRate{
+        public float rate;
+    }
 }

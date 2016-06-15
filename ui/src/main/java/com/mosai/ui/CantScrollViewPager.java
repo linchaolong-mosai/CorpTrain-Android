@@ -51,5 +51,4 @@ public class CantScrollViewPager extends ViewPager {
 		}
 
 	}
-
 }

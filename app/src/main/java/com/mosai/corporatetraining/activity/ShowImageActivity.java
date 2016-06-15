@@ -31,7 +31,6 @@ public class ShowImageActivity extends ABaseToolbarActivity {
     protected void initDatas() {
         resources = (Resources) getIntent().getSerializableExtra("resource");
         String url = getIntent().getStringExtra("url");
-        final String path = getIntent().getStringExtra("path");
         final String filepath = getIntent().getStringExtra("filepath");
         final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
         if (!TextUtils.isEmpty(url)) {

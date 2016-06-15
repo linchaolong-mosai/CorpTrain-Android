@@ -1,8 +1,7 @@
 package com.mosai.corporatetraining.activity;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -95,7 +94,34 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         tvDes = ViewUtil.findViewById(this, R.id.tv_description);
         lv = ViewUtil.findViewById(this, R.id.lv);
     }
+    private void viewDocOnline(String url,Resources resource){
+        Intent intent = new Intent(context,WebViewActivity.class);
+        intent.putExtra("filename",resource.getName());
+        intent.putExtra("url",url);
+        intent.putExtra("resource",resource);
+        startActivity(intent);
+    }
+    private void viewVideoOnline(String url,Resources resource){
+        Intent intent = new Intent(context,VideoActivity.class);
+        intent.putExtra("resource",resource);
+        intent.putExtra("url",url);
+        startActivity(intent);
+    }
+    private void viewVideoLocal(String filepath,Resources resource){
+        Intent intent = new Intent(context,VideoActivity.class);
+        intent.putExtra("resource",resource);
+        intent.putExtra("path",filepath);
+        startActivity(intent);
+    }
+    private void viewImgOnline(String url,Resources resource){
 
+    }
+    private void viewImgLocal(String filepath,Resources resource){
+        Intent intent = new Intent(context,VideoActivity.class);
+        intent.putExtra("resource",resource);
+        intent.putExtra("path",filepath);
+        startActivity(intent);
+    }
     @Override
     protected void addListener() {
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
@@ -119,46 +145,22 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                     getSurvey(resource);
                 } else if(resource.getResourceType() == Constants.ResourceTypeImage){
                     if(new File(filepath).exists()){
-                        //打开本地文件
-//                        openFile(filepath);
-                        Intent intent = new Intent(context,ShowImageActivity.class);
-                        intent.putExtra("filepath",filepath);
-                        intent.putExtra("resource",resource);
-                        startActivity(intent);
+                        viewImgLocal(filepath,resource);
                     }else{
-                        Intent intent = new Intent(context,ShowImageActivity.class);
-                        intent.putExtra("url",url);
-                        intent.putExtra("path",path);
-                        intent.putExtra("filepath",filepath);
-                        intent.putExtra("resource",resource);
-                        startActivity(intent);
-//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                       viewImgOnline(url,resource);
                     }
                 } else if(resource.getResourceType() == Constants.ResourceTypeVideo){
                     if(new File(filepath).exists()){
-                        Intent intent = new Intent(context,VideoActivity.class);
-                        intent.putExtra("resource",resource);
-                        intent.putExtra("path",filepath);
-                        startActivity(intent);
+                        viewVideoLocal(path,resource);
                     }else{
-                        Intent intent = new Intent(context,VideoActivity.class);
-                        intent.putExtra("resource",resource);
-                        intent.putExtra("url",url);
-                        startActivity(intent);
-//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                        viewVideoOnline(url,resource);
                     }
                 } else{
                     if(new File(filepath).exists()){
-                        //打开本地文件
                         submitPercentDoc(resource);
-                        openFile(filepath);
+                        openDoc(filepath,url,resource.getName(),resource);
                     }else{
-                        Intent intent = new Intent(context,WebViewActivity.class);
-                        intent.putExtra("filename",resource.getName());
-                        intent.putExtra("url",url);
-                        intent.putExtra("resource",resource);
-                        startActivity(intent);
-//                        downloadFile(ClassResourceActivity.this.resources.get(position),position);
+                        viewDocOnline(url,resource);
                     }
                 }
 
@@ -168,6 +170,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             @Override
             public void callback(Resources resource,int position) {
                 LogUtils.e("callback");
+                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
                 if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
                     getQuiz(resource);
@@ -175,27 +178,20 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                     getSurvey(resource);
                 } else if(resource.getResourceType() == Constants.ResourceTypeImage){
                     if(resource.exist){
-                        Intent intent = new Intent(context,ShowImageActivity.class);
-                        intent.putExtra("filepath",filepath);
-                        intent.putExtra("resource",resource);
-                        startActivity(intent);
+                        viewImgLocal(filepath,resource);
                     }else{
                         downloadFile(resource,position);
                     }
                 } else if(resource.getResourceType() == Constants.ResourceTypeVideo){
                     if(resource.exist){
-                        Intent intent = new Intent(context,VideoActivity.class);
-                        intent.putExtra("resource",resource);
-                        intent.putExtra("path",filepath);
-                        intent.putExtra("resource",resource);
-                        startActivity(intent);
+                        viewVideoLocal(filepath,resource);
                     }else{
                         downloadFile(resource,position);
                     }
                 } else{
                     if(new File(filepath).exists()){
                         submitPercentDoc(resource);
-                        openFile(filepath);
+                        openDoc(filepath,url,resource.getName(),resource);
                     }else{
                         downloadFile(resource,position);
                     }
@@ -310,44 +306,44 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             }
         });
     }
-    private int resourceCount;
     private void getResourcesPercent(){
-        resourceCount=0;
-        showProgressDialog();
-        for(final Resources resources1 : resources){
-            String classId = classes.getClassInfo().getClassId();
-            String resourceId = resources1.getResourceId();
-            AppAction.getResourcePercentById(context, classId, resourceId, new HttpResponseHandler(context,HttpResponse.class) {
-                @Override
-                public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                    //{"returnCode":0,"completed_percent":3}
-                    try {
-                        int completed_percent=new JSONObject(responseString).optInt("completed_percent");
-                        resources1.percent = completed_percent;
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+        AppAction.getResourcesPercentByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(context,ResourcesRoot.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                try {
+                    JSONObject jsonObject = new JSONObject(responseString);
+                    JSONObject ids = jsonObject.optJSONObject("completed_percent_list");
+                    Iterator<String> keys = ids.keys();
+                    while(keys.hasNext()){
+                        String key = keys.next();
+                        for(Resources resources:ClassResourceActivity.this.resources){
+                            if(TextUtils.equals(key,resources.getResourceId())){
+                                resources.percent = ids.optInt(key);
+                                continue;
+                            }
+                        }
                     }
+                    adapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
+            @Override
+            public void onResponeseStart() {
+                showProgressDialog();
+            }
 
-                @Override
-                public void onResponesefinish() {
-                    super.onResponesefinish();
-                    handler.sendEmptyMessage(0);
-                }
-            });
-        }
-    }
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            resourceCount+=1;
-            if(resourceCount==resources.size()){
-                adapter.notifyDataSetChanged();
+            @Override
+            public void onResponesefinish() {
                 dismissProgressDialog();
             }
-        }
-    };
+
+            @Override
+            public void onResponeseFail(int statusCode, HttpResponse response) {
+                showHintDialog(response.message);
+            }
+        });
+    }
 
     private void getClassResource() {
         AppAction.getResourceByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(context,ResourcesRoot.class) {
@@ -387,19 +383,21 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Map map = new HashMap();
         Iterator iter = httpHandlers.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
-//            String key = (String) entry.getKey();
             HttpHandler<?> val = (HttpHandler<?>) entry.getValue();
             val.cancel();
             }
         EventBus.getDefault().unregister(this);
     }
-
-    private void openFile(String path) {
-        startActivity(FileUtils.openFile(path));
+    private void openDoc(String path, String url, String filename, Resources resources) {
+        Intent intent = FileUtils.openFile(path);
+        if(intent==null){
+            viewDocOnline(url,resources);
+        }else{
+            startActivity(intent);
+        }
     }
 
     private void downloadFile(final Resources recources, final int position) {

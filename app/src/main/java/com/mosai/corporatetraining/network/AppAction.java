@@ -433,6 +433,16 @@ public class AppAction {
     }
 
     /**
+     * 获取resource进度
+     * @param context
+     * @param classId
+     * @param httpResponseHandler
+     */
+    public static void getResourcesPercentByClassId(Context context,String classId,AsyncHttpResponseHandler httpResponseHandler){
+        AsyncHttp.getInstance().execute(context,getUrl("api/resource/completePercentList/")+classId,AsyncHttp.METHOD_GET,httpResponseHandler);
+    }
+
+    /**
      * 获取class进度
      * @param context
      * @param courseId
@@ -441,7 +451,6 @@ public class AppAction {
     public static void getClassesPercentByCourseId(Context context,String courseId,AsyncHttpResponseHandler httpResponseHandler){
         AsyncHttp.getInstance().execute(context,getUrl("api/class/completePercentList/")+courseId,AsyncHttp.METHOD_GET,httpResponseHandler);
     }
-
     /**
      * 获取resource进度
      * @param context

@@ -215,6 +215,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 .setPositiveButton(mContext.getString(R.string.ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(new File(Utils.getMaterialsDir(mContext)).isDirectory()&&new File(Utils.getMaterialsDir(mContext)).list().length==0){
+                            ToastUtils.showToast(mContext,mContext.getString(R.string.delete_success));
+                            return;
+                        }
                         new AsyncTask<Void,Void,Boolean>(){
                             @Override
                             protected void onPreExecute() {

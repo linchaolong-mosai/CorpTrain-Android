@@ -1,14 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 android {
-//    signingConfigs {
-//        config_debug {
-//            keyAlias 'znb_debugkey'
-//            keyPassword 'znb2238226'
-//            storeFile file('D:/debug.keystore')
-//            storePassword 'znb2238226'
-//        }
-//    }
+    signingConfigs {
+        config_debug {
+            keyAlias 'mosai_znb'
+            keyPassword 'znb2238226'
+            storeFile file('mosai_znb.jks')
+            storePassword 'znb2238226'
+        }
+        config_release {
+            keyAlias 'mosai_znb'
+            keyPassword 'znb2238226'
+            storeFile file('mosai_znb.jks')
+            storePassword 'znb2238226'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
@@ -22,6 +28,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config_release
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config_debug
         }
     }
     productFlavors {
@@ -48,5 +60,4 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile project(':universalvideoview')
     compile project(':photoviewlibrary')
-//    compile 'org.greenrobot:eventbus:3.0.0'
 }

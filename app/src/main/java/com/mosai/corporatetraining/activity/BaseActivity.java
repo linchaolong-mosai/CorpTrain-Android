@@ -15,6 +15,7 @@ import com.mosai.corporatetraining.network.AsyncHttp;
 import com.mosai.corporatetraining.network.progress.DefaultProgressIndicator;
 import com.mosai.corporatetraining.network.progress.TextProgressIndicator;
 import com.mosai.corporatetraining.util.AppManager;
+import com.mosai.corporatetraining.util.LogUtils;
 import com.mosai.corporatetraining.util.ViewUtil;
 import com.mosai.corporatetraining.widget.HintDialog;
 import com.mosai.utils.SwitchingAnim;
@@ -148,7 +149,8 @@ public class BaseActivity extends AppCompatActivity {
                 tokenExpireReceiver.setTokenExpireCallback(new TokenExpireReceiver.TokenExpireCallback() {
                     @Override
                     public void teCallback() {
-                        //登录超时
+                        //token过时
+                        LogUtils.e("Go to Login");
                         AppManager.getAppManager().finishAllActivity();
 //                        UserPF.getInstance().putBoolean(UserPF.IS_LOGIN, false);
                         UserPF.getInstance().putString(UserPF.PASSWORD,"");

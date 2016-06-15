@@ -5,12 +5,24 @@
     android:orientation="vertical"
     tools:context="com.mosai.corporatetraining.fragment.CourseComentsFragment">
 
-    <ListView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<include layout="@layout/layout_header_coursedetail"/>
+    <com.mosai.ui.NoScrollListview
         android:id="@+id/lv_comment"
         style="@style/listviewstyle"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_width="match_parent"/>
+
+    </LinearLayout>
+    </ScrollView>
     <include layout="@layout/layout_horizontalline"></include>
     <LinearLayout
         android:gravity="center_vertical"

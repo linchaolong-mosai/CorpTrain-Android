@@ -71,7 +71,6 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
 //        fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
