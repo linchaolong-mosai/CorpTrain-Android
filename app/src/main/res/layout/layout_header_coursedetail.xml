@@ -47,22 +47,23 @@
         android:layout_margin="10dp" >
     </com.mosai.ui.SegmentedControlView>
 
-    <include layout="@layout/layout_horizontalline"></include>
+    <!--<include layout="@layout/layout_horizontalline"></include>-->
 
     <TextView
         android:visibility="gone"
-        android:padding="5dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello_blank_fragment" />
-    <TextView
+    <com.mosai.ui.JustifyTextView
         android:visibility="gone"
-        android:ellipsize="end"
-        android:maxHeight="30dp"
-        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginLeft="25dp"
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

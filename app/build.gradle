@@ -18,7 +18,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        applicationId "com.mosai.corporatetraining"
+        applicationId "com.itutorgroup.liveh2h.com"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
@@ -60,4 +60,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile project(':universalvideoview')
     compile project(':photoviewlibrary')
+    compile 'me.biubiubiu.justifytext:library:1.1'
 }

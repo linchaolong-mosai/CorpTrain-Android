@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mosai.corporatetraining.fragment.MeFragment">
+    tools:context=".fragment.MeFragment">
     <RelativeLayout
         android:background="@color/titlecolor"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
 
 
     <!--</FrameLayout>-->
-    <com.mosai.corporatetraining.ui.CustomScrollView
+    <com.itutorgroup.liveh2h.train.ui.CustomScrollView
 
         android:scrollbars="none"
         android:layout_width="match_parent"
@@ -106,5 +106,5 @@
             </com.mosai.ui.HorizontalListView>
         </LinearLayout>
         </LinearLayout>
-    </com.mosai.corporatetraining.ui.CustomScrollView>
+    </com.itutorgroup.liveh2h.train.ui.CustomScrollView>
 </LinearLayout>

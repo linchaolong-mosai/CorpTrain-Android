@@ -113,4 +113,5 @@
     <string name="open_quiz">Start Quiz</string>
     <string name="open_survey">Start Survey</string>
     <string name="uploading">uploading&#8230;</string>
+    <string name="server_error">We are facing technical difficulties connecting to our server. Please come back later and try again. You can let us know your issues by contacting us:http://www.liveh2h.com/contact</string>
 </resources>

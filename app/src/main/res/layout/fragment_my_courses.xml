@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mosai.corporatetraining.activity.CategoryActivity">
+    tools:context=".activity.CategoryActivity">
     <RelativeLayout
         android:background="@color/titlecolor"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
         android:layout_margin="10dp" >
     </com.mosai.ui.SegmentedControlView>
 
-    <include layout="@layout/layout_horizontalline"></include>
+    <!--<include layout="@layout/layout_horizontalline"></include>-->
     <com.mosai.ui.CantScrollViewPager
         android:layout_weight="1"
         android:id="@+id/viewPager"

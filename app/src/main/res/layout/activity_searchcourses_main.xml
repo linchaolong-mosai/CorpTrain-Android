@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mosai.corporatetraining.activity.CategoryActivity">
+    tools:context=".activity.CategoryActivity">
     <RelativeLayout
         android:background="@color/titlecolor"
         android:layout_width="match_parent"

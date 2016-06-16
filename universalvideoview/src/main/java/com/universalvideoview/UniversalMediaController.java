@@ -56,7 +56,7 @@ public class UniversalMediaController extends FrameLayout {
 
     private boolean mScalable = false;
     private boolean mIsFullScreen = false;
-//    private boolean mFullscreenEnabled = false;
+    private boolean mFullscreenEnabled = false;
 
 
     private static final int sDefaultTimeout = 3000;
@@ -84,7 +84,7 @@ public class UniversalMediaController extends FrameLayout {
 
     private ImageButton mTurnButton;// 开启暂停按钮
 
-    private ImageButton mScaleButton;
+    public ImageButton mScaleButton;
 
     private View mBackButton;// 返回按钮
 
@@ -656,10 +656,10 @@ public class UniversalMediaController extends FrameLayout {
         mTitle.setText(titile);
     }
 
-//    public void setFullscreenEnabled(boolean enabled) {
-//        mFullscreenEnabled = enabled;
-//        mScaleButton.setVisibility(mIsFullScreen ? VISIBLE : GONE);
-//    }
+    public void setFullscreenEnabled(boolean enabled) {
+        mFullscreenEnabled = enabled;
+        mScaleButton.setVisibility(mIsFullScreen ? VISIBLE : GONE);
+    }
 
 
     public void setOnErrorView(int resId) {
