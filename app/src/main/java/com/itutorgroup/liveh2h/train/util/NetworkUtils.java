@@ -45,7 +45,7 @@ public class NetworkUtils {
             conn.setDoInput(true);
             conn.setUseCaches(false);
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+            conn.setRequestProperty("API_TOKEN", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
             conn.setRequestProperty("Content-Type",
                     "multipart/form-data; boundary=" + BOUNDARY);
 

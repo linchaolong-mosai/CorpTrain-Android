@@ -113,5 +113,5 @@
     <string name="open_quiz">開始測驗</string>
     <string name="open_survey">問卷調查</string>
     <string name="uploading">上傳中&#8230;</string>
-    <string name="server_error">服務器發生故障，請稍後嘗試，可以通過以下途徑與我們聯繫:http://www.liveh2h.com/contact</string>
+    <string name="server_error">服務器發生故障，請稍後嘗試，可以通過以下途徑與我們聯繫:\nhttp://www.liveh2h.com/contact</string>
 </resources>

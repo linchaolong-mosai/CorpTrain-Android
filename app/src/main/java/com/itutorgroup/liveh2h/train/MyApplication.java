@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -30,8 +31,11 @@ public class MyApplication extends Application {
         initImageLoader();
         initAbnormalHandler();
         initDirs();
+        initLogger();
     }
-
+    private void initLogger(){
+        Logger.init("znb").methodOffset(0).hideThreadInfo();
+    }
     private void initAbnormalHandler() {
         if (BuildConfig.DEBUG) {
             AbnormalHandler crashHandler = AbnormalHandler.getInstance();
@@ -55,8 +59,6 @@ public class MyApplication extends Application {
         ImageLoader.getInstance().init(config);
         MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
         DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
-//        ImageLoader.getInstance().getDiskCache().remove(UserPF.getInstance().getAvatarUrl());
-//        ImageLoader.getInstance().getMemoryCache().remove(UserPF.getInstance().getAvatarUrl());
     }
     public void initMaterialDir(){
         File file = new File(Utils.getMaterialsDir(this));

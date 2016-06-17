@@ -113,5 +113,5 @@
     <string name="open_quiz">开始测验</string>
     <string name="open_survey">问卷调查</string>
     <string name="uploading">上传中&#8230;</string>
-    <string name="server_error">服务器发生故障，请稍后尝试，可以通过以下途径与我们联系:http://www.liveh2h.com/contact</string>
+    <string name="server_error">服务器发生故障，请稍后尝试，可以通过以下途径与我们联系:\nhttp://www.liveh2h.com/contact</string>
 </resources>

@@ -11,6 +11,7 @@ import com.loopj.android.http.RequestParams;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.nio.channels.AsynchronousCloseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -143,7 +144,7 @@ public class AppAction {
             params.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0));
             AsyncHttp.getInstance().getClient().removeAllHeaders();
             AsyncHttp.getInstance().getClient().addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,"multipart/form-data");
-            AsyncHttp.getInstance().getClient().addHeader("apiToken", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+            AsyncHttp.getInstance().getClient().addHeader("API_TOKEN", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
             AsyncHttp.getInstance().getClient().post(context,AVATAR_URL,params,responseHandler);
         } catch (FileNotFoundException e) {
 
@@ -238,7 +239,7 @@ public class AppAction {
         HashMap<String,Object> hashmap = new HashMap<>();
         hashmap.put("courseId",courseId);
         hashmap.put("rating",rating);
-        AsyncHttp.getInstance().execute(context,getUrl("api/course/rating"),null,hashmap,AsyncHttp.METHOD_PUT,null,responseHandler);
+        AsyncHttp.getInstance().putJsonBody(context,getUrl("api/course/rating"),hashmap,responseHandler);
     }
 
     /**
@@ -249,12 +250,6 @@ public class AppAction {
      */
 
     public static void joinCourse(Context context,String courseId,AsyncHttpResponseHandler responseHandle){
-        //corptraining/api/course/join/
-        //https://train-qa.liveh2h.com/tutormeetweb/api/course/completePercent/<course_id>
-//        HashMap<String,Object> hashmap = new HashMap<>();
-//        hashmap.put("completePercent",1);
-//        AsyncHttp.getInstance().execute(context,getUrl("api/course/joinOptionalCourse/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandle);
-//        AsyncHttp.getInstance().postJsonBody(context,getUrl("api/course/completePercent/")+courseId,null,responseHandle);
         AsyncHttp.getInstance().execute(context,getUrl("api/course/joinOptionalCourse/")+courseId,AsyncHttp.METHOD_POST,responseHandle);
     }
 
@@ -283,14 +278,14 @@ public class AppAction {
             e.printStackTrace();
         }
         hashmap.put("comment",comment);
-        AsyncHttp.getInstance().execute(context,getUrl("api/course/comment/")+courseId,hashmap,AsyncHttp.METHOD_PUT,responseHandler);
+        AsyncHttp.getInstance().putJsonBody(context,getUrl("api/course/comment/")+courseId,hashmap,responseHandler);
 
     }
     public static void updateCourseFavorite(Context context,String courseId,boolean isFavorite,AsyncHttpResponseHandler responseHandler){
         HashMap<String,Object> hashmap = new HashMap<>();
         hashmap.put("courseId",courseId);
         hashmap.put("favorite",isFavorite?1:0);
-        AsyncHttp.getInstance().execute(context,getUrl("api/course/favorite"),hashmap,AsyncHttp.METHOD_PUT,responseHandler);
+        AsyncHttp.getInstance().putJsonBody(context,getUrl("api/course/favorite"),hashmap,responseHandler);
     }
     /**
      * 通过CourseId获取课程内容

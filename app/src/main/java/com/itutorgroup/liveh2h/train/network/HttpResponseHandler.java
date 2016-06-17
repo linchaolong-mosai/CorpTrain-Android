@@ -13,6 +13,7 @@ import com.itutorgroup.liveh2h.train.util.FastJsonUtils;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.mosai.utils.Tools;
+import com.orhanobut.logger.Logger;
 
 import java.net.HttpURLConnection;
 
@@ -32,23 +33,22 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
         this.progressIndicator = progressIndicator;
 		this.context = context.getApplicationContext();
     }
-
 	@Override
 	public void onSuccess(int statusCode, Header[] headers,
 			String responseString) {
-//		try {
-//			responseString = new String(responseString.getBytes("utf-8"));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-		LogUtils.i("状态码：" + statusCode + " 返回值：" + responseString);
+//		LogUtils.i("状态码：" + statusCode + " 返回值：" + responseString);
+		Logger.t("resultCode").e("状态码:"+statusCode);
+		if (FastJsonUtils.isJson(responseString)){
+			Logger.t("resultString").json(responseString);
+		}else{
+			Logger.t("resultString").e("返回结果:"+responseString);
+		}
 		if (statusCode == HttpURLConnection.HTTP_OK ||statusCode == HttpURLConnection.HTTP_CREATED) {
 			try {
 				if (FastJsonUtils.isJson(responseString)) {
                     HttpResponse response = FastJsonUtils.parseObject(responseString, mClass);
 					if (response != null && response.isSuccess()) {
 						onResponeseSucess(statusCode, response, responseString);// 成功
-//						context.sendBroadcast(new Intent(TokenExpireReceiver.action));
 					}
 					else {
 						//token_expire
