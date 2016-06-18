@@ -7,11 +7,14 @@ import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.MySSLSocketFactory;
+import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,17 +44,16 @@ public class AsyncHttp {
 
 	public void init(Context context) {
         client.setTimeout(15000); // 设置链接超时，如果不设置，默认为15s
-
-//        client.setCookieStore(new PersistentCookieStore(context.getApplicationContext()));
-//        try {
-//            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-//            trustStore.load(null, null);
-//            MySSLSocketFactory socketFactory = new MySSLSocketFactory(trustStore);
-//            socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-//            client.setSSLSocketFactory(socketFactory);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        client.setCookieStore(new PersistentCookieStore(context.getApplicationContext()));
+        try {
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            trustStore.load(null, null);
+            MySSLSocketFactory socketFactory = new MySSLSocketFactory(trustStore);
+            socketFactory.setHostnameVerifier(MySSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            client.setSSLSocketFactory(socketFactory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 	public AsyncHttpClient getClient() {
