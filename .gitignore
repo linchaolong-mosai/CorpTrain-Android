@@ -12,6 +12,3 @@
 /photoviewlibrary/photoviewlibrary.iml
 /photoviewlibrary/build/
 .gradle/
-*.log
-/.gradle/
-**/.DS_Store

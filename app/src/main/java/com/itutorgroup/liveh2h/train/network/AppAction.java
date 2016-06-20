@@ -30,6 +30,7 @@ public class AppAction {
 //    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
     public static final String URL = "https://train-qa.liveh2h.com/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
+
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
