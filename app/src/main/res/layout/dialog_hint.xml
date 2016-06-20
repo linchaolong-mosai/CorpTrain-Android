@@ -13,7 +13,7 @@
         android:text="@string/error"
         android:textColor="@color/black3"/>
 
-    <TextView
+    <com.mosai.ui.JustifyTextView
         android:id="@+id/tvMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

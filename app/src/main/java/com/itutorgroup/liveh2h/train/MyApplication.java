@@ -34,7 +34,7 @@ public class MyApplication extends Application {
         initLogger();
     }
     private void initLogger(){
-        Logger.init("znb").methodOffset(0).hideThreadInfo();
+        Logger.init("znb").setMethodCount(3);
     }
     private void initAbnormalHandler() {
         if (BuildConfig.DEBUG) {

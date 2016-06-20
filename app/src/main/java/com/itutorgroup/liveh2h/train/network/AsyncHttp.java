@@ -115,8 +115,9 @@ public class AsyncHttp {
 
     }
     protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
+//        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
             client.post(context,url,null,null,responseHandler);

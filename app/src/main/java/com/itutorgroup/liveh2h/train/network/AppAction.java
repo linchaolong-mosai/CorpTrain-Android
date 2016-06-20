@@ -28,11 +28,11 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 //    private static final String BASE_URL = "https://train-qa.liveh2h.com/tutormeetweb/";
-    public static final String URL = "https://com-qa.liveh2h.com/";
+    public static final String URL = "https://train-qa.liveh2h.com/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
     private static final String BASE_URL = URL+"corptraining/";
-    public static final String IMG_RESOURSE_COURSE_URL = "https://com-qa.liveh2h.com/" + "resources/";
-    public static final String FILE_RESOURSE_COURSE_URL = "https://com-qa.liveh2h.com/" + "resources/";
+    public static final String IMG_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
+    public static final String FILE_RESOURSE_COURSE_URL = "https://train-qa.liveh2h.com/" + "resources/";
 
     public static String getUrl(String url) {
         return BASE_URL + url;
@@ -172,6 +172,7 @@ public class AppAction {
         //https://train-qa.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
+
 
 
     /**
@@ -369,8 +370,6 @@ public class AppAction {
         params.put("classId",classId);
         params.put("questionId",questionId);
         AsyncHttp.getInstance().postJsonBody(context,getUrl("api/basicQuiz/answer"),params,asyncHttpResponseHandler);
-//        params.setUseJsonStreamer(true);
-//        AsyncHttp.getInstance().execute(context,getUrl("corptraining/api/basicQuiz/answer"),AsyncHttp.METHOD_POST,"application/json",asyncHttpResponseHandler);
     }
 
     /**
