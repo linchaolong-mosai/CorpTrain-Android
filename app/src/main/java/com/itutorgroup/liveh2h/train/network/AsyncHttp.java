@@ -98,7 +98,7 @@ public class AsyncHttp {
         execute(context, url, params, map, method, null, responseHandler);
     }
     protected void postJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
+        //LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
@@ -112,7 +112,6 @@ public class AsyncHttp {
                 e.printStackTrace();
             }
         }
-
     }
     protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
 //        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
