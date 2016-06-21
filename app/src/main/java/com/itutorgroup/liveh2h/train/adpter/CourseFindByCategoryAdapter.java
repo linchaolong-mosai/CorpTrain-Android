@@ -39,7 +39,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
         String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,courseFindByCategory.getCourseId(),courseFindByCategory.getImageName());
         String subject = courseFindByCategory.getSubject();
         int viewcount = courseFindByCategory.getViewCount();
-        int rating = courseFindByCategory.getRating();
+        float rating = courseFindByCategory.getRating();
         int shareType = courseFindByCategory.getShareType();
         long publishtime = courseFindByCategory.getPublishTime();
 

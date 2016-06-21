@@ -112,13 +112,13 @@ public class WebViewActivity extends ABaseToolbarActivity {
                 }
                 @Override
                 public void onResponeseStart() {
-                    showProgressDialog();
+                    showTextProgressDialog(context.getString(R.string.uploading));
                 }
 
                 @Override
                 public void onResponesefinish() {
 
-                    dismissProgressDialog();
+                    dismissTextProgressDialog();
                 }
 
                 @Override

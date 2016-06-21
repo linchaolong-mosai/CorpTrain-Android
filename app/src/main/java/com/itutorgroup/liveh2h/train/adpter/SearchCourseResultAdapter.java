@@ -41,7 +41,7 @@ public class SearchCourseResultAdapter extends CommonAdapter<Courses> {
         String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,courseInfo.getCourseId(), courseInfo.getImageName());
         String subject = courseInfo.getSubject();
         int viewcount = courseInfo.getViewCount();
-        int rating = courseInfo.getRating();
+        float rating = courseInfo.getRating();
         int shareType = courseInfo.getShareType();
         long publishtime = courseInfo.getPublishTime();
 

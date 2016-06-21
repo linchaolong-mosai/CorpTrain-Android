@@ -80,6 +80,21 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
                         submitPercent.resources = resources;
                         EventBus.getDefault().post(submitPercent);
                     }
+                    @Override
+                    public void onResponeseStart() {
+                        showTextProgressDialog(context.getString(R.string.uploading));
+                    }
+
+                    @Override
+                    public void onResponesefinish() {
+
+                        dismissTextProgressDialog();
+                    }
+
+                    @Override
+                    public void onResponeseFail(int statusCode, HttpResponse response) {
+                        showHintDialog(response.message);
+                    }
                 });
             }
         });
@@ -211,6 +226,21 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
                     EventBus.getDefault().post(submitPercent);
                     VideoActivity.super.onBackPressed();
 
+                }
+                @Override
+                public void onResponeseStart() {
+                    showTextProgressDialog(context.getString(R.string.uploading));
+                }
+
+                @Override
+                public void onResponesefinish() {
+
+                    dismissTextProgressDialog();
+                }
+
+                @Override
+                public void onResponeseFail(int statusCode, HttpResponse response) {
+                    showHintDialog(response.message);
                 }
             });
 

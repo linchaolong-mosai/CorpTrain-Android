@@ -137,7 +137,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LogUtils.e("onitemclick");
+//                LogUtils.e("onitemclick");
                 Resources resource = ClassResourceActivity.this.resources.get(position);
                 String path = Utils.getLocalFile(context, resource.getResourceId() + "_" + resource.getName());
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
@@ -173,7 +173,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         adapter.setClickStateTextViewCallback(new ClassResourceAdapter.ClickStateTextViewCallback() {
             @Override
             public void callback(Resources resource,int position) {
-                LogUtils.e("callback");
+//                LogUtils.e("callback");
                 String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
                 if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
@@ -313,6 +313,8 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         });
     }
     private void getResourcesPercent(){
+        if(resources.size()==0)
+            return;
         AppAction.getResourcesPercentByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(context,ResourcesRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {

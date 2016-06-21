@@ -33,7 +33,7 @@ public class ClassResourceAdapter extends CommonAdapter<Resources> {
         final Resources resources = listDatas.get(position);
         TextView tvClassName = holder.getView(R.id.tv_classname);
         TextView tvDesc = holder.getView(R.id.tv_duedate);
-        tvDesc.setText(resources.percent+"%");
+        tvDesc.setText(resources.percent+"%"+mContext.getString(R.string.completed_courses));
         tvClassName.setText(resources.getName());
         ImageView ivIcon = holder.getView(R.id.iv_class);
         HorizontalProgressBarWithNumber horizontalProgressBarWithNumber = holder.getView(R.id.hprogressbar);

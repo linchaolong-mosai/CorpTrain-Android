@@ -43,8 +43,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile project(':ui')
-    compile project(':utils')
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -58,9 +56,11 @@ dependencies {
     compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
-    compile project(':universalvideoview')
-    compile project(':photoviewlibrary')
     compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.github.orhanobut:logger:1.12'
-
+    compile project(':ui')
+    compile project(':utils')
+    compile project(':universalvideoview')
+    compile project(':photoviewlibrary')
+    compile project(':httplib')
 }

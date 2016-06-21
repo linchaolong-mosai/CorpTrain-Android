@@ -26,6 +26,7 @@ import com.itutorgroup.liveh2h.train.activity.SearchCourseMainActivity;
 import com.itutorgroup.liveh2h.train.adpter.CourseCoverAdapter;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
+import com.itutorgroup.liveh2h.train.comparotor.CreatTimeComparator;
 import com.itutorgroup.liveh2h.train.comparotor.ViewCountComparator;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
@@ -180,10 +181,6 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
                 newCourses.clear();
                 newCourses.addAll(courses);
                 Collections.sort(newCourses,new ViewCountComparator());
-                for(Courses courses1:newCourses){
-                    LogUtils.e(courses1.getCourseInfo().getViewCount()+"");
-                }
-
                 hotCourses.clear();
                 if(newCourses.size()>6){
                     hotCourses.addAll(newCourses.subList(0,6));
@@ -195,7 +192,12 @@ public class DiscoverFragment extends Fragment implements BaseSliderView.OnSlide
                     if(!courses1.getInviteeInfo().getMandatory()){
                         recommendCourses.add(courses1);
                     }
+
                 }
+                Collections.sort(newCourses,new CreatTimeComparator());
+//                for (Courses courses1 : newCourses){
+//                    System.out.println(courses1.getCourseInfo().getCreateTime());
+//                }
                 newCourseCoverAdapter.notifyDataSetChanged();
                 recommendedCourseCoverAdapter.notifyDataSetChanged();
                 initSlider();

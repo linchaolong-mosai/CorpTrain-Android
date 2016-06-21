@@ -149,7 +149,8 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
                 Intent intent = new Intent(context, ClassResourceActivity.class);
                 intent.putExtra("classes",classe);
                 intent.putExtra("courses",courses);
-                startActivity(intent);
+                startActivityForResult(intent,0);
+//                startActivity(intent);
             }
         });
         view.findViewById(R.id.rl_rating).setOnClickListener(new View.OnClickListener() {
@@ -205,16 +206,24 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
                 ClassesRoot classesRoot = (ClassesRoot) response;
                 classes.clear();
                 classes.addAll(classesRoot.getClasses());
-                getClassesPercent();
+                getClassesPercent(true);
 //                adapter.notifyDataSetChanged();
             }
         });
     }
-    private void getClassesPercent(){
+
+    /**
+     * get Classes percent
+     * @param first 是否第一次进入
+     */
+    private void getClassesPercent(final boolean first){
+        if(classes.size()==0)
+            return;
         AppAction.getClassesPercentByCourseId(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 try {
+                    boolean updateMyCourses = false;
                     JSONObject jsonObject = new JSONObject(responseString);
                     JSONObject ids = jsonObject.optJSONObject("completed_percent_list");
                     Iterator<String> keys = ids.keys();
@@ -222,17 +231,28 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
                         String key = keys.next();
                         for(Classes classes1:classes){
                             if(TextUtils.equals(key,classes1.getClassInfo().getClassId())){
+                                if(!first){
+//                                    if(classes1.getClassInfo().percent!=100&&ids.optInt(key)==100)
+                                        updateMyCourses &= (classes1.getClassInfo().percent!=100&&ids.optInt(key)==100);
+                                }
                                 classes1.getClassInfo().percent = ids.optInt(key);
                                 continue;
                             }
                         }
                     }
                     adapter.notifyDataSetChanged();
+                    updateMyCourses(updateMyCourses);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+    private void updateMyCourses(boolean update){
+        if (!update)
+            return;
+        EventBus.getDefault().post(new Event.UpdateMyCourses());
+
     }
     private RatingDialog ratingDialog;
     public void rating() {
@@ -278,5 +298,11 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getClassesPercent(false);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

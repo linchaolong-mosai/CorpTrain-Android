@@ -14,11 +14,14 @@ import com.itutorgroup.liveh2h.train.bean.CoursesFindByCategory;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
+import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 public class CourseFindByCategoryActivity extends BaseToolbarActivity {
     private ListView listView;
@@ -50,12 +53,20 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
     protected void initView() {
         listView = (ListView) findViewById(R.id.lv);
     }
+//    public void onEventMainThread(Event.UpdateViewcount updateViewcount){
+//        getDatas();
+//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        EventBus.getDefault().unregister(this);
+    }
 
     protected void addListener() {
+//        EventBus.getDefault().register(this);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 back();
             }
         });
@@ -74,7 +85,7 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
                             if(courses1.getCourseInfo().getCourseId().equals(courseFindByCategories.get(position).getCourseId())){
                                 Intent intent = new Intent(context,CourseDetailActivity.class);
                                 intent.putExtra("course",courses1);
-                                startActivity(intent);
+                                startActivityForResult(intent,0);
                                 break;
                             }
                         }
@@ -99,10 +110,10 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
                 });
             }
         });
-        getDatas();
+        getDatas(true);
     }
 
-        private void getDatas(){
+        private void getDatas(final boolean showTips){
         AppAction.getCourselist(context, categoryId,new HttpResponseHandler(context,CoursesFindByCategory.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
@@ -113,19 +124,27 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
             }
             @Override
             public void onResponeseStart() {
+                if(showTips)
                 showProgressDialog();
             }
 
             @Override
             public void onResponesefinish() {
+                if(showTips)
                 dismissProgressDialog();
             }
 
             @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
+                if(showTips)
                 showHintDialog(response.message);
             }
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getDatas(false);
+    }
 }

@@ -13,6 +13,7 @@ import com.itutorgroup.liveh2h.train.SelectedCallback;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
+import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.fragment.CourseComentsFragment;
 import com.itutorgroup.liveh2h.train.fragment.CourseDetailsFragment;
 import com.itutorgroup.liveh2h.train.network.AppAction;
@@ -23,6 +24,7 @@ import com.mosai.ui.CantScrollViewPager;
 import java.util.List;
 
 import butterknife.BindView;
+import de.greenrobot.event.EventBus;
 
 public class CourseDetailActivity extends ABaseToolbarActivity implements SelectedCallback {
     private CourseDetailsFragment courseDetailsFragment;
@@ -40,8 +42,18 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
     protected void initDatas() {
         tvTitle.setText(course.getCourseInfo().getSubject());
         getCourseByName();
+        increaseViewcount();
     }
-
+    private void increaseViewcount(){
+        AppAction.incrementViewcount(context, course.getCourseInfo().getCourseId(), new HttpResponseHandler(context, HttpResponse.class) {
+            @Override
+            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                Event.UpdateViewcount updateViewcount = new Event.UpdateViewcount();
+                updateViewcount.courses = course;
+                EventBus.getDefault().post(new Event.UpdateViewcount());
+            }
+        });
+    }
     @Override
     protected int setContent() {
         return R.layout.activity_course_detail;
@@ -98,9 +110,18 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
         }
 
     }
+    public void onEventMainThread(Event.UpdateViewcount updateViewcount){
+
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void addListener() {
+        EventBus.getDefault().register(this);
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,15 +156,7 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
         });
         viewPager.setCurrentItem(0);
     }
-
-
-
-
-
-
-
     private void getCourseByName(){
-
         AppAction.getAllUserCoursesByFilter(context, course.getCourseInfo().getSubject(), new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {

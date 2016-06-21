@@ -140,51 +140,51 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        LogUtils.i("onStart");
+//        LogUtils.i("onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LogUtils.i("onResume");
+//        LogUtils.i("onResume");
         tvName.setText(UserPF.getInstance().getString(UserPF.USER_NAME, ""));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        LogUtils.i("onPause");
+//        LogUtils.i("onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        LogUtils.i("onStop");
+//        LogUtils.i("onStop");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtils.i("onDestroy");
+//        LogUtils.i("onDestroy");
         EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        LogUtils.i("onDestroyView");
+//        LogUtils.i("onDestroyView");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        LogUtils.i("onDetach");
+//        LogUtils.i("onDetach");
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        LogUtils.i("onHiddenChanged hidden=" + hidden);
+//        LogUtils.i("onHiddenChanged hidden=" + hidden);
     }
 
     @Override

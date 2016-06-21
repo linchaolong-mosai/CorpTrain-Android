@@ -470,4 +470,15 @@ public class AppAction {
         hashmap.put("completePercent",percent);
         AsyncHttp.getInstance().putJsonBody(context,getUrl("api/resource/completePercent/")+resourceId+"/"+classId,hashmap,responseHandle);
     }
+
+    /**
+     * Increment viewcout
+     * @param context
+     * @param courseId
+     * @param httpResponseHandler
+     */
+    public static void incrementViewcount(Context context,String courseId,AsyncHttpResponseHandler httpResponseHandler){
+        //https://train-qa.liveh2h.com/corptraining/api/course/viewcount/<course_id>
+        AsyncHttp.getInstance().execute(context,getUrl("api/course/viewcount/"+courseId),AsyncHttp.METHOD_PUT,httpResponseHandler);
+    }
 }

@@ -2,6 +2,7 @@ package com.itutorgroup.liveh2h.train.network;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.text.TextUtils;
 
 import com.itutorgroup.liveh2h.train.MyApplication;
@@ -36,13 +37,12 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 	@Override
 	public void onSuccess(int statusCode, Header[] headers,
 			String responseString) {
-//		LogUtils.i("状态码：" + statusCode + " 返回值：" + responseString);
-		Logger.t("resultCode").e("状态码:"+statusCode);
-		if (FastJsonUtils.isJson(responseString)){
-			Logger.t("resultString").json(responseString);
-		}else{
-			Logger.t("resultString").e("返回结果:"+responseString);
-		}
+//		Logger.t("statusCode").e("状态码：" + statusCode);
+//		if (FastJsonUtils.isJson(responseString)){
+//			Logger.t("resultString").json(responseString);
+//		}else{
+			Logger.t("resultString").e("状态码：" + statusCode+"\n"+"返回结果:"+responseString);
+//		}
 		if (statusCode == HttpURLConnection.HTTP_OK ||statusCode == HttpURLConnection.HTTP_CREATED) {
 			try {
 				if (FastJsonUtils.isJson(responseString)) {

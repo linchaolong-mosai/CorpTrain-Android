@@ -45,8 +45,7 @@ public class AsyncHttp {
 	}
 
 	public void init(Context context) {
-        client.setTimeout(15000); // 设置链接超时，如果不设置，默认为15s
-
+        client.setTimeout(30000); // 设置链接超时，如果不设置，默认为15s
         client.setCookieStore(new PersistentCookieStore(context.getApplicationContext()));
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -98,8 +97,9 @@ public class AsyncHttp {
         execute(context, url, params, map, method, null, responseHandler);
     }
     protected void postJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
+//        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
+
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
             client.post(context,url,null,null,responseHandler);
@@ -114,6 +114,7 @@ public class AsyncHttp {
         }
 
     }
+
     protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
 //        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));

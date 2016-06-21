@@ -61,7 +61,7 @@
             android:textSize="16sp"
             android:layout_marginRight="5dp"
             android:textColor="@color/white"
-            android:text="Next"
+            android:text="@string/next_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView

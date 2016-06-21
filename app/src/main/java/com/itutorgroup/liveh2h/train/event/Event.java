@@ -1,6 +1,8 @@
 package com.itutorgroup.liveh2h.train.event;
 
+import com.itutorgroup.liveh2h.train.bean.classesforcourse.Classes;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 
 /**
  * 描述:
@@ -20,5 +22,11 @@ public class Event {
     }
     public static class SubmitRate{
         public float rate;
+    }
+    public static class UpdateMyCourses{
+        public Classes classes;
+    }
+    public static class UpdateViewcount{
+        public Courses courses;
     }
 }

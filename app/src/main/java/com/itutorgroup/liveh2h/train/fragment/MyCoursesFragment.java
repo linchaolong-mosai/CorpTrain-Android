@@ -55,6 +55,11 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
         enrolled.getDatas();
 
     }
+    //我的课程进度监听
+    public void onEventMainThread(Event.UpdateMyCourses updateMyCourses){
+        enrolled.getDatas();
+        completed.getDatas();
+    }
     //网络恢复
     public void onEventMainThread(Event.NetChange netChange){
         if(netChange.netChange){
@@ -62,6 +67,12 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
             enrolled.getDatas();
             completed.getDatas();
         }
+    }
+    //increase viewcout
+    public void onEventMainThread(Event.UpdateViewcount updateViewcount){
+        mandatory.getDatas();
+        enrolled.getDatas();
+        completed.getDatas();
     }
     public MyCoursesFragment() {
         // Required empty public constructor

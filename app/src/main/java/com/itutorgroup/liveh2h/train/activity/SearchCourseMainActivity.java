@@ -63,7 +63,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, CourseDetailActivity.class);
                 intent.putExtra("course", coursesTemp.get(position));
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
         findViewById(R.id.ib_back).setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,8 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
                 return false;
             }
         });
-        getDatas();
+        getDatas(true);
+
     }
 
     private void filter(String filter) {
@@ -117,30 +118,41 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
         }
     }
 
-    private void getDatas() {
+    private void getDatas(final boolean showTips) {
         AppAction.getUserCourses(this, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
-                SearchCourseMainActivity.this.courses = courses;
+                SearchCourseMainActivity.this.courses.clear();
+                SearchCourseMainActivity.this.courses.addAll(courses);
                 Tools.showSoftInput(cetCourses);
             }
 
             @Override
             public void onResponeseStart() {
+                if(showTips)
                 showProgressDialog();
             }
 
             @Override
             public void onResponesefinish() {
+                if(showTips)
                 dismissProgressDialog();
             }
 
             @Override
             public void onResponeseFail(int statusCode, HttpResponse response) {
+                if(showTips)
                 showHintDialog(response.message);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        getDatas(false);
+        filter(cetCourses.getText().toString());
     }
 }

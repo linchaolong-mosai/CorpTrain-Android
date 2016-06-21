@@ -27,7 +27,7 @@ public class CourseFindByCategory implements Serializable {
 
     private String imageName;
 
-    private int rating;
+    private float rating;
 
     private long createTime;
 
@@ -133,11 +133,11 @@ public class CourseFindByCategory implements Serializable {
         return this.imageName;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
-    public int getRating() {
+    public float getRating() {
         return this.rating;
     }
 
