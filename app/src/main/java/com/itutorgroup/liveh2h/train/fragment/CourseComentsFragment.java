@@ -121,7 +121,7 @@ public class CourseComentsFragment extends Fragment implements SegmentedControlV
         view.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!TextUtils.isEmpty(etReply.getText().toString())){
+                if(!TextUtils.isEmpty(etReply.getText().toString().trim())){
                     submitComment(etReply.getText().toString());
                     Tools.hideSoftInput(etReply);
                     etReply.setText("");
