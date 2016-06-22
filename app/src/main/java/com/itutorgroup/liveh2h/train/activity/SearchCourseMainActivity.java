@@ -152,7 +152,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getDatas(false);
-        filter(cetCourses.getText().toString());
+//        getDatas(false);
+//        filter(cetCourses.getText().toString());
     }
 }
