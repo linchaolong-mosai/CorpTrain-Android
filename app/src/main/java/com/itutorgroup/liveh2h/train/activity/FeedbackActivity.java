@@ -62,12 +62,14 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
     private void update() {
         String subject = etSubject.getText().toString();
         if (TextUtils.isEmpty(subject)) {
-            showHintDialog(R.string.subject_cannot_be_empty);
+            ToastUtils.showToast(context,getString(R.string.subject_cannot_be_empty));
+//            showHintDialog(R.string.subject_cannot_be_empty);
             return;
         }
         String text = etText.getText().toString();
         if (TextUtils.isEmpty(etText.getText())) {
-            showHintDialog(R.string.feedback_cannot_be_empty);
+            ToastUtils.showToast(context,getString(R.string.feedback_cannot_be_empty));
+//            showHintDialog(R.string.feedback_cannot_be_empty);
             return;
         }
         AppAction.submitFeedback(context, subject, text, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
@@ -91,5 +93,8 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
                 showHintDialog(response.message);
             }
         });
+    }
+    public void submit(View view){
+        update();
     }
 }

@@ -31,6 +31,7 @@ import java.util.List;
  * 邮箱：nianbin@mosainet.com
  */
 public class CourseListFragment extends Fragment{
+    private boolean isFirst=true;
     private Context context;
     private View view;
     private SearchCourseResultAdapter adapter;
@@ -46,8 +47,10 @@ public class CourseListFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.view_courselist,container,false);
-        listView = ViewUtil.findViewById(view,R.id.lv);
+        if(isFirst){
+            view = inflater.inflate(R.layout.view_courselist,container,false);
+            listView = ViewUtil.findViewById(view,R.id.lv);
+        }
         return view;
     }
 
@@ -55,10 +58,13 @@ public class CourseListFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter = new SearchCourseResultAdapter(context, courses, R.layout.item_listformat_course_searchresult);
-        listView.setAdapter(adapter);
-        getDatas();
-        addListener();
+        if(isFirst){
+            adapter = new SearchCourseResultAdapter(context, courses, R.layout.item_listformat_course_searchresult);
+            listView.setAdapter(adapter);
+            getDatas();
+            addListener();
+            isFirst=false;
+        }
     }
 
     private void addListener() {

@@ -66,7 +66,7 @@
     <string name="confirm_new_password">确认新密码</string>
     <string name="subject">主题</string>
     <string name="subject_cannot_be_empty">主题不能为空</string>
-    <string name="feedback_text_hint">请填写内容</string>
+    <string name="feedback_text_hint">告诉您的意见</string>
     <string name="feedback_cannot_be_empty">反馈信息不能为空</string>
     <string name="photo_album">相册</string>
     <string name="photograph">拍照</string>
@@ -115,4 +115,5 @@
     <string name="uploading">上传中&#8230;</string>
     <string name="server_error">服务器发生故障，请稍后尝试，可以通过以下途径与我们联系:\nhttp://www.liveh2h.com/contact</string>
     <string name="next_question">下一题</string>
+    <string name="feedback_tips">我们乐意听取您的意见!</string>
 </resources>

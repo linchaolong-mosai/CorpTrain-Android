@@ -67,7 +67,7 @@
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="subject">Subject</string>
     <string name="subject_cannot_be_empty">Subject cannot be empty</string>
-    <string name="feedback_text_hint">Tap to provide feedback</string>
+    <string name="feedback_text_hint">Tell us what you think</string>
     <string name="feedback_cannot_be_empty">Feedback cannot be empty</string>
     <string name="photo_album">Photo album</string>
     <string name="photograph">Photograph</string>
@@ -115,4 +115,5 @@
     <string name="uploading">uploading&#8230;</string>
     <string name="server_error">We are facing technical difficulties connecting to our server. Please come back later and try again. You can let us know your issues by contacting us:\nhttp://www.liveh2h.com/contact</string>
     <string name="next_question">Next</string>
+    <string name="feedback_tips">Got Ideas or suggesstions for improving the app?Share your thoughts!</string>
 </resources>

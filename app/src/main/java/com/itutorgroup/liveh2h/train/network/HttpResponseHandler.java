@@ -21,17 +21,32 @@ import java.net.HttpURLConnection;
 import cz.msebera.android.httpclient.Header;
 
 public abstract class HttpResponseHandler extends TextHttpResponseHandler{
+	private String url;
+	private boolean showTips;
     private Class<? extends HttpResponse> mClass;
     private IProgressIndicator progressIndicator;
 	private Context context;
     public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass) {
-        this(context,mClass, null);
+		super();
+		this.mClass = mClass == null ? HttpResponse.class : mClass;
+		this.context = context.getApplicationContext();
     }
-
+	public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass,boolean showTips){
+		super();
+		this.mClass = mClass == null ? HttpResponse.class : mClass;
+		this.context = context.getApplicationContext();
+		this.showTips = showTips;
+	}
+	public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass,String url){
+		super();
+		this.mClass = mClass == null ? HttpResponse.class : mClass;
+		this.context = context.getApplicationContext();
+		this.url = url;
+	}
     public HttpResponseHandler(Context context,Class<? extends HttpResponse> mClass, IProgressIndicator progressIndicator) {
         super();
         this.mClass = mClass == null ? HttpResponse.class : mClass;
-        this.progressIndicator = progressIndicator;
+		this.progressIndicator = progressIndicator;
 		this.context = context.getApplicationContext();
     }
 	@Override
@@ -41,7 +56,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 //		if (FastJsonUtils.isJson(responseString)){
 //			Logger.t("resultString").json(responseString);
 //		}else{
-			Logger.t("resultString").e("状态码：" + statusCode+"\n"+"返回结果:"+responseString);
+			Logger.t("result").e("url:"+url+"\n状态码：" + statusCode+"\n"+"返回结果:"+responseString);
 //		}
 		if (statusCode == HttpURLConnection.HTTP_OK ||statusCode == HttpURLConnection.HTTP_CREATED) {
 			try {
@@ -84,7 +99,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler{
 			message = getString(R.string.network_request_timeout);
 		}
         onResponeseFail(statusCode, new HttpResponse(message));
-        LogUtils.e("网络请求失败：code=" + statusCode + " " + message);
+        LogUtils.e("url:"+url+"\n网络请求失败：code=" + statusCode + " " + message);
     }
 
 	@Override
