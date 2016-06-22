@@ -64,7 +64,7 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
             selectedCallback = (SelectedCallback) context;
         }
     }
-    private Button btnJoinCourse;
+    public Button btnJoinCourse;
     private View view;
     private ListView lv;
 
@@ -129,13 +129,16 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
         getClasses();
 
     }
-    private void addListener(){
-        scv.setOnSelectionChangedListener(this);
+    public void checkJoin(Courses courses){
         if(!courses.getInviteeInfo().getMandatory()&&courses.getAttendeeInfo().getCompletePercent()==0){
             btnJoinCourse.setVisibility(View.VISIBLE);
         }else{
             btnJoinCourse.setVisibility(View.GONE);
         }
+    }
+    private void addListener(){
+        scv.setOnSelectionChangedListener(this);
+//        checkJoin(courses);
         btnJoinCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

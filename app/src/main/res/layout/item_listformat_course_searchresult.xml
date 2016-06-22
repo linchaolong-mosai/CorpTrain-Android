@@ -57,15 +57,16 @@
         android:layout_height="wrap_content">
         <TextView
             android:drawablePadding="3dp"
-            android:id="@+id/tv_viewcount"
-            android:drawableRight="@drawable/ic_eye"
+            android:id="@+id/tv_ratecount"
+            android:drawableRight="@drawable/ic_grey_rating"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="test"/>
         <TextView
+            android:id="@+id/tv_viewcount"
+            android:drawableRight="@drawable/ic_eye"
             android:drawablePadding="3dp"
-            android:id="@+id/tv_ratecount"
-            android:drawableRight="@drawable/ic_grey_rating"
+
             android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

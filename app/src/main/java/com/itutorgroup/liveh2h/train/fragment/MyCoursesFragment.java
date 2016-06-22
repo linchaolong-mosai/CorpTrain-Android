@@ -74,6 +74,12 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
         enrolled.getDatas();
         completed.getDatas();
     }
+    //rating
+    public void onEventMainThread(Event.SubmitRate submitRate){
+        mandatory.getDatas();
+        enrolled.getDatas();
+        completed.getDatas();
+    }
     public MyCoursesFragment() {
         // Required empty public constructor
     }
