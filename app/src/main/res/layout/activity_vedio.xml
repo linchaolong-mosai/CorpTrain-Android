@@ -3,24 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <!--<RelativeLayout-->
-        <!--android:background="@color/titlecolor"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/titleheight"-->
-        <!--&gt;-->
-
-        <!--<include layout="@layout/layout_ib_titile_back"></include>-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tv_title"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--style="@style/titletext"-->
-            <!--android:text="title"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent" />-->
-
-    <!--</RelativeLayout>-->
-    <!--<include layout="@layout/layout_horizontalline"></include>-->
     <FrameLayout
         android:id="@+id/video_layout"
         android:layout_width="match_parent"
@@ -32,14 +14,13 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            app:uvv_autoRotation="true"
-            app:uvv_fitXY="false" />
+           />
 
         <com.universalvideoview.UniversalMediaController
             android:id="@+id/media_controller"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            app:uvv_scalable="true" />
+           />
 
     </FrameLayout>
 

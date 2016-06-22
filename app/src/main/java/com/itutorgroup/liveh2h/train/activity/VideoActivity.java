@@ -20,10 +20,9 @@ package com.itutorgroup.liveh2h.train.activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
@@ -38,18 +37,13 @@ import com.universalvideoview.UniversalVideoView;
 import de.greenrobot.event.EventBus;
 
 public class VideoActivity extends BaseActivity implements UniversalVideoView.VideoViewCallback {
-
-    private static final String TAG = "VideoActivity";
     private static final String SEEK_POSITION_KEY = "SEEK_POSITION_KEY";
     UniversalVideoView mVideoView;
     UniversalMediaController mMediaController;
-
     View mVideoLayout;
-//    TextView mStart;
 
+    private boolean first = true;
     private int mSeekPosition;
-    private int cachedHeight;
-    private boolean isFullscreen;
     private Resources resources;
 
     @Override
@@ -65,13 +59,14 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         mMediaController.mScaleButton.setVisibility(View.GONE);
         mMediaController.setTitle(resources.getName());
         mVideoView.setMediaController(mMediaController);
-        setVideoAreaSize();
+        setUrlOrPath();
         mVideoView.setVideoViewCallback(this);
-        mVideoView.start();
         mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 LogUtils.e("onCompletion");
+                if(resources.percent==100)
+                    return;
                 AppAction.submitResourcePercent(VideoActivity.this, resources.getClassId(), resources.getResourceId(), 100, new HttpResponseHandler(VideoActivity.this, HttpResponse.class) {
                     @Override
                     public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
@@ -103,41 +98,15 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause ");
         if (mVideoView != null && mVideoView.isPlaying()) {
             mSeekPosition = mVideoView.getCurrentPosition();
-            Log.d(TAG, "onPause mSeekPosition=" + mSeekPosition);
             mVideoView.pause();
         }
     }
 
-
-    /**
-     * 置视频区域大小
-     */
-    private void setVideoAreaSize() {
-        mVideoLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                int width = mVideoLayout.getWidth();
-                cachedHeight = (int) (width * 405f / 720f);
-                ViewGroup.LayoutParams videoLayoutParams = mVideoLayout.getLayoutParams();
-                videoLayoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                videoLayoutParams.height = cachedHeight;
-                mVideoLayout.setLayoutParams(videoLayoutParams);
-                setUrlOrPath();
-                mVideoView.requestFocus();
-            }
-        });
-    }
-
-
-
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState Position=" + mVideoView.getCurrentPosition());
         outState.putInt(SEEK_POSITION_KEY, mSeekPosition);
     }
 
@@ -145,35 +114,18 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
     protected void onRestoreInstanceState(Bundle outState) {
         super.onRestoreInstanceState(outState);
         mSeekPosition = outState.getInt(SEEK_POSITION_KEY);
-        Log.d(TAG, "onRestoreInstanceState Position=" + mSeekPosition);
     }
 
 
     @Override
-    public void onScaleChange(boolean isFullscreen) {
-        this.isFullscreen = isFullscreen;
-        if (isFullscreen) {
-            ViewGroup.LayoutParams layoutParams = mVideoLayout.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-            mVideoLayout.setLayoutParams(layoutParams);
-
-        } else {
-            finish();
-
-        }
-
-    }
-
+    public void onScaleChange(boolean isFullscreen) {}
 
     @Override
     public void onPause(MediaPlayer mediaPlayer) {
-        Log.d(TAG, "onPause UniversalVideoView callback");
-
         LogUtils.e("onPause UniversalVideoView callback");
     }
 
-    private boolean first = true;
+
 
     @Override
     public void onStart(MediaPlayer mediaPlayer) {
@@ -208,7 +160,6 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         submitPercent();
     }
 
@@ -274,5 +225,6 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
         if (!TextUtils.isEmpty(path)) {
             mVideoView.setVideoPath(path);
         }
+        mVideoView.start();
     }
 }
