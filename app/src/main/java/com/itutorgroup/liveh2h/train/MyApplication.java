@@ -14,13 +14,19 @@ import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.orhanobut.logger.Logger;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import java.io.File;
 
 /**
  * Created by Rays on 16/5/9.
  */
 public class MyApplication extends Application {
+
     public static MyApplication INSTANCE;
+    private Tracker mTracker;
+
 
     @Override
     public void onCreate() {
@@ -42,6 +48,19 @@ public class MyApplication extends Application {
             crashHandler.init(getApplicationContext());
 
         }
+    }
+
+    /**
+            * Gets the default {@link Tracker} for this {@link Application}.
+            * @return tracker
+    */
+    synchronized public Tracker getDefaultTracker() {
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+             mTracker = analytics.newTracker(R.xml.global_tracker);
+        }
+        return mTracker;
     }
 
     private void initImageLoader() {
