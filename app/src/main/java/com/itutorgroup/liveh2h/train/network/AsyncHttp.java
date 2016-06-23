@@ -137,7 +137,6 @@ public class AsyncHttp {
     protected void execute(Context context, String url, RequestParams params, Map<String, Object> map, int method, String contentType,
                            AsyncHttpResponseHandler responseHandler){
         params = getRequestParams(params, map);
-        LogUtils.i(url + (params == null?"":("?" + params.toString())));
         if (contentType == null) {
             client.removeHeader(AsyncHttpClient.HEADER_CONTENT_TYPE);
         } else {
@@ -158,6 +157,7 @@ public class AsyncHttp {
             default:
                 break;
         }
+        LogUtils.i(url + (params == null?"":("?" + params.toString())));
     }
 
     private RequestParams getRequestParams(RequestParams params, Map<String, Object> map) {

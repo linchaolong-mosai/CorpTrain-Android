@@ -115,6 +115,5 @@
     <string name="uploading">uploading&#8230;</string>
     <string name="server_error">We are facing technical difficulties connecting to our server. Please come back later and try again. You can let us know your issues by contacting us:\nhttp://www.liveh2h.com/contact</string>
     <string name="next_question">Next</string>
-    <string name="feedback_tips">Thanks for being one of the first people to try out H2H Learn! In these early days, we\'re eager for feedback to help us make H2H Learn work better for you.\n
-        Got Ideas or suggesstions for improving the app?Share your thoughts!</string>
+    <string name="feedback_tips">Thanks for being one of the first people to try out H2H Learn! In these early days, we\'re eager for feedback to help us make H2H Learn work better for you.\nGot Ideas or suggesstions for improving the app?Share your thoughts!</string>
 </resources>

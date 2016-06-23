@@ -412,7 +412,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     private void downloadFile(final Resources recources, final int position) {
         final String filepath = Utils.getLocalFile(context, Constants.downloadedtag+recources.getResourceId() + "_" + recources.getName());
         final String path = Utils.getLocalFile(this, recources.getResourceId() + "_" + recources.getName());
-        String url = Utils.getFileUrl(recources.getResourceId(), recources.getName().replace(" ", "%20"));
+        String url = Utils.getFileUrl(recources.getResourceId(), recources.getName());
         if (!httpHandlers.containsKey(path)) {
             HttpHandler<?> httpHandler = httpUtils.download(url,
                     path, true, true,

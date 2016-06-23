@@ -141,7 +141,7 @@ public final class AppUtils {
         clearCache(context);
         clearFiles(context);
         clearSharedPreference(context);
-        $clearDatabase(context);
+        clearDatabase(context);
     }
 
     /**
@@ -173,7 +173,7 @@ public final class AppUtils {
      * 删除应用数据库目录
      * @param context
      */
-    public static void $clearDatabase(Context context) {
+    public static void clearDatabase(Context context) {
         FileUtils.del(new File("/data/data/" + context.getPackageName() + "/databases"), true);
     }
 }
