@@ -13,6 +13,7 @@ import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
 
@@ -47,7 +48,7 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
     }
 
     private void initData() {
-
+        etSubject.setText(Utils.getFeedbackSubject(context));
     }
 
     @Override

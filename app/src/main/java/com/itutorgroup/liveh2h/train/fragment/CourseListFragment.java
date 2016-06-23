@@ -16,12 +16,14 @@ import com.itutorgroup.liveh2h.train.activity.CourseDetailActivity;
 import com.itutorgroup.liveh2h.train.adpter.SearchCourseResultAdapter;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
+import com.itutorgroup.liveh2h.train.comparotor.CreatTimeComparator;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -110,6 +112,7 @@ public class CourseListFragment extends Fragment{
                         }
                     }
                 }
+                Collections.sort(CourseListFragment.this.courses,new CreatTimeComparator());
                 adapter.notifyDataSetChanged();
             }
         });

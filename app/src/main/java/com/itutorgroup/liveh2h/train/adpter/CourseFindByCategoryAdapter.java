@@ -40,7 +40,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
         String subject = courseFindByCategory.getSubject();
         int viewcount = courseFindByCategory.getViewCount();
         float rating = courseFindByCategory.getRating();
-        int shareType = courseFindByCategory.getShareType();
+        int lession = courseFindByCategory.getShareType();
         long publishtime = courseFindByCategory.getPublishTime();
 
         TextView tvLesson = holder.getView(R.id.tv_lessoncount);
@@ -54,7 +54,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
         tvViewcount.setText(viewcount+"");
         tvRatecount.setText(rating+"");
         tvSubject.setText(subject);
-        tvLesson.setText(shareType+" lesson");
+        tvLesson.setText(lession+" lesson");
 
         tvDueDate.setText("Due "+DateTimeUtil.getFormatDate(new Date(publishtime)));
     }

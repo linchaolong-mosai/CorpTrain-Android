@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <EditText
+        android:visibility="gone"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:background="@null"
@@ -58,7 +59,6 @@
         android:textColor="@color/black3"
         android:textColorHint="@color/black9"/>
 
-        <include layout="@layout/layout_horizontalline"/>
 
     <EditText
         android:gravity="top"
@@ -75,7 +75,7 @@
         android:textColorHint="@color/black9"
         />
     </LinearLayout>
-    <TextView
+    <com.mosai.ui.JustifyTextView
         android:textSize="16sp"
         android:lineSpacingMultiplier="1.2"
         android:text="@string/feedback_tips"

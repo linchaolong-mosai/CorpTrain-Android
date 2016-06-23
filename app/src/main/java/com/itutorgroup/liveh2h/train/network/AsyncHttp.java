@@ -100,7 +100,7 @@ public class AsyncHttp {
         execute(context, url, params, map, method, null, responseHandler);
     }
     protected void postJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-        url = EncodeUtil.encode(url);
+//        url = EncodeUtil.encodeUrl(url);
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
@@ -118,7 +118,7 @@ public class AsyncHttp {
     }
 
     protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-        url = EncodeUtil.encode(url);
+//        url = EncodeUtil.encodeUrl(url);
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
@@ -144,12 +144,12 @@ public class AsyncHttp {
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE, contentType);
         }
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-        url = EncodeUtil.encode(url);
         switch (method) {
             case METHOD_POST:
                 client.post(context, url, params, responseHandler);
                 break;
             case METHOD_GET:
+                url = EncodeUtil.encodeUrl(url);
                 client.get(context, url, params, responseHandler);
                 break;
             case METHOD_PUT:

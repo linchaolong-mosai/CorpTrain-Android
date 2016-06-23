@@ -15,12 +15,12 @@ public class EncodeUtil {
 	 */
 	public static String encode(String url,String charsetName){
 		try {
-			url = URLEncoder.encode(url,"UTF-8");
 			Matcher matcher = Pattern.compile("[\\u4e00-\\u9fa5]").matcher(url);
 			while (matcher.find()) {
 				String tmp = matcher.group();
 				url = url.replaceAll(tmp,URLEncoder.encode(tmp, charsetName));
 			}
+			url = URLEncoder.encode(url,"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -33,8 +33,14 @@ public class EncodeUtil {
 	 * @return
 	 */
 	public static String encode(String url) {
+			return  encode(url,"UTF-8");
+	}
+	public static String encodeUrl(String url){
+		return encodeUrl(url,"UTF-8");
+	}
+	public static String encodeUrl(String url,String charsetName){
 		try {
-			url =  encode(URLEncoder.encode(url,"UTF-8"),"UTF-8");
+			url = URLEncoder.encode(url,charsetName);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

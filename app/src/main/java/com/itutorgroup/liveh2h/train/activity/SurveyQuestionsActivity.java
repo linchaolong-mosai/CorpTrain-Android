@@ -42,6 +42,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
     private List<SurveyQuestionFragment> fragments = new ArrayList<>();
     @Override
     protected void initDatas() {
+        tvTitle.setText(getString(R.string.survey));
         resources = (Resources) getIntent().getSerializableExtra("resource");
         questions = (List<SurveyQuestion>) getIntent().getSerializableExtra("questions");
         count = questions.size();

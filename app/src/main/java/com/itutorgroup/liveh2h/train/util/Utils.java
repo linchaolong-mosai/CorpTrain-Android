@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.widget.ImageView;
 
 import com.itutorgroup.liveh2h.train.network.AppAction;
+import com.mosai.utils.AppUtils;
 import com.mosai.utils.EncodeUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,16 +26,16 @@ public class Utils {
        return Environment.getExternalStorageDirectory()+File.separator + context.getPackageName() + File.separator+filename;
     }
     public static String getImgUrl(String id,String name){
-        return EncodeUtil.encode(String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,id,name));
+        return EncodeUtil.encodeUrl(String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,id,name));
     }
     public static void displayImage(String url, ImageView imageView, DisplayImageOptions options){
-        ImageLoader.getInstance().displayImage(EncodeUtil.encode(url),imageView,options);
+        ImageLoader.getInstance().displayImage(EncodeUtil.encodeUrl(url),imageView,options);
     }
     public static void displayImage(String id,String name, ImageView imageView, DisplayImageOptions options){
         ImageLoader.getInstance().displayImage(getImgUrl(id,name),imageView,options);
     }
     public static String getFileUrl(String resourceId,String name){
-        return EncodeUtil.encode(String.format("%s%s/%s", AppAction.FILE_RESOURSE_COURSE_URL,resourceId,name));
+        return EncodeUtil.encodeUrl                                                 (String.format("%s%s/%s", AppAction.FILE_RESOURSE_COURSE_URL,resourceId,name));
     }
     public static boolean renameToNewFile(String src, String dest)
     {
@@ -49,5 +50,8 @@ public class Utils {
     }
     public static String getAvatar(int userId,int version){
         return String.format(AppAction.URL+"data/users/avatar/%d_medium.jpg?version=%d",userId,version);
+    }
+    public static String getFeedbackSubject(Context context){
+        return String.format("H2H Learn Android %s", AppUtils.getVersionCode(context));
     }
 }

@@ -42,9 +42,9 @@ public class SearchCourseResultAdapter extends CommonAdapter<Courses> {
         String subject = courseInfo.getSubject();
         int viewcount = courseInfo.getViewCount();
         float rating = courseInfo.getRating();
-        int shareType = courseInfo.getShareType();
+        int lession = courseFindByCategory.getClassCount();
         long publishtime = courseInfo.getPublishTime();
-
+        long createtime = courseInfo.getCreateTime();
         TextView tvLesson = holder.getView(R.id.tv_lessoncount);
         TextView tvDueDate = holder.getView(R.id.tv_duedate);
         ImageView iv = holder.getView(R.id.iv_courseicon);
@@ -56,9 +56,9 @@ public class SearchCourseResultAdapter extends CommonAdapter<Courses> {
         tvViewcount.setText(viewcount+"");
         tvRatecount.setText(rating+"");
         tvSubject.setText(subject);
-        tvLesson.setText(shareType+" lesson");
+        tvLesson.setText(lession+" lesson");
 
-        tvDueDate.setText("Due "+ DateTimeUtil.getFormatDate(new Date(publishtime)));
+        tvDueDate.setText("Due "+ DateTimeUtil.getFormatDate(new Date(createtime)));
     }
     private void setImage(String url,ImageView iv){
         ImageLoader.getInstance().displayImage(url, iv, options, null);
