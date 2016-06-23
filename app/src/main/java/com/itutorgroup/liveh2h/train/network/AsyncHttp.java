@@ -5,15 +5,18 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
+import com.lidroid.xutils.http.client.util.URLEncodedUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
+import com.mosai.utils.EncodeUtil;
 
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.KeyStore;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -97,9 +100,8 @@ public class AsyncHttp {
         execute(context, url, params, map, method, null, responseHandler);
     }
     protected void postJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-//        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
+        url = EncodeUtil.encode(url);
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
             client.post(context,url,null,null,responseHandler);
@@ -116,9 +118,8 @@ public class AsyncHttp {
     }
 
     protected void putJsonBody(Context context,String url,HashMap<String,Object> hashMap,AsyncHttpResponseHandler responseHandler){
-//        LogUtils.i(url + (hashMap == null?"":("?" + new RequestParams(hashMap).toString())));
+        url = EncodeUtil.encode(url);
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-
         if(hashMap==null){
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE,ContentType.APPLICATION_JSON.toString());
             client.post(context,url,null,null,responseHandler);
@@ -143,7 +144,7 @@ public class AsyncHttp {
             client.addHeader(AsyncHttpClient.HEADER_CONTENT_TYPE, contentType);
         }
         client.addHeader(API_TOKEN, UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
-
+        url = EncodeUtil.encode(url);
         switch (method) {
             case METHOD_POST:
                 client.post(context, url, params, responseHandler);

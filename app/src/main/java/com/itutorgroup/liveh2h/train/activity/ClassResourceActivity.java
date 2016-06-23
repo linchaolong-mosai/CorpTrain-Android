@@ -141,7 +141,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
                 Resources resource = ClassResourceActivity.this.resources.get(position);
                 String path = Utils.getLocalFile(context, resource.getResourceId() + "_" + resource.getName());
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
-                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
+                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName());
                 if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
                     getQuiz(resource);
                 } else if (resource.getResourceType() == Constants.ResourceTypeSurvey) {
@@ -174,7 +174,8 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
             @Override
             public void callback(Resources resource,int position) {
 //                LogUtils.e("callback");
-                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
+//                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName().replace(" ", "%20"));
+                String url = Utils.getFileUrl(resource.getResourceId(), resource.getName());
                 String filepath = Utils.getLocalFile(context, Constants.downloadedtag+resource.getResourceId() + "_" + resource.getName());
                 if (resource.getResourceType() == Constants.ResourceTypeQuiz) {
                     getQuiz(resource);
