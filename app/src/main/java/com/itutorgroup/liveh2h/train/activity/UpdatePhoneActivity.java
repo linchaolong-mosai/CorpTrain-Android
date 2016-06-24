@@ -94,7 +94,7 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
     /****************************************Analytics**************************/
     @Override
     public String getAnalyticsTrackName() {
-        return TrackName.ChangePhoneNumber;
+        return TrackName.ChangePhoneNumberScreen;
     }
     private void changePhoneNumberEvent(){
         AnalyticsUtils.setEvent(context,R.array.ChangePhoneNumber);

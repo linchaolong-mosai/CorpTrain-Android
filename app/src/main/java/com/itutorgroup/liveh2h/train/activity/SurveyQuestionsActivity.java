@@ -15,11 +15,13 @@ import android.widget.TextView;
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
 import com.itutorgroup.liveh2h.train.bean.survey.SurveyQuestion;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.fragment.SurveyQuestionFragment;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.MyLog;
 import com.mosai.utils.ToastUtils;
@@ -75,6 +77,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             super.handleMessage(msg);
             submitCount+=1;
             if(submitCount>=count){
+                submitASurveyAnswerEvent();
                 submitPercent();
             }
         }
@@ -259,4 +262,14 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
             checkIndex();
         }
     }
+
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.SurveyScreen;
+    }
+    private void submitASurveyAnswerEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SubmitASurveyAnswer);
+    }
+    /****************************************Analytics**************************/
 }

@@ -17,10 +17,12 @@ import com.itutorgroup.liveh2h.train.bean.quiz.Question;
 import com.itutorgroup.liveh2h.train.bean.quiz.Questions;
 import com.itutorgroup.liveh2h.train.bean.quiz.Quiz;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.fragment.QuizQuestionFragment;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.MyLog;
 import com.mosai.utils.ToastUtils;
@@ -68,7 +70,6 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
         llNext = ViewUtil.findViewById(this, R.id.ll_next);
         ivLast = ViewUtil.findViewById(this, R.id.iv_last_step);
         ivLast.setVisibility(View.GONE);
-//        llNext.setVisibility(count==0?View.GONE:View.VISIBLE);
     }
 
     private int submitCount;
@@ -78,6 +79,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             super.handleMessage(msg);
             submitCount += 1;
             if (submitCount >= count) {
+                submitAQuizAnswerEvent();
                 getSummary();
                 dismissProgressDialog();
             }
@@ -264,4 +266,13 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
             checkIndex();
         }
     }
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.QuizScreen;
+    }
+    private void submitAQuizAnswerEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SubmitAQuizAnswer);
+    }
+    /****************************************Analytics**************************/
 }

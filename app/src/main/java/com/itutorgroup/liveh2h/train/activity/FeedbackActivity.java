@@ -9,10 +9,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.Utils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
@@ -76,6 +78,7 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
         AppAction.submitFeedback(context, subject, text, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                sendAppFeedbackEvent();
                 ToastUtils.showToast(context,getString(R.string.feedback_successfully));
                 finish();
             }
@@ -98,4 +101,14 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
     public void submit(View view){
         update();
     }
+
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.FeedbackScreen;
+    }
+    private void sendAppFeedbackEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SendAppFeedback);
+    }
+    /****************************************Analytics**************************/
 }

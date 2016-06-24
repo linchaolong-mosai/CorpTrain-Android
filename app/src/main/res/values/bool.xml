@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     //数据监听开关
-    <bool name="isAnlytics" >true</bool>
+    <bool name="isAnlytics" >false</bool>
 </resources>

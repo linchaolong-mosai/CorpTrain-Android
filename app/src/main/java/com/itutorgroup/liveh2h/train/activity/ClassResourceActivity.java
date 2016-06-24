@@ -17,10 +17,12 @@ import com.itutorgroup.liveh2h.train.bean.resourseforclass.ResourcesRoot;
 import com.itutorgroup.liveh2h.train.bean.survey.SurveyQuestion;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.constants.Constants;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.Utils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
@@ -358,6 +360,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
         AppAction.getResourceByClassId(this, classes.getClassInfo().getClassId(), new HttpResponseHandler(context,ResourcesRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                getResourceListEvent();
                 ResourcesRoot root = (ResourcesRoot) response;
                 resources.clear();
                 resources.addAll(root.getResources());
@@ -453,4 +456,13 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
 
 
     }
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.LessonScreen;
+    }
+    private void getResourceListEvent(){
+        AnalyticsUtils.setEvent(context,R.array.GetResourceList);
+    }
+    /****************************************Analytics**************************/
 }

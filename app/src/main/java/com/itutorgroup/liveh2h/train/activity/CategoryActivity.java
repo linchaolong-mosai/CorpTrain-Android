@@ -10,9 +10,11 @@ import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.adpter.CategoryAdapter;
 import com.itutorgroup.liveh2h.train.bean.Categories;
 import com.itutorgroup.liveh2h.train.bean.CategoryRoot;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +77,7 @@ public class CategoryActivity extends BaseToolbarActivity {
         AppAction.getTopCategoryList(context, new HttpResponseHandler(context,CategoryRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                getTopCategoryListEvent();
                 CategoryRoot categoryRoot = (CategoryRoot) response;
                     CategoryActivity.this.categories.clear();
                     CategoryActivity.this.categories.addAll(categoryRoot.getCategories());
@@ -96,4 +99,14 @@ public class CategoryActivity extends BaseToolbarActivity {
             }
         });
     }
+
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.CategoryScreen;
+    }
+    private void getTopCategoryListEvent(){
+        AnalyticsUtils.setEvent(context,R.array.GetTopCategoryList);
+    }
+    /****************************************Analytics**************************/
 }

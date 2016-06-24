@@ -1,5 +1,7 @@
 package com.itutorgroup.liveh2h.train.constants;
 
+import com.itutorgroup.liveh2h.train.bean.quiz.Quiz;
+
 /**
  * 描述:
  * 作者：znb
@@ -11,6 +13,12 @@ public interface TrackName {
     String ChangePasswordScreen="Change Password Screen";
     String PersonalInfoScreen="Personal Info Screen";
     String ChangeNameScreen="Change Name Screen";
-    String ChangePhoneNumber="ChangePhoneNumber";
+    String ChangePhoneNumberScreen ="Change Phone Number Screen";
     String CourseScreen="Course Screen";
+    String FeedbackScreen="Feedback Screen";
+    String SurveyScreen="Survey Screen";
+    String QuizScreen="Quiz Screen";
+    String LessonScreen="Lesson Screen";
+    String CategoryScreen="Category Screen";
+    String SubcategoryScreen="Sub-category Screen";
 }

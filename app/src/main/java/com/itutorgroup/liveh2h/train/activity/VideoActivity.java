@@ -165,11 +165,13 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     private void submitPercent() {
         if (resources.percent != 100) {
+            mVideoView.pause();
             int current = mVideoView.getCurrentPosition();
             int duration = mVideoView.getDuration();
             final int percent = (int) (current * 0.01 / duration * 100 * 100);
+            //当前进度小于上一次进度的时候不提交
             if(resources.percent>percent)
-                return;
+                VideoActivity.super.onBackPressed();
             AppAction.submitResourcePercent(this, resources.getClassId(), resources.getResourceId(), percent, new HttpResponseHandler(this, HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {

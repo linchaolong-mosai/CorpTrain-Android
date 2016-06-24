@@ -156,6 +156,7 @@ public class CourseComentsFragment extends BaseFragment implements SegmentedCont
         AppAction.submitCourseComment(context, course.getCourseInfo().getCourseId(), comment, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                        submitCourseRatingEvent();
                         getCommentlist(true);
             }
 
@@ -247,6 +248,9 @@ public class CourseComentsFragment extends BaseFragment implements SegmentedCont
     }
     private void submitCourseRatingEvent(){
         AnalyticsUtils.setEvent(context,R.array.SubmitCourseRating);
+    }
+    private void submitCourseCommentEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SubmitCourseComment);
     }
     /****************************************Analytics**************************/
 }
