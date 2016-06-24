@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+
+
 android {
     signingConfigs {
         config_debug {
@@ -63,4 +65,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.github.orhanobut:logger:1.12'
+    compile 'com.google.android.gms:play-services-analytics:9.0.2'
+
 }
+
+apply plugin: 'com.google.gms.google-services'

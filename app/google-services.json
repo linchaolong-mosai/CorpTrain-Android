@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "52622760076",
+    "project_id": "h2h-learn-2390b"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:52622760076:android:0fbb54b8ef7c4f08",
+        "android_client_info": {
+          "package_name": "com.itutorgroup.liveh2h.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT1YQ_PDKfu9B1l1vvmvAcf8wro7W9V4U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-75023357-2"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
