@@ -159,8 +159,7 @@ public class MainActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         return super.onOptionsItemSelected(item);
-    }
-    private long lastKeyBackTime = 0;
+    } private long lastKeyBackTime = 0;
     @Override
     public void onBackPressed() {
         long nowtime = SystemClock.elapsedRealtime();

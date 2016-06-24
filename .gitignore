@@ -11,5 +11,5 @@
 /universalvideoview/universalvideoview.iml
 /photoviewlibrary/photoviewlibrary.iml
 /photoviewlibrary/build/
-.gradle/
+/.gradle/
 /httplib/httplib.iml
