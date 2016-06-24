@@ -116,4 +116,5 @@
     <string name="server_error">服務器發生故障，請稍後嘗試，可以通過以下途徑與我們聯繫:\nhttp://www.liveh2h.com/contact</string>
     <string name="next_question">下一題</string>
     <string name="feedback_tips">我們樂意聽取您的意見!</string>
+    <string name="creat_date">創建時間</string>
 </resources>

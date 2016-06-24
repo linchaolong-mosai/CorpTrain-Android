@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SurveyQuestionFragment extends Fragment {
+public class SurveyQuestionFragment extends BaseFragment {
     private boolean firstLoad = true;
     private Button btn_submit;
     private TextView tvQuestion;

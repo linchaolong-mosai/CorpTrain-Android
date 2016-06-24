@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,10 @@ import com.itutorgroup.liveh2h.train.activity.FeedbackActivity;
 import com.itutorgroup.liveh2h.train.activity.LoginActivity;
 import com.itutorgroup.liveh2h.train.activity.MainActivity;
 import com.itutorgroup.liveh2h.train.activity.PersonalInfoActivity;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.local.UserPF;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.AppManager;
 import com.itutorgroup.liveh2h.train.util.DeleteDirectory;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
@@ -40,7 +41,7 @@ import me.drakeet.materialdialog.MaterialDialog;
 /**
  * me
  */
-public class MeFragment extends Fragment implements View.OnClickListener {
+public class MeFragment extends BaseFragment implements View.OnClickListener {
     private MaterialDialog mldgSignout;
     private Context mContext;
     private Button btnSignout;
@@ -257,4 +258,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.itutorgroup.liveh2h.train.broadcast.TokenExpireReceiver;
@@ -14,6 +15,7 @@ import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AsyncHttp;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
 import com.itutorgroup.liveh2h.train.network.progress.TextProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.AppManager;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
@@ -22,34 +24,43 @@ import com.mosai.utils.SwitchingAnim;
 
 /**
  * 公共父类
- * 
- * @author Rays
  *
+ * @author Rays
  */
 public class BaseActivity extends AppCompatActivity {
     private TextProgressIndicator textProgressIndicator;
-	protected Context context;
-	private Toast toast;
+    protected Context context;
+    private Toast toast;
     private HintDialog hintDialog;
     protected DefaultProgressIndicator progressIndicator;
     private IntentFilter tokenexpireIntentFilter;
     private TokenExpireReceiver tokenExpireReceiver;
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         context = this;
         AppManager.getAppManager().addActivity(this);
         register();
-        textProgressIndicator = TextProgressIndicator.newInstance(this);
-	}
+//        textProgressIndicator = TextProgressIndicator.newInstance(this);
+    }
 
-	@Override
-	public void setContentView(int layoutResID) {
-		super.setContentView(layoutResID);
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
         ViewUtil.initStatusBar(this);
 
-	}
+    }
+    public void showTextProgressDialog(String message) {
+        if (textProgressIndicator == null)
+            textProgressIndicator = TextProgressIndicator.newInstance(this);
+        textProgressIndicator.showDialog(message);
+    }
 
+    public void dismissTextProgressDialog() {
+        if (textProgressIndicator != null)
+            textProgressIndicator.dismissDialg();
+    }
     public void showProgressDialog() {
         if (progressIndicator == null) {
             progressIndicator = DefaultProgressIndicator.newInstance(context);
@@ -95,22 +106,22 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-	 * 显示Toast
-	 */
-	public void showToast(CharSequence text) {
-		if (toast != null) {
-			toast.cancel();
-		}
-		toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
-		toast.show();
-	}
-	
-	/**
-	 * 显示Toast
-	 */
-	public void showToast(int resId) {
-		showToast(getResources().getText(resId));
-	}
+     * 显示Toast
+     */
+    public void showToast(CharSequence text) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    /**
+     * 显示Toast
+     */
+    public void showToast(int resId) {
+        showToast(getResources().getText(resId));
+    }
 
     @Override
     protected void onDestroy() {
@@ -125,9 +136,11 @@ public class BaseActivity extends AppCompatActivity {
     private void register() {
         registerTokenExpireBroadcast();
     }
+
     private void unregister() {
         unregisterTokenExpireBroadcast();
     }
+
     public void back() {
         SwitchingAnim.backward(this);
         unregister();
@@ -137,15 +150,16 @@ public class BaseActivity extends AppCompatActivity {
         SwitchingAnim.forward(this);
     }
 
-    protected boolean openTokenExpireBroadcast(){
+    protected boolean openTokenExpireBroadcast() {
         return false;
     }
-    private void registerTokenExpireBroadcast(){
-        if(openTokenExpireBroadcast()){
-            if(tokenexpireIntentFilter==null && tokenExpireReceiver==null){
+
+    private void registerTokenExpireBroadcast() {
+        if (openTokenExpireBroadcast()) {
+            if (tokenexpireIntentFilter == null && tokenExpireReceiver == null) {
                 tokenexpireIntentFilter = new IntentFilter(TokenExpireReceiver.action);
                 tokenExpireReceiver = new TokenExpireReceiver();
-                registerReceiver(tokenExpireReceiver,tokenexpireIntentFilter);
+                registerReceiver(tokenExpireReceiver, tokenexpireIntentFilter);
                 tokenExpireReceiver.setTokenExpireCallback(new TokenExpireReceiver.TokenExpireCallback() {
                     @Override
                     public void teCallback() {
@@ -153,35 +167,48 @@ public class BaseActivity extends AppCompatActivity {
                         LogUtils.e("Go to Login");
                         AppManager.getAppManager().finishAllActivity();
 //                        UserPF.getInstance().putBoolean(UserPF.IS_LOGIN, false);
-                        UserPF.getInstance().putString(UserPF.PASSWORD,"");
-                        startActivity(new Intent(BaseActivity.this,LoginActivity.class));
+                        UserPF.getInstance().putString(UserPF.PASSWORD, "");
+                        startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                     }
                 });
             }
         }
     }
-    private void unregisterTokenExpireBroadcast(){
-        if(openTokenExpireBroadcast()){
-                if(tokenexpireIntentFilter!=null && tokenExpireReceiver!=null){
-                    unregisterReceiver(tokenExpireReceiver);
-                    tokenexpireIntentFilter=null;
-                    tokenExpireReceiver=null;
-                }
+
+    private void unregisterTokenExpireBroadcast() {
+        if (openTokenExpireBroadcast()) {
+            if (tokenexpireIntentFilter != null && tokenExpireReceiver != null) {
+                unregisterReceiver(tokenExpireReceiver);
+                tokenexpireIntentFilter = null;
+                tokenExpireReceiver = null;
+            }
         }
     }
-    public void showTextProgressDialog(String message){
-       textProgressIndicator.showDialog(message);
-    }
-    public void dismissTextProgressDialog(){
-        textProgressIndicator.dismissDialg();
-    }
+
+
 
     @Override
     public Resources getResources() {
         Resources res = super.getResources();
-        Configuration config=new Configuration();
+        Configuration config = new Configuration();
         config.setToDefaults();
-        res.updateConfiguration(config,res.getDisplayMetrics());
+        res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
+    }
+
+    public String getAnalyticsTrackName() {
+        return null;
+    }
+
+    public void setAnalyticsTrackName() {
+        if (!TextUtils.isEmpty(getAnalyticsTrackName())) {
+            AnalyticsUtils.setTracker(context, getAnalyticsTrackName());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setAnalyticsTrackName();
     }
 }

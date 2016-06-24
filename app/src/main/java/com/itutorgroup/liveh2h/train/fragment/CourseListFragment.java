@@ -32,7 +32,7 @@ import java.util.List;
  * 时间：2016/5/25 0025 16:30
  * 邮箱：nianbin@mosainet.com
  */
-public class CourseListFragment extends Fragment{
+public class CourseListFragment extends BaseFragment{
     private boolean isFirst=true;
     private Context context;
     private View view;

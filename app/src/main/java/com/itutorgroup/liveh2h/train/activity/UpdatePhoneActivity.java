@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
 
@@ -68,6 +70,7 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
         AppAction.changePhoneNumber(context, phone, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                changePhoneNumberEvent();
                 UserPF.getInstance().putString(UserPF.PHONE, phone);
                 ToastUtils.showToast(context,getString(R.string.change_phone_successfully));
                 finish();
@@ -88,4 +91,13 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
             }
         });
     }
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.ChangePhoneNumber;
+    }
+    private void changePhoneNumberEvent(){
+        AnalyticsUtils.setEvent(context,R.array.ChangePhoneNumber);
+    }
+    /****************************************Analytics**************************/
 }

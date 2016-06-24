@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.entity.UserInfoResponse;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
 
@@ -91,6 +93,7 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
         AppAction.changePassword(context, currentPassword, newPassword, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                changePasswordEvent();
                 UserPF.getInstance().putString(UserPF.PASSWORD,etNewPassword.getText().toString());
                 loginTogetApiToken(UserPF.getInstance().getString(UserPF.USER_EMAIL,""),UserPF.getInstance().getString(UserPF.PASSWORD,""));
             }
@@ -136,4 +139,13 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
             }
         });
     }
+/****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.ChangePasswordScreen;
+    }
+    private void changePasswordEvent(){
+        AnalyticsUtils.setEvent(context,R.array.ChangePassword);
+    }
+    /****************************************Analytics**************************/
 }

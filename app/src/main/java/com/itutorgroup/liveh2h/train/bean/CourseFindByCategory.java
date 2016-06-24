@@ -6,7 +6,7 @@ public class CourseFindByCategory implements Serializable {
     private String courseId;
     private String creatorId;
 
-
+    public int classCount;
     private String ctCompanyId;
 
     private String subject;

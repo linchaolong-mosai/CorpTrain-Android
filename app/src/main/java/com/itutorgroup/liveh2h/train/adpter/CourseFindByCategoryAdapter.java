@@ -40,7 +40,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
         String subject = courseFindByCategory.getSubject();
         int viewcount = courseFindByCategory.getViewCount();
         float rating = courseFindByCategory.getRating();
-        int lession = courseFindByCategory.getShareType();
+        int lession = courseFindByCategory.classCount;
         long publishtime = courseFindByCategory.getPublishTime();
 
         TextView tvLesson = holder.getView(R.id.tv_lessoncount);
@@ -56,7 +56,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
         tvSubject.setText(subject);
         tvLesson.setText(lession+" lesson");
 
-        tvDueDate.setText("Due "+DateTimeUtil.getFormatDate(new Date(publishtime)));
+        tvDueDate.setText(mContext.getString(R.string.creat_date)+" "+DateTimeUtil.getFormatDate(new Date(publishtime)));
     }
     private void setImage(String url,ImageView iv){
         ImageLoader.getInstance().displayImage(url, iv, options, null);

@@ -45,7 +45,7 @@ import de.greenrobot.event.EventBus;
 /**
  * me
  */
-public class DiscoverFragment extends Fragment implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener{
+public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener,ViewPagerEx.OnPageChangeListener{
     private View view;
     private HorizontalListView hlvNewcourses,hlvRecommended;
     private TextView tvNewcourses,tvRecommended;

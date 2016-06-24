@@ -116,4 +116,5 @@
     <string name="server_error">服务器发生故障，请稍后尝试，可以通过以下途径与我们联系:\nhttp://www.liveh2h.com/contact</string>
     <string name="next_question">下一题</string>
     <string name="feedback_tips">我们乐意听取您的意见!</string>
+    <string name="creat_date">创建时间</string>
 </resources>

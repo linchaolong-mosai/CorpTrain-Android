@@ -7,4 +7,103 @@
         <item>Somewhat Disagree</item>
         <item>Strongly Disagree</item>
     </string-array>
+
+
+
+    <string-array name="TryToLogin">
+        <item>Login Screen</item>
+        <item>Network</item>
+        <item>TryToLogin</item>
+    </string-array>
+
+    <string-array name="Login">
+        <item>Login Screen</item>
+        <item>Network</item>
+        <item>Login</item>
+    </string-array>
+    <string-array name="ResetPassword">
+        <item>Me Page Screen</item>
+        <item>Network</item>
+        <item>ResetPassword</item>
+    </string-array>
+
+    <string-array name="SubmitAvatar">
+        <item>Me Page Screen</item>
+        <item>Network</item>
+        <item>Submit Avatar</item>
+    </string-array>
+
+    <string-array name="ChangePassword">
+        <item>Me Page Screen</item>
+        <item>Network</item>
+        <item>ChangePassword</item>
+    </string-array>
+
+    <string-array name="ChangeName">
+        <item>Me Page Screen</item>
+        <item>Network</item>
+        <item>ChangeName</item>
+    </string-array>
+
+    <string-array name="ChangePhoneNumber">
+        <item>Me Page Screen</item>
+        <item>Network</item>
+        <item>ChangePhoneNumber</item>
+    </string-array>
+
+    <string-array name="GetTopCategoryList">
+        <item>Discover Screen</item>
+        <item>Network</item>
+        <item>GetTopCategoryList</item>
+    </string-array>
+
+    <string-array name="GetSubCategoryList">
+        <item>Category Screen</item>
+        <item>Network</item>
+        <item>GetSubCategoryList</item>
+    </string-array>
+
+    <string-array name="GetCoursesUnderCategory">
+        <item>Sub-category Screen</item>
+        <item>Network</item>
+        <item>GetCoursesUnderCategory</item>
+    </string-array>
+
+    <string-array name="GetResourceList">
+        <item>Lesson Screen</item>
+        <item>Network</item>
+        <item>GetResourceList</item>
+    </string-array>
+    <string-array name="SubmitAQuizAnswer">
+        <item>Quiz Screen</item>
+        <item>Network</item>
+        <item>SubmitAQuizAnswer</item>
+    </string-array>
+    <string-array name="SubmitASurveyAnswer">
+        <item>Survey Screen</item>
+        <item>Network</item>
+        <item>SubmitASurveyAnswer</item>
+    </string-array>
+    <string-array name="SubmitCourseComment">
+        <item>Course Screen</item>
+        <item>Network</item>
+        <item>SubmitCourseComment</item>
+    </string-array>
+    <string-array name="SendAppFeedback">
+        <item>Personal Info Screen</item>
+        <item>Network</item>
+        <item>SendAppFeedback</item>
+    </string-array>
+
+    <string-array name="SubmitCourseRating">
+        <item>Course Screen</item>
+        <item>Network</item>
+        <item>SubmitCourseRating</item>
+    </string-array>
+
+    <string-array name="JoinACourse">
+        <item>Course Screen</item>
+        <item>Network</item>
+        <item>JoinACourse</item>
+    </string-array>
 </resources>

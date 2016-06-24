@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,11 +23,13 @@ import com.itutorgroup.liveh2h.train.adpter.ClassAdapter;
 import com.itutorgroup.liveh2h.train.bean.classesforcourse.Classes;
 import com.itutorgroup.liveh2h.train.bean.classesforcourse.ClassesRoot;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.ui.RatingDialog;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.ui.SegmentedControlView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -46,7 +47,7 @@ import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
-public class CourseDetailsFragment extends Fragment implements SegmentedControlView.OnSelectionChangedListener{
+public class CourseDetailsFragment extends BaseFragment implements SegmentedControlView.OnSelectionChangedListener{
     private ImageView ivIcon;
     public RatingBar ratingBar;
     private List<Classes> classes = new ArrayList<>();
@@ -185,6 +186,7 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
         AppAction.joinCourse(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                JoinACourseEvent();
                 dialog = new MaterialDialog(context)
 //                        .setTitle("Tips")
                         .setMessage(context.getResources().getString(R.string.enrolled_success))
@@ -269,6 +271,7 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
         AppAction.submitCourseRating(context, courses.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                submitCourseRatingEvent();
                 ratingBar.setRating(rating);
                 Event.SubmitRate submitRate = new Event.SubmitRate();
                 submitRate.rate = rating;
@@ -308,4 +311,17 @@ public class CourseDetailsFragment extends Fragment implements SegmentedControlV
         getClassesPercent(false);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.CourseScreen;
+    }
+    private void JoinACourseEvent(){
+        AnalyticsUtils.setEvent(context,R.array.JoinACourse);
+    }
+    private void submitCourseRatingEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SubmitCourseRating);
+    }
+    /****************************************Analytics**************************/
 }

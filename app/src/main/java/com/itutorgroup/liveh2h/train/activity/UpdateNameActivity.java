@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
 
@@ -73,6 +75,7 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
         AppAction.changeName(context, name, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                changeNameEvent();
                 UserPF.getInstance().putString(UserPF.USER_NAME, name);
                 ToastUtils.showToast(context,getString(R.string.change_name_successfully));
                 finish();
@@ -93,4 +96,13 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
             }
         });
     }
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.ChangeNameScreen;
+    }
+    private void changeNameEvent(){
+        AnalyticsUtils.setEvent(context,R.array.ChangeName);
+    }
+    /****************************************Analytics**************************/
 }

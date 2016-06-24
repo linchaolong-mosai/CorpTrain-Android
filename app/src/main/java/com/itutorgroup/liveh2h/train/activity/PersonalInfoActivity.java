@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
-import com.itutorgroup.liveh2h.train.entity.HttpResponse;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
-import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.NetworkUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
@@ -161,7 +161,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 Uri uri = UCrop.getOutput(data);
                 final String path = new File(new URI(uri.toString())).getAbsolutePath();
                 LogUtils.e(String.format("Ucop Success,filepath:%s",path));
-                uploadFile2(path);
+                uploadFile(path);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -190,7 +190,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
     }
-    private void uploadFile2(final String path){
+    private void uploadFile(final String path){
         new AsyncTask<Void,Void,Boolean>(){
             @Override
             protected void onPreExecute() {
@@ -214,6 +214,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 dismissTextProgressDialog();
                 LogUtils.e(aBoolean+"");
                 if (aBoolean){
+                    submitAvatarEvent();
                     String ivurl = UserPF.getInstance().getAvatarUrl();
                     MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
                     DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
@@ -224,33 +225,14 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
             }
         }.execute();
     }
-    private void uploadFile(String path){
-        AppAction.uploadMyicon(this, path, new HttpResponseHandler(context,HttpResponse.class) {
-            @Override
-            public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                String ivurl = UserPF.getInstance().getAvatarUrl();
-                MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());
-                DiskCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getDiskCache());
-                ImageLoader.getInstance().displayImage(ivurl, ivMyicon, options);
-                EventBus.getDefault().post(new Event.UpdateAvatar());
 
-            }
-
-            @Override
-            public void onResponeseStart() {
-                showProgressDialog();
-            }
-
-            @Override
-            public void onResponesefinish() {
-                dismissProgressDialog();
-            }
-
-            @Override
-            public void onResponeseFail(int statusCode, HttpResponse response) {
-                showHintDialog(response.message);
-            }
-        });
-
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.PersonalInfoScreen;
     }
+    private void submitAvatarEvent(){
+        AnalyticsUtils.setEvent(mContext,R.array.SubmitAvatar);
+    }
+    /****************************************Analytics**************************/
 }

@@ -3,7 +3,6 @@ package com.itutorgroup.liveh2h.train.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,11 +22,13 @@ import com.itutorgroup.liveh2h.train.adpter.CourseCommentAdapter;
 import com.itutorgroup.liveh2h.train.bean.coursecomment.Comments;
 import com.itutorgroup.liveh2h.train.bean.coursecomment.CourseCommentRoot;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.ui.RatingDialog;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.ui.SegmentedControlView;
 import com.mosai.utils.Tools;
@@ -41,7 +42,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class CourseComentsFragment extends Fragment implements SegmentedControlView.OnSelectionChangedListener{
+public class CourseComentsFragment extends BaseFragment implements SegmentedControlView.OnSelectionChangedListener{
     private CourseCommentAdapter adapter;
     private List<Comments> comments = new ArrayList<>();
     private Context context;
@@ -201,6 +202,7 @@ public class CourseComentsFragment extends Fragment implements SegmentedControlV
         AppAction.submitCourseRating(context, course.getCourseInfo().getCourseId(), rating, new HttpResponseHandler(context,HttpResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                submitCourseRatingEvent();
                 ratingBar.setRating(rating);
                 Event.SubmitRate submitRate = new Event.SubmitRate();
                 submitRate.rate = rating;
@@ -237,4 +239,14 @@ public class CourseComentsFragment extends Fragment implements SegmentedControlV
             }
         }
     }
+
+    /****************************************Analytics**************************/
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.CourseScreen;
+    }
+    private void submitCourseRatingEvent(){
+        AnalyticsUtils.setEvent(context,R.array.SubmitCourseRating);
+    }
+    /****************************************Analytics**************************/
 }

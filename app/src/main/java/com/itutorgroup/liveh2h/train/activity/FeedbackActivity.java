@@ -61,14 +61,14 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
     }
 
     private void update() {
-        String subject = etSubject.getText().toString();
+        String subject = etSubject.getText().toString().trim();
         if (TextUtils.isEmpty(subject)) {
             ToastUtils.showToast(context,getString(R.string.subject_cannot_be_empty));
 //            showHintDialog(R.string.subject_cannot_be_empty);
             return;
         }
-        String text = etText.getText().toString();
-        if (TextUtils.isEmpty(etText.getText())) {
+        String text = etText.getText().toString().trim();
+        if (TextUtils.isEmpty(text)) {
             ToastUtils.showToast(context,getString(R.string.feedback_cannot_be_empty));
 //            showHintDialog(R.string.feedback_cannot_be_empty);
             return;

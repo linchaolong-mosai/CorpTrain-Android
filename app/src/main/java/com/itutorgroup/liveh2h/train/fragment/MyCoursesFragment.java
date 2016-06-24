@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +26,7 @@ import de.greenrobot.event.EventBus;
 /**
  * me
  */
-public class MyCoursesFragment extends Fragment implements SegmentedControlView.OnSelectionChangedListener {
+public class MyCoursesFragment extends BaseFragment implements SegmentedControlView.OnSelectionChangedListener {
     private final static int COUNT = 3;
     private final static int ONE = 0;
     private final static int TWO = 1;
@@ -136,6 +137,7 @@ public class MyCoursesFragment extends Fragment implements SegmentedControlView.
     }
 
     private class TabAdapter extends FragmentPagerAdapter {
+
         public TabAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
             // TODO Auto-generated constructor stub

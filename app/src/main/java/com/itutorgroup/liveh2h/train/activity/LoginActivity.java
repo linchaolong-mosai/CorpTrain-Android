@@ -9,12 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.CurrentCtUserResponse;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.entity.UserInfoResponse;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.Validator;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 
@@ -54,48 +56,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 		ViewUtil.setEditorAction(etPassword, btnLogin);
 		ViewUtil.setEdittextLabelVisibility(etEmail, tvEmail);
 		ViewUtil.setEdittextLabelVisibility(etPassword, tvPassword);
-//        etPassword.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                String text;
-//                if (s.length() == 0) {
-//                    text = getString(R.string.help);
-//                } else {
-//                    Object obj = tvShow.getTag(tvShow.getId());
-//                    if (obj == null || ((boolean) obj)) {
-//                        text = getString(R.string.show);
-//                        tvShow.setTag(tvShow.getId(), true);
-//                    } else {
-//                        text = getString(R.string.hide);
-//                        tvShow.setTag(tvShow.getId(), false);
-//                    }
-//                }
-//                tvShow.setText(text);
-//                tvShow.setTag(text);
-//            }
-//        });
 	}
 
 	private void initData() {
-//        etEmail.setText("ctuser@whatever.com");
-//        etPassword.setText("tutormeet1");
 		String email = UserPF.getInstance().getString(UserPF.USER_EMAIL, "");
         String password = UserPF.getInstance().getString(UserPF.PASSWORD, "");
 		if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
 			etEmail.setText(email);
             etPassword.setText(password);
             login();
-//			etPassword.requestFocus();
 		}
         if(!TextUtils.isEmpty(email) && TextUtils.isEmpty(password)){
             etEmail.setText(email);
@@ -129,21 +98,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             intent.putExtra("email", etEmail.getText().toString());
             startActivity(intent);
         }
-//        else {
-//            if ((boolean) tvShow.getTag(tvShow.getId())) {
-//                tvShow.setText(R.string.hide);
-//                tvShow.setTag(tvShow.getId(), false);
-//                etPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//            } else {
-//                tvShow.setText(R.string.show);
-//                tvShow.setTag(tvShow.getId(), true);
-//                etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//            }
-//            etPassword.setSelection(etPassword.length());
-//        }
     }
 
     private void login() {
+		tryLoginEvent();
 		String email = etEmail.getText().toString();
 		if (TextUtils.isEmpty(email)) {
 			showHintDialog(R.string.email_cannot_be_empty);
@@ -187,10 +145,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         AppAction.getCurrentCtUser(context, new HttpResponseHandler(context,CurrentCtUserResponse.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
-                CurrentCtUserResponse currentCtUserResponse = (CurrentCtUserResponse) response;
+                loginEvent();
+				CurrentCtUserResponse currentCtUserResponse = (CurrentCtUserResponse) response;
                 UserPF.getInstance().saveCtUser(currentCtUserResponse);
-//                startActivity(new Intent(context, MainActivity.class));
-//				finish();
 				startActivity(new Intent(context, MainActivity.class));
 				finish();
             }
@@ -212,4 +169,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         });
     }
 
+	/****************************************Analytics**************************/
+	@Override
+	public String getAnalyticsTrackName() {
+		return TrackName.LoginScreen;
+	}
+	private void tryLoginEvent(){
+		AnalyticsUtils.setEvent(context,R.array.TryToLogin);
+	}
+	private void loginEvent(){
+		AnalyticsUtils.setEvent(context,R.array.Login);
+	}
+	/****************************************Analytics**************************/
 }

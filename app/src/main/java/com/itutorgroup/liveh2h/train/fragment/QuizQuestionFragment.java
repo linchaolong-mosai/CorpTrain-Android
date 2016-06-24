@@ -28,7 +28,7 @@ import java.util.List;
  * Use the {@link QuizQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class QuizQuestionFragment extends Fragment {
+public class QuizQuestionFragment extends BaseFragment {
     private boolean firstLoad = true;
     private View view;
     public QuizQuestionAdapter adapter;
