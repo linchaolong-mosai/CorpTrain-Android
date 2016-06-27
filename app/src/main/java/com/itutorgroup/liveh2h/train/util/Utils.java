@@ -56,4 +56,10 @@ public class Utils {
     public static String getFeedbackSubject(Context context){
         return String.format("H2H Learn Android %s", AppUtils.getVersionCode(context));
     }
+    public static String encodeEmail(String src,String sign){
+        return src.replace(sign,EncodeUtil.encode(sign));
+    }
+    public static String encodeEmail(String src){
+        return encodeEmail(src,"+");
+    }
 }

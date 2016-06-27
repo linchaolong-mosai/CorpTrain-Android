@@ -21,4 +21,7 @@ public interface TrackName {
     String LessonScreen="Lesson Screen";
     String CategoryScreen="Category Screen";
     String SubcategoryScreen="Sub-category Screen";
+    String CoursesUnderCategoryScreen="CoursesUnderCategory Screen";
+    String ResetPasswordScreen="ResetPassword Screen";
+    String SplashScreen = "Splash Screen";
 }

@@ -1,11 +1,13 @@
 package com.itutorgroup.liveh2h.train.util;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.itutorgroup.liveh2h.train.MyApplication;
 import com.itutorgroup.liveh2h.train.R;
+import com.orhanobut.logger.Logger;
 
 /**
  * 描述:
@@ -20,11 +22,14 @@ public class AnalyticsUtils {
     public static void setEvent(Context context,int arrayId){
         if(!context.getResources().getBoolean(R.bool.isAnlytics))
             return;
+        if(((Activity)context).isFinishing())
+            return;
         Tracker mTracker = MyApplication.INSTANCE.getDefaultTracker();
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory(context.getResources().getStringArray(arrayId)[1])
                 .setAction(context.getResources().getStringArray(arrayId)[2])
                 .build());
+        Logger.t("event").e(String.format("Category:%s,Action:%s",context.getResources().getStringArray(arrayId)[1],context.getResources().getStringArray(arrayId)[2]));
     }
     public static void setTracker(Context context,String screenName){
         if(!context.getResources().getBoolean(R.bool.isAnlytics))
@@ -35,6 +40,8 @@ public class AnalyticsUtils {
     }
     public static void setEvent(Context context,String categoryName,String actionName){
         if(!context.getResources().getBoolean(R.bool.isAnlytics))
+            return;
+        if(((Activity)context).isFinishing())
             return;
         Tracker mTracker = MyApplication.INSTANCE.getDefaultTracker();
         mTracker.send(new HitBuilders.EventBuilder()

@@ -22,7 +22,7 @@
         <item>Login</item>
     </string-array>
     <string-array name="ResetPassword">
-        <item>Me Page Screen</item>
+        <item>ResetPassword Screen</item>
         <item>Network</item>
         <item>ResetPassword</item>
     </string-array>
@@ -105,5 +105,20 @@
         <item>Course Screen</item>
         <item>Network</item>
         <item>JoinACourse</item>
+    </string-array>
+    <string-array name="LaunchApp">
+        <item>Splash Screen</item>
+        <item>AppState</item>
+        <item>LaunchApp</item>
+    </string-array>
+    <string-array name="DidEnterBackground">
+        <item>Splash Screen</item>
+        <item>AppState</item>
+        <item>DidEnterBackground</item>
+    </string-array>
+    <string-array name="WillEnterForeground">
+        <item>Splash Screen</item>
+        <item>AppState</item>
+        <item>WillEnterForeground</item>
     </string-array>
 </resources>

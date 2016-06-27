@@ -13,15 +13,14 @@ import com.itutorgroup.liveh2h.train.bean.CourseFindByCategory;
 import com.itutorgroup.liveh2h.train.bean.CoursesFindByCategory;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
-import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 public class CourseFindByCategoryActivity extends BaseToolbarActivity {
     private ListView listView;
@@ -117,6 +116,7 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
         AppAction.getCourselist(context, categoryId,new HttpResponseHandler(context,CoursesFindByCategory.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                getCoursesUnderCategoryEvent();
                 CoursesFindByCategory categories = (CoursesFindByCategory) response;
                     CourseFindByCategoryActivity.this.courseFindByCategories.clear();
                     CourseFindByCategoryActivity.this.courseFindByCategories.addAll(categories.getCourses());
@@ -147,4 +147,14 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         getDatas(false);
     }
+
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.CoursesUnderCategoryScreen;
+    }
+    /****************************************Analytics**************************/
+    private void getCoursesUnderCategoryEvent(){
+        AnalyticsUtils.setEvent(context,R.array.GetCoursesUnderCategory);
+    }
+    /****************************************Analytics**************************/
 }

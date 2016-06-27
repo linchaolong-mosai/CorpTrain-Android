@@ -8,10 +8,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.Validator;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 
@@ -81,6 +83,7 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         AppAction.forgotPassword(context, email, new HttpResponseHandler(context,HttpResponse.class, DefaultProgressIndicator.newInstance(context)) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                resetPasswordEvent();
                 showHintDialog(R.string.forgot_success_hint).setTitles(R.string.success);
             }
             @Override
@@ -99,4 +102,14 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
             }
         });
     }
+
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.ResetPasswordScreen;
+    }
+    /****************************************Analytics**************************/
+    private void resetPasswordEvent(){
+        AnalyticsUtils.setEvent(context,R.array.ResetPassword);
+    }
+    /****************************************Analytics**************************/
 }

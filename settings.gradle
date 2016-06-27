@@ -1,1 +1,1 @@
-include ':app', ':ui', ':utils', ':universalvideoview', ':photoviewlibrary', ':httplib'
+include ':app', ':ui', ':utils', ':universalvideoview', ':photoviewlibrary', ':httplib', ':javalib'

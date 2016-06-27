@@ -1,11 +1,16 @@
 package com.itutorgroup.liveh2h.train;
 
+import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.itutorgroup.liveh2h.train.common.AbnormalHandler;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AsyncHttp;
 import com.itutorgroup.liveh2h.train.util.Utils;
+import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -13,9 +18,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.orhanobut.logger.Logger;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 
@@ -38,6 +40,7 @@ public class MyApplication extends Application {
         initAbnormalHandler();
         initDirs();
         initLogger();
+        setActivityLifecycleCallbacks();
     }
     private void initLogger(){
         Logger.init("znb").setMethodCount(4);
@@ -88,4 +91,58 @@ public class MyApplication extends Application {
     public void initDirs() {
         initMaterialDir();
     }
+
+    private int appCount = 0;
+
+
+
+    private void setActivityLifecycleCallbacks() {
+        super.onCreate();
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+                appCount++;
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+                appCount--;
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
+    }
+
+    public int getAppCount() {
+        return appCount;
+    }
+
+    public void setAppCount(int appCount) {
+        this.appCount = appCount;
+    }
+    public  boolean isForeground() {
+        return getAppCount() > 0;
+    }
+    public boolean foregound = false;
+
 }

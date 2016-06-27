@@ -25,6 +25,7 @@ import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.fragment.DiscoverFragment;
 import com.itutorgroup.liveh2h.train.fragment.MeFragment;
 import com.itutorgroup.liveh2h.train.fragment.MyCoursesFragment;
+import com.itutorgroup.liveh2h.train.util.AppManager;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.utils.ToastUtils;
@@ -169,6 +170,7 @@ public class MainActivity extends BaseToolbarActivity {
         } else {
             lastKeyBackTime = 0;
             finish();
+//           AppManager.getAppManager().AppExit(context);
 //            moveTaskToBack(true);
         }
     }

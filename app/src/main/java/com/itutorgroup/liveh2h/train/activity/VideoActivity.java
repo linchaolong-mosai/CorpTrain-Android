@@ -205,7 +205,7 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
     }
 
     private void viewLastProgress() {
-        if (first&&getIntent().hasExtra("path")) {
+        if (first&&(getIntent().hasExtra("path")||getIntent().hasExtra("url"))) {
             LogUtils.e("mVideoView.getDuration()" + mVideoView.getDuration());
             if (resources.percent != 100) {
                 int current = (int) (mVideoView.getDuration() * 0.01 * resources.percent);

@@ -4,9 +4,11 @@ import android.content.Context;
 
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.util.ConverStr;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.mosai.utils.EncodeUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,7 +52,7 @@ public class AppAction {
         RequestParams params = new RequestParams();
         params.put("action", "authUser");
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("email", email);
+        map.put("email", Utils.encodeEmail(email));
         map.put("password", password);
         AsyncHttp.getInstance().execute(context, getUrl("corplogin.do"), params, map, AsyncHttp.METHOD_POST, responseHandler);
     }

@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.test.ApplicationTestCase;
 
 import com.itutorgroup.liveh2h.train.util.LogUtils;
+import com.mosai.utils.EncodeUtil;
 
 import java.io.File;
 
@@ -28,5 +29,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         System.out.println("renameToNewFile is OK ? :" +isOk);
         LogUtils.e(isOk+"");
         return isOk;
+    }
+    public void test1(){
+        System.out.println(EncodeUtil.encodeUrl("ctuser@whatever.com"));
     }
 }

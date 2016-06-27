@@ -1,5 +1,6 @@
 package com.itutorgroup.liveh2h.train.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.itutorgroup.liveh2h.train.MyApplication;
+import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.broadcast.TokenExpireReceiver;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AsyncHttp;
@@ -21,6 +24,8 @@ import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.itutorgroup.liveh2h.train.widget.HintDialog;
 import com.mosai.utils.SwitchingAnim;
+import com.mosai.utils.ToastUtils;
+import com.orhanobut.logger.Logger;
 
 /**
  * 公共父类
@@ -51,6 +56,7 @@ public class BaseActivity extends AppCompatActivity {
         ViewUtil.initStatusBar(this);
 
     }
+
     public void showTextProgressDialog(String message) {
         if (textProgressIndicator == null)
             textProgressIndicator = TextProgressIndicator.newInstance(this);
@@ -61,6 +67,7 @@ public class BaseActivity extends AppCompatActivity {
         if (textProgressIndicator != null)
             textProgressIndicator.dismissDialg();
     }
+
     public void showProgressDialog() {
         if (progressIndicator == null) {
             progressIndicator = DefaultProgressIndicator.newInstance(context);
@@ -131,14 +138,32 @@ public class BaseActivity extends AppCompatActivity {
         AsyncHttp.getInstance().getClient().cancelRequests(this, true);
         AppManager.getAppManager().finishActivity(this);
         unregister();
+
+        MyApplication.INSTANCE.foregound=false;
     }
 
     private void register() {
         registerTokenExpireBroadcast();
+        registerHomeKeyEvent();
+
+    }
+
+    private void registerHomeKeyEvent() {
+        //注册广播
+        if (openHomeKeyEventBroadcast())
+            registerReceiver(mHomeKeyEventReceiver, new IntentFilter(
+                    Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
+    }
+
+    private void unregisterHomeKeyEvent() {
+        if (openHomeKeyEventBroadcast() && mHomeKeyEventReceiver != null)
+            unregisterReceiver(mHomeKeyEventReceiver);
     }
 
     private void unregister() {
         unregisterTokenExpireBroadcast();
+        unregisterHomeKeyEvent();
     }
 
     public void back() {
@@ -151,6 +176,10 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean openTokenExpireBroadcast() {
+        return false;
+    }
+
+    protected boolean openHomeKeyEventBroadcast() {
         return false;
     }
 
@@ -186,7 +215,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public Resources getResources() {
         Resources res = super.getResources();
@@ -196,8 +224,51 @@ public class BaseActivity extends AppCompatActivity {
         return res;
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setAnalyticsTrackName();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Logger.t("lifecircle").e(MyApplication.INSTANCE.getAppCount() + "");
+        checkForegound();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Logger.t("lifecircle").e(MyApplication.INSTANCE.getAppCount() + "");
+        checkBackgound();
+    }
+
+    private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+        String SYSTEM_REASON = "reason";
+        String SYSTEM_HOME_KEY = "homekey";
+        String SYSTEM_HOME_KEY_LONG = "recentapps";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                String reason = intent.getStringExtra(SYSTEM_REASON);
+                if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
+                    //表示按了home键,程序到了后台
+                    if (MyApplication.INSTANCE.getAppCount() > 0)
+                        Logger.t("ground").e("Background");
+                    ToastUtils.showToast(context, "Background");
+                    MyApplication.INSTANCE.foregound = true;
+                    didEnterBackgroundEvent();
+                }
+            }
+        }
+    };
+
     public String getAnalyticsTrackName() {
-        return null;
+        return this.getClass().getSimpleName();
     }
 
     public void setAnalyticsTrackName() {
@@ -206,9 +277,34 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setAnalyticsTrackName();
+    protected void didEnterBackgroundEvent() {
+        if (!TextUtils.isEmpty(getAnalyticsTrackName()))
+            AnalyticsUtils.setEvent(context, R.array.DidEnterBackground);
+    }
+
+    protected void willEnterForeground() {
+        if (!TextUtils.isEmpty(getAnalyticsTrackName()))
+            AnalyticsUtils.setEvent(context, R.array.WillEnterForeground);
+    }
+
+    private void checkForegound() {
+        if (MyApplication.INSTANCE.foregound) {
+            if (MyApplication.INSTANCE.getAppCount() > 0) {
+                MyApplication.INSTANCE.foregound = false;
+                willEnterForeground();
+                Logger.t("ground").e("Foreground");
+            }
+        }
+    }
+
+    private void checkBackgound() {
+        if (MyApplication.INSTANCE.getAppCount() <= 0) {
+//            if (!TextUtils.equals(AppManager.getAppManager().firstActivity().getClass().getSimpleName(), this.getClass().getSimpleName())) {
+                Logger.t("ground").e("Background");
+                MyApplication.INSTANCE.foregound = true;
+                didEnterBackgroundEvent();
+
+//            }
+        }
     }
 }

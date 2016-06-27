@@ -1,6 +1,7 @@
 package com.itutorgroup.liveh2h.train.util;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 
 import java.util.Stack;
@@ -40,7 +41,9 @@ public class AppManager {
 		Activity activity = activityStack.lastElement();
 		return activity;
 	}
-	
+	public Activity firstActivity(){
+		return activityStack.firstElement();
+	}
 	/**
 	 * 获取指定activity，没有返回null
 	 * @param cls
@@ -105,9 +108,9 @@ public class AppManager {
 		try {
 //			MobclickAgent.onKillProcess(context);
 			finishAllActivity();
-//			ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-//			activityMgr.killBackgroundProcesses(context.getPackageName());
-//			android.os.Process.killProcess(android.os.Process.myPid());
+			ActivityManager activityMgr = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+			activityMgr.killBackgroundProcesses(context.getPackageName());
+			android.os.Process.killProcess(android.os.Process.myPid());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

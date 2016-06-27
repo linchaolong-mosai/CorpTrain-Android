@@ -7,7 +7,9 @@ import android.os.Looper;
 import android.text.TextUtils;
 
 import com.itutorgroup.liveh2h.train.R;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.local.UserPF;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -40,5 +42,16 @@ public class SplashActivity extends BaseActivity {
 
             }
         }, 1500);
+        launchAppEvent();
     }
+
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.SplashScreen;
+    }
+    /****************************************Analytics**************************/
+    private void launchAppEvent(){
+        AnalyticsUtils.setEvent(context,R.array.LaunchApp);
+    }
+    /****************************************Analytics**************************/
 }
