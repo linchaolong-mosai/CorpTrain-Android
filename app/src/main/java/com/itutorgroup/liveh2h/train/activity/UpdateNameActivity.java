@@ -98,7 +98,7 @@ public class UpdateNameActivity extends BaseToolbarActivity implements TextView.
     }
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.ChangeNameScreen;
     }
     private void changeNameEvent(){

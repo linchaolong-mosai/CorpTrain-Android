@@ -93,7 +93,7 @@ public class UpdatePhoneActivity extends BaseToolbarActivity implements TextView
     }
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.ChangePhoneNumberScreen;
     }
     private void changePhoneNumberEvent(){

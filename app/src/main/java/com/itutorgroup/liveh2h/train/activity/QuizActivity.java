@@ -8,6 +8,7 @@ import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.quiz.Questions;
 import com.itutorgroup.liveh2h.train.bean.quiz.Quiz;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
@@ -89,4 +90,8 @@ public class QuizActivity extends ABaseToolbarActivity {
         });
     }
 
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.QuizPreviewScreen;
+    }
 }

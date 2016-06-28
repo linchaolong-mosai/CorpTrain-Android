@@ -103,10 +103,6 @@ public class ForgotPasswordActivity extends BaseActivity implements View.OnClick
         });
     }
 
-    @Override
-    public String getAnalyticsTrackName() {
-        return TrackName.ResetPasswordScreen;
-    }
     /****************************************Analytics**************************/
     private void resetPasswordEvent(){
         AnalyticsUtils.setEvent(context,R.array.ResetPassword);

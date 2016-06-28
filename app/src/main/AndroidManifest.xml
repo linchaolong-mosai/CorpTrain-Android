@@ -52,6 +52,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:launchMode="singleInstance"
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme" />

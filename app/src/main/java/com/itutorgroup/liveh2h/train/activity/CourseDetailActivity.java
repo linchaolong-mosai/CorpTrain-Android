@@ -202,5 +202,8 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
             }
         });
     }
-
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.CourseScreen;
+    }
 }

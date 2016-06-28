@@ -458,7 +458,7 @@ public class ClassResourceActivity extends ABaseToolbarActivity {
     }
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.LessonScreen;
     }
     private void getResourceListEvent(){

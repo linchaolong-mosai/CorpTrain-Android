@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.mosai.ui.CantScrollViewPager;
@@ -187,5 +188,10 @@ public class MyCoursesFragment extends BaseFragment implements SegmentedControlV
 
         viewPager.setAdapter(new TabAdapter(((AppCompatActivity)context).getSupportFragmentManager()));
         scv.setOnSelectionChangedListener(this);
+    }
+
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.MyCourseScreen;
     }
 }

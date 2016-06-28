@@ -228,7 +228,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
 
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.PersonalInfoScreen;
     }
     private void submitAvatarEvent(){

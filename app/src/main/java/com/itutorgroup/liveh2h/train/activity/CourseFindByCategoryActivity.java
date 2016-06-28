@@ -149,9 +149,10 @@ public class CourseFindByCategoryActivity extends BaseToolbarActivity {
     }
 
     @Override
-    public String getAnalyticsTrackName() {
-        return TrackName.CoursesUnderCategoryScreen;
+    protected String getAnalyticsTrackScreenName() {
+        return TrackName.CourseUnderCategoryScreen;
     }
+
     /****************************************Analytics**************************/
     private void getCoursesUnderCategoryEvent(){
         AnalyticsUtils.setEvent(context,R.array.GetCoursesUnderCategory);

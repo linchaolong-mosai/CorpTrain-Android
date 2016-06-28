@@ -9,6 +9,7 @@ import com.itutorgroup.liveh2h.train.network.progress.DefaultProgressIndicator;
 import com.itutorgroup.liveh2h.train.network.progress.TextProgressIndicator;
 import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.widget.HintDialog;
+import com.orhanobut.logger.Logger;
 
 /**
  * 描述:
@@ -22,9 +23,6 @@ public class BaseFragment extends Fragment{
     private HintDialog hintDialog;
     protected DefaultProgressIndicator progressIndicator;
     protected Context mContext;
-    public String getAnalyticsTrackName(){
-        return null;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -37,10 +35,13 @@ public class BaseFragment extends Fragment{
         super.onResume();
         setAnalyticsTrackName();
     }
-
-    public void setAnalyticsTrackName(){
+    protected String getAnalyticsTrackName(){
+        return null;
+    }
+    protected void setAnalyticsTrackName(){
+//        Logger.t("event").e("onResume");
         if(!TextUtils.isEmpty(getAnalyticsTrackName())){
-            AnalyticsUtils.setTracker(mContext,getAnalyticsTrackName());
+            AnalyticsUtils.setScreen(mContext,getAnalyticsTrackName());
         }
     }
     public void showTextProgressDialog(String message) {
@@ -87,6 +88,7 @@ public class BaseFragment extends Fragment{
         }
         return hintDialog;
     }
+
 
     /**
      * 隐藏提示框

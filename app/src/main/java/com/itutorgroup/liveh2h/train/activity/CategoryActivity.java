@@ -100,11 +100,12 @@ public class CategoryActivity extends BaseToolbarActivity {
         });
     }
 
-    /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    protected String getAnalyticsTrackScreenName() {
         return TrackName.CategoryScreen;
     }
+
+    /****************************************Analytics**************************/
     private void getTopCategoryListEvent(){
         AnalyticsUtils.setEvent(context,R.array.GetTopCategoryList);
     }

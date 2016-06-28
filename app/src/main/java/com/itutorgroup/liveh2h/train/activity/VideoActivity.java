@@ -26,6 +26,7 @@ import android.view.WindowManager;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
@@ -230,5 +231,10 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
             mVideoView.setVideoPath(path);
         }
         mVideoView.start();
+    }
+
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.VideoPlayerScreen;
     }
 }

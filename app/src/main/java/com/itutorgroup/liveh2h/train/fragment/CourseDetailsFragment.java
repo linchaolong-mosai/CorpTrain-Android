@@ -208,6 +208,7 @@ public class CourseDetailsFragment extends BaseFragment implements SegmentedCont
         AppAction.getClassesByCourseId(context, courses.getCourseInfo().getCourseId(), new HttpResponseHandler(context,ClassesRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                getClassesEvent();
                 ClassesRoot classesRoot = (ClassesRoot) response;
                 classes.clear();
                 classes.addAll(classesRoot.getClasses());
@@ -313,15 +314,15 @@ public class CourseDetailsFragment extends BaseFragment implements SegmentedCont
     }
 
     /****************************************Analytics**************************/
-    @Override
-    public String getAnalyticsTrackName() {
-        return TrackName.CourseScreen;
-    }
+
     private void JoinACourseEvent(){
         AnalyticsUtils.setEvent(context,R.array.JoinACourse);
     }
     private void submitCourseRatingEvent(){
         AnalyticsUtils.setEvent(context,R.array.SubmitCourseRating);
+    }
+    private void getClassesEvent(){
+        AnalyticsUtils.setEvent(context,R.array.GetClasses);
     }
     /****************************************Analytics**************************/
 }

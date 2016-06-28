@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
@@ -130,5 +131,10 @@ public class WebViewActivity extends ABaseToolbarActivity {
         }else{
             WebViewActivity.super.back();
         }
+    }
+
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.MaterialViewScreen;
     }
 }

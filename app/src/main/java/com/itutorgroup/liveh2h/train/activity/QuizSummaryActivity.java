@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.quiz.QuizSummary;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.local.UserPF;
@@ -229,5 +230,10 @@ public class QuizSummaryActivity extends ABaseToolbarActivity {
                 }
             },dTime);
         }
+    }
+
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.QuizSummaryScreen;
     }
 }

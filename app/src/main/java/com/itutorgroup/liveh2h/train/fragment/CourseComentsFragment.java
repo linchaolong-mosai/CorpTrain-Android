@@ -242,10 +242,6 @@ public class CourseComentsFragment extends BaseFragment implements SegmentedCont
     }
 
     /****************************************Analytics**************************/
-    @Override
-    public String getAnalyticsTrackName() {
-        return TrackName.CourseScreen;
-    }
     private void submitCourseRatingEvent(){
         AnalyticsUtils.setEvent(context,R.array.SubmitCourseRating);
     }

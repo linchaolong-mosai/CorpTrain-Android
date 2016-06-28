@@ -259,5 +259,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.MePageScreen;
+    }
 }

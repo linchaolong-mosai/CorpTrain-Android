@@ -45,10 +45,6 @@ public class SplashActivity extends BaseActivity {
         launchAppEvent();
     }
 
-    @Override
-    public String getAnalyticsTrackName() {
-        return TrackName.SplashScreen;
-    }
     /****************************************Analytics**************************/
     private void launchAppEvent(){
         AnalyticsUtils.setEvent(context,R.array.LaunchApp);

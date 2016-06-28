@@ -30,12 +30,12 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 //    private static final String BASE_URL = "http://54.153.127.218/tutormeetweb/";
-    public static final String URL = "http://54.153.127.218/";
+    public static final String URL = "https://train-qa.liveh2h.com/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
 
     private static final String BASE_URL = URL+"corptraining/";
-    public static final String IMG_RESOURSE_COURSE_URL = "http://54.153.127.218/" + "resources/";
-    public static final String FILE_RESOURSE_COURSE_URL = "http://54.153.127.218/" + "resources/";
+    public static final String IMG_RESOURSE_COURSE_URL = URL + "resources/";
+    public static final String FILE_RESOURSE_COURSE_URL = URL + "resources/";
 
     public static String getUrl(String url) {
         return BASE_URL + url;
@@ -52,7 +52,7 @@ public class AppAction {
         RequestParams params = new RequestParams();
         params.put("action", "authUser");
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("email", Utils.encodeEmail(email));
+        map.put("email", email);
         map.put("password", password);
         AsyncHttp.getInstance().execute(context, getUrl("corplogin.do"), params, map, AsyncHttp.METHOD_POST, responseHandler);
     }

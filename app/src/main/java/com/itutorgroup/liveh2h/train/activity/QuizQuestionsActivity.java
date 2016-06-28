@@ -268,7 +268,7 @@ public class QuizQuestionsActivity extends ABaseToolbarActivity implements QuizQ
     }
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.QuizScreen;
     }
     private void submitAQuizAnswerEvent(){

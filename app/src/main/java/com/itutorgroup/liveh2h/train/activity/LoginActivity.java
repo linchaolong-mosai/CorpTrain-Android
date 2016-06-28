@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 	/****************************************Analytics**************************/
 	@Override
-	public String getAnalyticsTrackName() {
+	public String getAnalyticsTrackScreenName() {
 		return TrackName.LoginScreen;
 	}
 	private void tryLoginEvent(){

@@ -141,7 +141,7 @@ public class ChangePasswordActivity extends BaseToolbarActivity implements TextV
     }
 /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.ChangePasswordScreen;
     }
     private void changePasswordEvent(){

@@ -1,6 +1,6 @@
 package com.itutorgroup.liveh2h.train.constants;
 
-import com.itutorgroup.liveh2h.train.bean.quiz.Quiz;
+import com.itutorgroup.liveh2h.train.bean.Course;
 
 /**
  * 描述:
@@ -19,9 +19,15 @@ public interface TrackName {
     String SurveyScreen="Survey Screen";
     String QuizScreen="Quiz Screen";
     String LessonScreen="Lesson Screen";
-    String CategoryScreen="Category Screen";
     String SubcategoryScreen="Sub-category Screen";
-    String CoursesUnderCategoryScreen="CoursesUnderCategory Screen";
-    String ResetPasswordScreen="ResetPassword Screen";
-    String SplashScreen = "Splash Screen";
+    String DiscoverScreen="Discover Screen";
+    String MaterialViewScreen="Material View Screen";
+    String MyCourseScreen="My Course Screen";
+    String VideoPlayerScreen="Video Player Screen";
+    String MePageScreen="Me Page Screen";
+    String QuizPreviewScreen="Quiz Preview Screen";
+    String QuizSummaryScreen="Quiz Summary Screen";
+    String SearchCourseScreen="Search Course Screen";
+    String CourseUnderCategoryScreen="Course Under Category Screen";
+    String CategoryScreen="Category Screen";
 }

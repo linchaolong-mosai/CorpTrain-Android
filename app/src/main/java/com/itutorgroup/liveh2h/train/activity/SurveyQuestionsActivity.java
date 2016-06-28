@@ -265,7 +265,7 @@ public class SurveyQuestionsActivity extends ABaseToolbarActivity implements Sur
 
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.SurveyScreen;
     }
     private void submitASurveyAnswerEvent(){

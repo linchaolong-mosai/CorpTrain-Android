@@ -104,7 +104,7 @@ public class FeedbackActivity extends BaseToolbarActivity implements TextView.On
 
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.FeedbackScreen;
     }
     private void sendAppFeedbackEvent(){

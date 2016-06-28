@@ -28,10 +28,12 @@ import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
 import com.itutorgroup.liveh2h.train.comparotor.CreatTimeComparator;
 import com.itutorgroup.liveh2h.train.comparotor.ViewCountComparator;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
+import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.mosai.ui.HorizontalListView;
 
@@ -176,6 +178,7 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
         AppAction.getUserCourses(context, new HttpResponseHandler(context,UserCourseRoot.class) {
             @Override
             public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
+                getCoursesEvent();
                 UserCourseRoot userCourseRoot = (UserCourseRoot) response;
                 List<Courses> courses = userCourseRoot.getCourses();
                 newCourses.clear();
@@ -283,5 +286,13 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
                 startActivity(new Intent(context, SearchCourseMainActivity.class));
             }
         });
+    }
+
+    @Override
+    public String getAnalyticsTrackName() {
+        return TrackName.DiscoverScreen;
+    }
+    private void getCoursesEvent(){
+        AnalyticsUtils.setEvent(context,R.array.GetCourses);
     }
 }

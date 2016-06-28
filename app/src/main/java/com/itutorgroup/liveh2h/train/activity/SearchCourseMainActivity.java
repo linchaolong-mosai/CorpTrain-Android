@@ -15,6 +15,7 @@ import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.adpter.SearchCourseResultAdapter;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.bean.usercourse.UserCourseRoot;
+import com.itutorgroup.liveh2h.train.constants.TrackName;
 import com.itutorgroup.liveh2h.train.entity.HttpResponse;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
@@ -154,5 +155,10 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
         super.onActivityResult(requestCode, resultCode, data);
 //        getDatas(false);
 //        filter(cetCourses.getText().toString());
+    }
+
+    @Override
+    public String getAnalyticsTrackScreenName() {
+        return TrackName.SearchCourseScreen;
     }
 }

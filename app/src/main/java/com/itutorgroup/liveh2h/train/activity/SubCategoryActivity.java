@@ -98,7 +98,7 @@ public class SubCategoryActivity extends BaseToolbarActivity {
 
     /****************************************Analytics**************************/
     @Override
-    public String getAnalyticsTrackName() {
+    public String getAnalyticsTrackScreenName() {
         return TrackName.SubcategoryScreen;
     }
     private void getSubCategoryListEvent(){

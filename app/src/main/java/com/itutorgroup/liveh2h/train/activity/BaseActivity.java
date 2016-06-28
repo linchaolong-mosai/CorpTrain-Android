@@ -223,12 +223,10 @@ public class BaseActivity extends AppCompatActivity {
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }
-
-
     @Override
     protected void onResume() {
         super.onResume();
-        setAnalyticsTrackName();
+        setAnalyticsTrackScreenName();
     }
 
     @Override
@@ -267,23 +265,20 @@ public class BaseActivity extends AppCompatActivity {
         }
     };
 
-    public String getAnalyticsTrackName() {
-        return this.getClass().getSimpleName();
+    protected String getAnalyticsTrackScreenName() {
+        return null;
     }
 
-    public void setAnalyticsTrackName() {
-        if (!TextUtils.isEmpty(getAnalyticsTrackName())) {
-            AnalyticsUtils.setTracker(context, getAnalyticsTrackName());
+    protected void setAnalyticsTrackScreenName() {
+//        Logger.t("event").e("onResume");
+        if (!TextUtils.isEmpty(getAnalyticsTrackScreenName())) {
+            AnalyticsUtils.setScreen(context, getAnalyticsTrackScreenName());
         }
     }
-
     protected void didEnterBackgroundEvent() {
-        if (!TextUtils.isEmpty(getAnalyticsTrackName()))
             AnalyticsUtils.setEvent(context, R.array.DidEnterBackground);
     }
-
     protected void willEnterForeground() {
-        if (!TextUtils.isEmpty(getAnalyticsTrackName()))
             AnalyticsUtils.setEvent(context, R.array.WillEnterForeground);
     }
 
@@ -299,12 +294,9 @@ public class BaseActivity extends AppCompatActivity {
 
     private void checkBackgound() {
         if (MyApplication.INSTANCE.getAppCount() <= 0) {
-//            if (!TextUtils.equals(AppManager.getAppManager().firstActivity().getClass().getSimpleName(), this.getClass().getSimpleName())) {
                 Logger.t("ground").e("Background");
                 MyApplication.INSTANCE.foregound = true;
                 didEnterBackgroundEvent();
-
-//            }
         }
     }
 }
