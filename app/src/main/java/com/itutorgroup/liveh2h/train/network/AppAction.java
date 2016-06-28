@@ -30,7 +30,7 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 //    private static final String BASE_URL = "http://54.153.127.218/tutormeetweb/";
-    public static final String URL = "https://train-qa.liveh2h.com/";
+    public static final String URL = "http://54.153.127.218/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
 
     private static final String BASE_URL = URL+"corptraining/";
