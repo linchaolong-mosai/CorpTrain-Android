@@ -7,4 +7,104 @@
         <item>不太同意</item>
         <item>強烈反對</item>
     </string-array>
+
+    <string-array name="TryToLogin">
+        <item>Network</item>
+        <item>TryToLogin</item>
+    </string-array>
+
+    <string-array name="Login">
+        <item>Network</item>
+        <item>Login</item>
+    </string-array>
+    <string-array name="ResetPassword">
+        <item>Network</item>
+        <item>ResetPassword</item>
+    </string-array>
+
+    <string-array name="SubmitAvatar">
+        <item>Network</item>
+        <item>Submit Avatar</item>
+    </string-array>
+
+    <string-array name="ChangePassword">
+        <item>Network</item>
+        <item>ChangePassword</item>
+    </string-array>
+
+    <string-array name="ChangeName">
+        <item>Network</item>
+        <item>ChangeName</item>
+    </string-array>
+
+    <string-array name="ChangePhoneNumber">
+        <item>Network</item>
+        <item>ChangePhoneNumber</item>
+    </string-array>
+
+    <string-array name="GetTopCategoryList">
+        <item>Network</item>
+        <item>GetTopCategoryList</item>
+    </string-array>
+
+    <string-array name="GetSubCategoryList">
+        <item>Network</item>
+        <item>GetSubCategoryList</item>
+    </string-array>
+
+    <string-array name="GetCoursesUnderCategory">
+        <item>Network</item>
+        <item>GetCoursesUnderCategory</item>
+    </string-array>
+
+    <string-array name="GetResourceList">
+        <item>Network</item>
+        <item>GetResourceList</item>
+    </string-array>
+    <string-array name="SubmitAQuizAnswer">
+        <item>Network</item>
+        <item>SubmitAQuizAnswer</item>
+    </string-array>
+    <string-array name="SubmitASurveyAnswer">
+        <item>Network</item>
+        <item>SubmitASurveyAnswer</item>
+    </string-array>
+    <string-array name="SubmitCourseComment">
+        <item>Network</item>
+        <item>SubmitCourseComment</item>
+    </string-array>
+    <string-array name="SendAppFeedback">
+        <item>Network</item>
+        <item>SendAppFeedback</item>
+    </string-array>
+
+    <string-array name="SubmitCourseRating">
+        <item>Network</item>
+        <item>SubmitCourseRating</item>
+    </string-array>
+
+    <string-array name="JoinACourse">
+        <item>Network</item>
+        <item>JoinACourse</item>
+    </string-array>
+    <string-array name="LaunchApp">
+        <item>AppState</item>
+        <item>LaunchApp</item>
+    </string-array>
+    <string-array name="DidEnterBackground">
+        <item>AppState</item>
+        <item>DidEnterBackground</item>
+    </string-array>
+    <string-array name="WillEnterForeground">
+        <item>AppState</item>
+        <item>WillEnterForeground</item>
+    </string-array>
+    <string-array name="GetClasses">
+        <item>Network</item>
+        <item>GetClasses</item>
+    </string-array>
+    <string-array name="GetCourses">
+        <item>Network</item>
+        <item>GetCourses</item>
+    </string-array>
 </resources>

@@ -30,12 +30,12 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 //    private static final String BASE_URL = "http://54.153.127.218/tutormeetweb/";
-    public static final String URL = "https://train-qa.liveh2h.com/";
+    public static final String URL = "http://54.153.127.218/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
-
+    public static final String RESOURCE_URL = "http://imgsrv.liveh2h.com/";
     private static final String BASE_URL = URL+"corptraining/";
-    public static final String IMG_RESOURSE_COURSE_URL = URL + "resources/";
-    public static final String FILE_RESOURSE_COURSE_URL = URL + "resources/";
+    public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
+    public static final String FILE_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
 
     public static String getUrl(String url) {
         return BASE_URL + url;
