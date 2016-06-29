@@ -8,8 +8,6 @@ import com.itutorgroup.liveh2h.train.util.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.mosai.utils.EncodeUtil;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -29,10 +27,10 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_SUBSCRIBED = 4;
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
-//    private static final String BASE_URL = "http://54.153.127.218/tutormeetweb/";
-    public static final String URL = "http://54.153.127.218/";
+//    private static final String BASE_URL = "https://web1.liveh2h.com/tutormeetweb/";
+    public static final String URL = "https://web1.liveh2h.com/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
-    public static final String RESOURCE_URL = "http://imgsrv.liveh2h.com/";
+    public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
@@ -161,7 +159,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getTopCategoryList(Context context,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/category/subcategories
+        //https://web1.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -172,7 +170,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSubCategorylist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/category/subcategories
+        //https://web1.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -185,7 +183,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getCourselist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/category/subcategories
+        //https://web1.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/courses/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -308,7 +306,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getClassesByCourseId(Context context,String courseId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/course/classes/<course_id>
+        //https://web1.liveh2h.com/corptraining/api/course/classes/<course_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/course/classes/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -319,7 +317,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getResourceByClassId(Context context,String classId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/class/resources/<class_id>
+        //https://web1.liveh2h.com/corptraining/api/class/resources/<class_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/class/resources/")+classId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -330,7 +328,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuizByQuizId(Context context,String quizId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicQuiz/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicQuiz/<quiz_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/basicQuiz/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -341,7 +339,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuestionslistByQuizId(Context context,String quizId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicQuiz/question/list/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicQuiz/question/list/<quiz_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/basicQuiz/question/list/")+quizId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -354,7 +352,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSummaryById(Context context,String userId,String classId,String quizId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
         String url = String.format("%s%s/%s/%s",getUrl("api/basicQuiz/summary/"),userId,classId,quizId);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
@@ -384,7 +382,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuizSummary(Context context,String user,String classId,String quizId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
         String url = String.format("%s%s/%s/%s",getUrl("api/basicQuiz/summary/"),user,classId,quizId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
@@ -395,7 +393,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getQuestionslistBySurveyId(Context context,String surveyId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicSurvey/question/list/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicSurvey/question/list/<quiz_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/basicSurvey/question/list/")+surveyId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -424,7 +422,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSurveySummary(Context context,String user,String classId,String surveyId,AsyncHttpResponseHandler responseHandler){
-        //http://54.153.127.218/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
+        //https://web1.liveh2h.com/corptraining/api/basicQuiz/summary/user/<class_id>/<quiz_id>
         String url = String.format("%s%s/%s/%s",getUrl("api/basicSurvey/summary/"),user,classId,surveyId,responseHandler);
         AsyncHttp.getInstance().execute(context,url,AsyncHttp.METHOD_GET,responseHandler);
     }
@@ -480,7 +478,7 @@ public class AppAction {
      * @param httpResponseHandler
      */
     public static void incrementViewcount(Context context,String courseId,AsyncHttpResponseHandler httpResponseHandler){
-        //http://54.153.127.218/corptraining/api/course/viewcount/<course_id>
+        //https://web1.liveh2h.com/corptraining/api/course/viewcount/<course_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/course/viewcount/"+courseId),AsyncHttp.METHOD_PUT,httpResponseHandler);
     }
 }
