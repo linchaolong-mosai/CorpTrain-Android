@@ -83,14 +83,6 @@ public class NetworkUtils {
                     File file = new File(inputValue);
                     String filename = file.getName();
                     String contentType = "image/jpeg";
-//                            .getContentType(file);
-//                    if (filename.endsWith(".png")) {
-//                        contentType = "image/png";
-//                    }
-//                    if (contentType == null || contentType.equals("")) {
-//                        contentType = "application/octet-stream";
-//                    }
-
 
                     StringBuffer strBuf = new StringBuffer();
                     strBuf.append("\r\n").append("--").append(BOUNDARY).append(

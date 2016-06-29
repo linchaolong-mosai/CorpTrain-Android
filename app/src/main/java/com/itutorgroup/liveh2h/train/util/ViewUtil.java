@@ -65,60 +65,6 @@ public class ViewUtil {
 	}
 	
 	/**
-	 * 为editText设置分隔符 123-232-123
-	 * @param editText
-	 */
-//	public static void setSeparator(final EditText editText) {
-//		editText.addTextChangedListener(new TextWatcher() {
-//			@Override
-//			public void onTextChanged(CharSequence s, int start, int before, int count) {
-//				if (s.length() > 0 && s.length() % 4 == 0) {
-//					s = StringUtil.space(s.toString(), "-", 3);
-//					editText.setText(s.toString());
-//					editText.setSelection(s.length());
-//				}
-//			}
-//			@Override
-//			public void beforeTextChanged(CharSequence s, int start, int count,
-//					int after) {
-//			}
-//			@Override
-//			public void afterTextChanged(Editable s) {
-//			}
-//		});
-//	}
-
-//    /**
-//     * 该方法使api 19以上的设备状态栏颜色改变
-//     * 注意：根布局不要使用merge，设置padding属性无效，状态栏的颜色可以在主题的colorPrimaryDark里面设置，默认为黑色
-//     * @param activity
-//     */
-//    public static void initStatusBar(Activity activity) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            try {
-//                int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
-//                if (resourceId > 0) {
-//                    int statusBarHeight = activity.getResources().getDimensionPixelSize(resourceId);
-//                    activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//                    ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
-//                    ViewGroup root = (ViewGroup) contentView.getChildAt(0);
-//                    root.setPadding(root.getLeft(), root.getTop() + statusBarHeight, root.getRight(), root.getBottom());
-////                    root.setFitsSystemWindows(true);
-////                    root.setClipToPadding(true);
-//                    TypedArray array = activity.getTheme().obtainStyledAttributes(new int[]{R.attr.colorPrimaryDark});
-//                    int backgroundColor = array.getColor(0, Color.BLACK);
-//                    array.recycle();
-//                    LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, statusBarHeight);
-//                    View view = new View(activity);
-//                    view.setBackgroundColor(backgroundColor);
-//                    contentView.addView(view, 0, layoutParams);
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-	/**
 	 * 该方法使api 19以上的设备状态栏颜色改变
 	 * 注意：状态栏的颜色可以在主题的status_bar_bg里面设置，默认为黑色
 	 * @param activity
@@ -139,6 +85,8 @@ public class ViewUtil {
 					ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusBarHeight);
 					contentParent.addView(view, 0, layoutParams);
 					activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//					activity.getWindow().findViewById(resourceId).setBackgroundColor(Color.TRANSPARENT);
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -155,41 +103,7 @@ public class ViewUtil {
 			}
 		}
 	}
-	/**
-	 * 设置标题栏高度，把状态栏包括进来
-	 * @param context
-	 * @param view
-	 * @param barHeight
-	 */
-	/*public static void setBarHeight(Context context, View view, int barHeight) {
-		if (android.os.Build.VERSION.SDK_INT >= 19) {
-			int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
-				LayoutParams layoutParams = view.getLayoutParams();
-				layoutParams.height = statusBarHeight + barHeight;
-				view.setPadding(0, statusBarHeight, 0, 0);
-			}
-		}
-	}*/
 
-	/**
-	 * 设置标题栏高度，把状态栏包括进来
-	 * @param context
-	 * @param view
-	 */
-	/*public static void setBarHeight(Context context, View view) {
-		if (android.os.Build.VERSION.SDK_INT >= 19) {
-			int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
-			if (resourceId > 0) {
-				int statusBarHeight = context.getResources().getDimensionPixelSize(resourceId);
-				view.setPadding(view.getPaddingLeft(),
-						statusBarHeight + view.getPaddingTop(),
-						view.getPaddingRight(), view.getPaddingBottom());
-			}
-		}
-	}*/
-	
 	/**
 	 * 根据EditText是否有内容，显示label
 	 * @param editText

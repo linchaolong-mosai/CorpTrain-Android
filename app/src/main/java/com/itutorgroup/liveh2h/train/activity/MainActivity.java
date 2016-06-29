@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.itutorgroup.liveh2h.train.NetworkChangedInterface;
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.fragment.DiscoverFragment;
@@ -32,7 +33,7 @@ import com.mosai.utils.ToastUtils;
 
 import de.greenrobot.event.EventBus;
 
-public class MainActivity extends BaseToolbarActivity {
+public class MainActivity extends BaseToolbarActivity implements NetworkChangedInterface{
     private Fragment currentFragment;
     private ImageView ivDiscover, ivLearn, ivMe;
     private TextView tvDisicover, tvLearn, tvMe;
@@ -48,11 +49,6 @@ public class MainActivity extends BaseToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        initListener();
-        /////////动态注册广播
-        IntentFilter mFilter = new IntentFilter();
-        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(myNetReceiver, mFilter);
         EventBus.getDefault().register(this);
     }
     public void onEventMainThread(boolean flag){
@@ -116,17 +112,8 @@ public class MainActivity extends BaseToolbarActivity {
         initBottomlayout();
     }
 
-    private void initListener() {
-
-//        addBottomListener();
-    }
-
-    private void initData() {
-        show(DiscoverFragment.class.getSimpleName());
-    }
 
     private void show(String tag) {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(tag);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -151,8 +138,6 @@ public class MainActivity extends BaseToolbarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-//        this.menu = menu;
-//        getMenuInflater().inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -170,38 +155,22 @@ public class MainActivity extends BaseToolbarActivity {
         } else {
             lastKeyBackTime = 0;
             finish();
-//           AppManager.getAppManager().AppExit(context);
-//            moveTaskToBack(true);
         }
     }
-    /////////////监听网络状态变化的广播接收器
-    private ConnectivityManager mConnectivityManager;
-    private NetworkInfo netInfo;
-    public BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            LogUtils.e("net changed");
-            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-                mConnectivityManager = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-                netInfo = mConnectivityManager.getActiveNetworkInfo();
-                if(netInfo != null && netInfo.isAvailable()) {
-                    Event.NetChange netChange = new Event.NetChange();
-                    netChange.netChange=true;
-                    EventBus.getDefault().post(netChange);
-                }
-            }
 
-        }
-    };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        /////////解除广播
-        if(myNetReceiver!=null){
-            unregisterReceiver(myNetReceiver);
+    }
+
+    @Override
+    public void networkChanged(boolean isAvailable) {
+        if(isAvailable){
+            Event.NetChange netChange = new Event.NetChange();
+            netChange.netChange=true;
+            EventBus.getDefault().post(netChange);
         }
     }
 }

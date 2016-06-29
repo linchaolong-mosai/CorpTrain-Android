@@ -64,8 +64,6 @@ public class QuizQuestionFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        LogUtils.e("znb"+"onCreateView"+question.getText());
         if(firstLoad){
         view =  inflater.inflate(R.layout.fragment_quiz_question, container, false);
         tvQuestion = ViewUtil.findViewById(view,R.id.tv_question);
@@ -81,12 +79,8 @@ public class QuizQuestionFragment extends BaseFragment {
         LogUtils.e("znb"+"onViewCreated"+question.getText());
         if(firstLoad){
         tvQuestion.setText(question.getText());
-//        if(adapter==null){
         adapter = new QuizQuestionAdapter(context,answers,R.layout.item_listformat_quiz_question);
         listView.setAdapter(adapter);
-//        }else{
-//            adapter.notifyDataSetChanged();
-//        }
         addListener();
             firstLoad=false;
         }

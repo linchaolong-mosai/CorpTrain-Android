@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.itutorgroup.liveh2h.train.MyApplication;
+import com.itutorgroup.liveh2h.train.NetworkChangedInterface;
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.broadcast.TokenExpireReceiver;
 import com.itutorgroup.liveh2h.train.local.UserPF;
@@ -47,7 +50,6 @@ public class BaseActivity extends AppCompatActivity {
         context = this;
         AppManager.getAppManager().addActivity(this);
         register();
-//        textProgressIndicator = TextProgressIndicator.newInstance(this);
     }
 
     @Override
@@ -139,13 +141,13 @@ public class BaseActivity extends AppCompatActivity {
         AppManager.getAppManager().finishActivity(this);
         unregister();
 
-        MyApplication.INSTANCE.foregound=false;
+        MyApplication.INSTANCE.foregound = false;
     }
 
     private void register() {
         registerTokenExpireBroadcast();
         registerHomeKeyEvent();
-
+        registerNetworkChanged();
     }
 
     private void registerHomeKeyEvent() {
@@ -164,6 +166,7 @@ public class BaseActivity extends AppCompatActivity {
     private void unregister() {
         unregisterTokenExpireBroadcast();
         unregisterHomeKeyEvent();
+        unregisterNetworkChanged();
     }
 
     public void back() {
@@ -195,7 +198,6 @@ public class BaseActivity extends AppCompatActivity {
                         //token过时
                         LogUtils.e("Go to Login");
                         AppManager.getAppManager().finishAllActivity();
-//                        UserPF.getInstance().putBoolean(UserPF.IS_LOGIN, false);
                         UserPF.getInstance().putString(UserPF.PASSWORD, "");
                         startActivity(new Intent(BaseActivity.this, LoginActivity.class));
                     }
@@ -214,7 +216,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
+    //字体不跟随系统设置变化
     @Override
     public Resources getResources() {
         Resources res = super.getResources();
@@ -223,6 +225,7 @@ public class BaseActivity extends AppCompatActivity {
         res.updateConfiguration(config, res.getDisplayMetrics());
         return res;
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -270,16 +273,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void setAnalyticsTrackScreenName() {
-//        Logger.t("event").e("onResume");
         if (!TextUtils.isEmpty(getAnalyticsTrackScreenName())) {
             AnalyticsUtils.setScreen(context, getAnalyticsTrackScreenName());
         }
     }
+
     protected void didEnterBackgroundEvent() {
-            AnalyticsUtils.setEvent(context, R.array.DidEnterBackground);
+        AnalyticsUtils.setEvent(context, R.array.DidEnterBackground);
     }
+
     protected void willEnterForeground() {
-            AnalyticsUtils.setEvent(context, R.array.WillEnterForeground);
+        AnalyticsUtils.setEvent(context, R.array.WillEnterForeground);
     }
 
     private void checkForegound() {
@@ -294,9 +298,54 @@ public class BaseActivity extends AppCompatActivity {
 
     private void checkBackgound() {
         if (MyApplication.INSTANCE.getAppCount() <= 0) {
-                Logger.t("ground").e("Background");
-                MyApplication.INSTANCE.foregound = true;
-                didEnterBackgroundEvent();
+            Logger.t("ground").e("Background");
+            MyApplication.INSTANCE.foregound = true;
+            didEnterBackgroundEvent();
         }
     }
+
+
+    /*********************************************
+     * 监听网络变化
+     ***********************************/
+    private IntentFilter networkChangedFilter;
+    private NetworkChangedInterface networkChangedInterface;
+    public BroadcastReceiver myNetReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            LogUtils.e("net changed");
+            if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+                ConnectivityManager mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = mConnectivityManager.getActiveNetworkInfo();
+                if (netInfo != null && netInfo.isAvailable()) {
+                    if (networkChangedInterface != null)
+                        networkChangedInterface.networkChanged(netInfo.isAvailable());
+                }
+            }
+        }
+    };
+
+    private void registerNetworkChanged() {
+        if (this instanceof NetworkChangedInterface) {
+            networkChangedInterface = (NetworkChangedInterface) this;
+            networkChangedFilter = new IntentFilter();
+            networkChangedFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(myNetReceiver, networkChangedFilter);
+        }
+
+    }
+
+    private void unregisterNetworkChanged() {
+        if (this instanceof NetworkChangedInterface) {
+            if (networkChangedInterface != null) {
+                if (myNetReceiver != null && networkChangedFilter != null) {
+                    unregisterReceiver(myNetReceiver);
+                }
+                myNetReceiver = null;
+                networkChangedFilter = null;
+            }
+        }
+    }
+    /**************************************监听网络变化*********************************/
 }
