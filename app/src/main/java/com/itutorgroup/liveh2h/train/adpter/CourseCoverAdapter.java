@@ -36,7 +36,6 @@ public class CourseCoverAdapter extends CommonAdapter<Courses> {
     protected void fillData(CommonViewHolder holder, int position) {
         Courses course = listDatas.get(position);
             String imgurl = Utils.getImgUrl(course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
-//            LogUtils.e("imgurl:"+imgurl);
             String name = course.getCourseInfo().getSubject();
             int focus = course.getCourseInfo().getViewCount();
             ImageView ivImgurl = holder.getView(R.id.iv_courseicon);
@@ -45,9 +44,6 @@ public class CourseCoverAdapter extends CommonAdapter<Courses> {
             if(!TextUtils.isEmpty(name)){
                 Utils.displayImage(imgurl,ivImgurl,options);
             }
-
-
-
             tvName.setText(name);
             tvFocus.setText(focus+"");
     }

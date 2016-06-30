@@ -39,7 +39,6 @@ import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListene
 import com.orhanobut.logger.Logger;
 
 import java.io.File;
-
 import de.greenrobot.event.EventBus;
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -50,19 +49,22 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private MaterialDialog mldgSignout;
     private Context mContext;
     private Button btnSignout;
-    private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback,tvClearMaterials;
+    private TextView tvName, tvPersonalInfo, tvChangePassword, tvFeedback, tvClearMaterials;
     private CircleImageView ivHeadpotrait;
     private DisplayImageOptions options;
+
     public MeFragment() {
         // Required empty public constructor
     }
-    private void setImageloaderOptions(){
+
+    private void setImageloaderOptions() {
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .showImageForEmptyUri(R.drawable.ic_blank_user_small)
                 .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).build();
 
     }
+
     public static MeFragment newInstance() {
         return new MeFragment();
     }
@@ -80,9 +82,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         LogUtils.i("onCreate");
         EventBus.getDefault().register(this);
     }
-    public void onEventMainThread(Event.UpdateAvatar updateAvatar){
-        ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
+
+    public void onEventMainThread(Event.UpdateAvatar updateAvatar) {
+        ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(), ivHeadpotrait, options);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -104,9 +108,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         tvPersonalInfo = ViewUtil.findViewById(view, R.id.tvPersonalInfo);
         tvChangePassword = ViewUtil.findViewById(view, R.id.tvChangePassword);
         tvFeedback = ViewUtil.findViewById(view, R.id.tvFeedback);
-        ivHeadpotrait = ViewUtil.findViewById(view,R.id.ivHeadpotrait);
-        btnSignout = ViewUtil.findViewById(view,R.id.btn_signout);
-        tvClearMaterials = ViewUtil.findViewById(view,R.id.tvClearOffline);
+        ivHeadpotrait = ViewUtil.findViewById(view, R.id.ivHeadpotrait);
+        btnSignout = ViewUtil.findViewById(view, R.id.btn_signout);
+        tvClearMaterials = ViewUtil.findViewById(view, R.id.tvClearOffline);
         setImageloaderOptions();
         initListener();
         initData();
@@ -121,11 +125,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initData() {
-        ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
-//        Picasso.with(mContext).load("https://imgsrv.liveh2h.com/resources/3F4285DE-8E71-4239-A41E-136F319739BD/caution-hard-lesson-ahead-300x276.jpg").into(ivHeadpotrait);
-
-//        ImageLoader.getInstance().displayImage("https://imgsrv.liveh2h.com/resources/DB9493FA-C188-4002-A995-D182298B0947/3%20copy.jpg",ivHeadpotrait,options);
-
+        ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(), ivHeadpotrait, options);
         mldgSignout = new MaterialDialog(mContext)
 //                .setTitle("Tips")
                 .setMessage(getString(R.string.signout_message))
@@ -144,15 +144,16 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     }
                 });
     }
-    private void signout(){
-        UserPF.getInstance().putString(UserPF.PASSWORD,"");
+
+    private void signout() {
+        UserPF.getInstance().putString(UserPF.PASSWORD, "");
         AppManager.getAppManager().finishAllActivity();
         startActivity(new Intent(mContext, LoginActivity.class));
     }
+
     @Override
     public void onStart() {
         super.onStart();
-//        LogUtils.i("onStart");
     }
 
     @Override
@@ -196,7 +197,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvPersonalInfo:
-                startActivityForResult(new Intent(getActivity(), PersonalInfoActivity.class),0);
+                startActivityForResult(new Intent(getActivity(), PersonalInfoActivity.class), 0);
                 break;
             case R.id.tvChangePassword:
                 startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
@@ -221,23 +222,23 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 .setPositiveButton(mContext.getString(R.string.ok), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!new File(Utils.getMaterialsDir(mContext)).isDirectory()){
-                            ToastUtils.showToast(mContext,mContext.getString(R.string.delete_success));
+                        if (!new File(Utils.getMaterialsDir(mContext)).isDirectory()) {
+                            ToastUtils.showToast(mContext, mContext.getString(R.string.delete_success));
                             return;
                         }
-                        new AsyncTask<Void,Void,Boolean>(){
+                        new AsyncTask<Void, Void, Boolean>() {
                             @Override
                             protected void onPreExecute() {
                                 super.onPreExecute();
-                                ((MainActivity)mContext).showTextProgressDialog(mContext.getString(R.string.clearing));
+                                ((MainActivity) mContext).showTextProgressDialog(mContext.getString(R.string.clearing));
                             }
 
                             @Override
                             protected void onPostExecute(Boolean aVoid) {
                                 super.onPostExecute(aVoid);
-                                ((MainActivity)mContext).dismissTextProgressDialog();
-                                ToastUtils.showToast(mContext,mContext.getString(aVoid?R.string.delete_success: R.string.delete_fail));
-                                if(aVoid)
+                                ((MainActivity) mContext).dismissTextProgressDialog();
+                                ToastUtils.showToast(mContext, mContext.getString(aVoid ? R.string.delete_success : R.string.delete_fail));
+                                if (aVoid)
                                     MyApplication.INSTANCE.initMaterialDir();
                             }
 

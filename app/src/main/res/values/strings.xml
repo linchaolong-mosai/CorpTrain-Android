@@ -118,4 +118,6 @@
     <string name="next_question">Next</string>
     <string name="feedback_tips">Thanks for being one of the first people to try out H2H Learn! In these early days, we\'re eager for feedback to help us make H2H Learn work better for you.\nGot Ideas or suggesstions for improving the app?Share your thoughts!</string>
     <string name="creat_date">Create date</string>
+    <string name="action_settings">Settings</string>
+    <string name="error_text">error!</string>
 </resources>

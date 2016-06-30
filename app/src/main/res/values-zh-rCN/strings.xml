@@ -117,4 +117,6 @@
     <string name="next_question">下一题</string>
     <string name="feedback_tips">我们乐意听取您的意见!</string>
     <string name="creat_date">创建时间</string>
+    <string name="action_settings">设置</string>
+    <string name="error_text">错误!</string>
 </resources>

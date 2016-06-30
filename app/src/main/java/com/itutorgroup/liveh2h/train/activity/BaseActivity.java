@@ -56,7 +56,6 @@ public class BaseActivity extends AppCompatActivity {
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         ViewUtil.initStatusBar(this);
-
     }
 
     public void showTextProgressDialog(String message) {

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.CourseFindByCategory;
 import com.itutorgroup.liveh2h.train.network.AppAction;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 import com.mosai.utils.DateTimeUtil;
@@ -36,7 +37,7 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
     @Override
     protected void fillData(CommonViewHolder holder, int position) {
         CourseFindByCategory courseFindByCategory = listDatas.get(position);
-        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,courseFindByCategory.getCourseId(),courseFindByCategory.getImageName());
+        String imgurl = Utils.getImgUrl(courseFindByCategory.getCourseId(),courseFindByCategory.getImageName());
         String subject = courseFindByCategory.getSubject();
         int viewcount = courseFindByCategory.getViewCount();
         float rating = courseFindByCategory.getRating();

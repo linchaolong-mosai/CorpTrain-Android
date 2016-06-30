@@ -40,7 +40,6 @@ public class CourseCommentAdapter extends CommonAdapter<Comments>{
         Comments comments = listDatas.get(position);
         tvComment.setText(comments.getCourseCommentInfo().getComment());
         tvCreater.setText(comments.getCreatorInfo().getCreator());
-
         ImageLoader.getInstance().displayImage(Utils.getAvatar(comments.getCreatorInfo().getUserSn()),circleImageView,options);
     }
 }

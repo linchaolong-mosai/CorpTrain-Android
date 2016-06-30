@@ -38,7 +38,6 @@ public class ClassAdapter extends CommonAdapter<Classes> {
         Classes classes = listDatas.get(position);
         ImageView ivIcon = holder.getView(R.id.iv_class);
         Utils.displayImage(classes.getClassInfo().getClassId(),classes.getClassInfo().getImageName(),ivIcon,options);
-//        ImageLoader.getInstance().displayImage(Utils.getClassImgUrl(classes.getClassInfo().getClassId(),classes.getClassInfo().getImageName()),ivIcon);
         TextView tvClassName = holder.getView(R.id.tv_classname);
         TextView tvDuedate = holder.getView(R.id.tv_duedate);
         tvClassName.setText(classes.getClassInfo().getSubject());

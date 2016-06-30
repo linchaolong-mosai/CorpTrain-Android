@@ -117,4 +117,6 @@
     <string name="next_question">下一題</string>
     <string name="feedback_tips">我們樂意聽取您的意見!</string>
     <string name="creat_date">創建時間</string>
+    <string name="action_settings">設置</string>
+    <string name="error_text">錯誤!</string>
 </resources>

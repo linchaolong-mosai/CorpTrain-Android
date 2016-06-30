@@ -21,7 +21,6 @@ import java.util.List;
  * 邮箱：nianbin@mosainet.com
  */
 public class ClassResourceAdapter extends CommonAdapter<Resources> {
-//    private DisplayImageOptions options;
     private Context mContext;
     public ClassResourceAdapter(Context context, List<Resources> listDatas, int layoutId) {
         super(context, listDatas, layoutId);
@@ -50,7 +49,6 @@ public class ClassResourceAdapter extends CommonAdapter<Resources> {
                 tvState.setText(mContext.getString(R.string.open));
                 horizontalProgressBarWithNumber.setVisibility(View.GONE);
             }else{
-
                 if(resources.showProgress){
                     horizontalProgressBarWithNumber.setMax(100);
                     int progress = (int)((resources.currentcount*0.01f)/(resources.totalcount*0.01f)*100);

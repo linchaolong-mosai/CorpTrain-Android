@@ -40,10 +40,6 @@ public class QuizQuestionAdapter extends CommonAdapter<Answer> {
                 notifyDataSetChanged();
             }
         });
-//        ll.setOnClickListener(null);
-//        ivAnwser.setOnClickListener(null);
-//        ll.setSelected(index == position);
-//        ivAnwser.setSelected(index == position);
         ll.setBackgroundResource(index==position?R.color.pressed_bgcolor_green:R.color.white);
         ivAnwser.setImageResource(index == position ? R.drawable.ic_check_checked : R.drawable.ic_check_unchecked);
     }
