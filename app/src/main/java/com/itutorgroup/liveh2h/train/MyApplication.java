@@ -9,9 +9,9 @@ import com.google.android.gms.analytics.Tracker;
 import com.itutorgroup.liveh2h.train.common.AbnormalHandler;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AsyncHttp;
+import com.itutorgroup.liveh2h.train.network.https.AuthImageDownloader;
 import com.itutorgroup.liveh2h.train.util.Utils;
-import com.mosai.utils.ToastUtils;
-import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -70,13 +70,13 @@ public class MyApplication extends Application {
         //开始构建
         ImageLoaderConfiguration config = new ImageLoaderConfiguration
                 .Builder(this)
-                .threadPoolSize(3)//线程池内加载的数量
-                .threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024)) // You can pass your own memory cache implementation/你可以通过自己的内存缓存实现
+                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
                 .memoryCacheSize(2 * 1024 * 1024)
+                .diskCacheSize(50 * 1024 * 1024)
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                 .writeDebugLogs()
+                .imageDownloader(new AuthImageDownloader(this))
                 .build();
         ImageLoader.getInstance().init(config);
         MemoryCacheUtils.removeFromCache(UserPF.getInstance().getAvatarUrl(), ImageLoader.getInstance().getMemoryCache());

@@ -26,8 +26,11 @@ public class Utils {
     public static String getLocalFile(Context context,String filename){
        return Environment.getExternalStorageDirectory()+File.separator + context.getPackageName() + File.separator+filename;
     }
-    public static String getImgUrl(String id,String name){
+    public static String getImgUrlNotTrim(String id,String name){
         return (String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,id,name));
+    }
+    public static String getImgUrl(String id,String name){
+        return replaceSpace(String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,id,name));
     }
     public static void displayImage(String url, ImageView imageView, DisplayImageOptions options){
         ImageLoader.getInstance().displayImage(url,imageView,options);
@@ -36,7 +39,7 @@ public class Utils {
         ImageLoader.getInstance().displayImage(getImgUrl(id,name),imageView,options);
     }
     public static String getFileUrl(String resourceId,String name){
-        return (String.format("%s%s/%s", AppAction.FILE_RESOURSE_COURSE_URL,resourceId,name)).replace(" ","%20");
+        return replaceSpace(String.format("%s%s/%s", AppAction.FILE_RESOURSE_COURSE_URL,resourceId,name));
     }
     public static boolean renameToNewFile(String src, String dest)
     {
@@ -45,6 +48,7 @@ public class Utils {
         boolean isOk = srcDir.renameTo(new File(dest));  //dest新文件夹路径，通过renameto修改
         System.out.println("renameToNewFile is OK ? :" +isOk);
         return isOk;
+
 
     }
     public static String getAvatar(int userId){
@@ -61,5 +65,8 @@ public class Utils {
     }
     public static String encodeEmail(String src){
         return encodeEmail(src,"+");
+    }
+    public static String replaceSpace(String src){
+        return src.replace(" ","%20");
     }
 }

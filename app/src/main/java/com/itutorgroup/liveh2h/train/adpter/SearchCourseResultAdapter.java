@@ -8,6 +8,7 @@ import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.usercourse.CourseInfo;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.network.AppAction;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 import com.mosai.utils.DateTimeUtil;
@@ -38,7 +39,8 @@ public class SearchCourseResultAdapter extends CommonAdapter<Courses> {
     protected void fillData(CommonViewHolder holder, int position) {
         Courses courseFindByCategory = listDatas.get(position);
         CourseInfo courseInfo = courseFindByCategory.getCourseInfo();
-        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,courseInfo.getCourseId(), courseInfo.getImageName());
+//        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,courseInfo.getCourseId(), courseInfo.getImageName());
+        String imgurl = Utils.getImgUrl(courseInfo.getCourseId(), courseInfo.getImageName());
         String subject = courseInfo.getSubject();
         int viewcount = courseInfo.getViewCount();
         float rating = courseInfo.getRating();

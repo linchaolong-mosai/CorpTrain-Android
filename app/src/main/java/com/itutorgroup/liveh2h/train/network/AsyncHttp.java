@@ -12,6 +12,7 @@ import com.loopj.android.http.MySSLSocketFactory;
 import com.loopj.android.http.PersistentCookieStore;
 import com.loopj.android.http.RequestParams;
 import com.mosai.utils.EncodeUtil;
+import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
@@ -157,11 +158,13 @@ public class AsyncHttp {
             default:
                 break;
         }
-        LogUtils.i(url + (params == null?"":("?" + params.toString())));
+        Logger.t("http").e(url + (params == null?"":("?" + params.toString())));
+//        LogUtils.i(url + (params == null?"":("?" + params.toString())));
     }
 
     private RequestParams getRequestParams(RequestParams params, Map<String, Object> map) {
         if (map != null && !map.isEmpty()) {
+
             if (params == null) {
                 params = new RequestParams();
             }

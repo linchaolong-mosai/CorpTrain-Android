@@ -58,7 +58,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler {
     @Override
     public void onSuccess(int statusCode, Header[] headers,
                           String responseString) {
-        Logger.t("result").e("url:" + url + "\n状态码：" + statusCode + "\n" + "返回结果:" + responseString);
+        Logger.t("http").e("url:" + url + "\n状态码：" + statusCode + "\n" + "返回结果:" + responseString);
         if (statusCode == HttpURLConnection.HTTP_OK || statusCode == HttpURLConnection.HTTP_CREATED) {
             try {
                 if (FastJsonUtils.isJson(responseString)) {
@@ -103,7 +103,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler {
             message = getString(R.string.network_request_timeout);
         }
         onResponeseFail(statusCode, new HttpResponse(message));
-        LogUtils.e("url:" + url + "\n网络请求失败：code=" + statusCode + " " + message);
+        Logger.t("http").e("url:" + url + "\n网络请求失败：code=" + statusCode + " " + message);
     }
 
     @Override

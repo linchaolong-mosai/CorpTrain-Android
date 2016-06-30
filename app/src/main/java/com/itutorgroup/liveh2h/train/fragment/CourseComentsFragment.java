@@ -29,6 +29,7 @@ import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.ui.RatingDialog;
 import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.ui.SegmentedControlView;
 import com.mosai.utils.Tools;
@@ -111,7 +112,7 @@ public class CourseComentsFragment extends BaseFragment implements SegmentedCont
                 .showImageForEmptyUri(R.drawable.bg_course_default_cover)
                 .showImageOnFail(R.drawable.bg_course_default_cover)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
-        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL, course.getCourseInfo().getCourseId(), course.getCourseInfo().getImageName());
+        String imgurl = Utils.getImgUrl(course.getCourseInfo().getCourseId(), course.getCourseInfo().getImageName());
         ImageLoader.getInstance().displayImage(imgurl, ivIcon);
         addListener();
         getCommentlist(false);

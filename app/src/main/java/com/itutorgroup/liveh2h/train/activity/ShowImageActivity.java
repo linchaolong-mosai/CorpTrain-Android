@@ -1,7 +1,8 @@
 package com.itutorgroup.liveh2h.train.activity;
 
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.resourseforclass.Resources;
@@ -10,8 +11,10 @@ import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.lidroid.xutils.http.HttpHandler;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
@@ -34,23 +37,31 @@ public class ShowImageActivity extends ABaseToolbarActivity {
         final String filepath = getIntent().getStringExtra("filepath");
         final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
         if (!TextUtils.isEmpty(url)) {
-            showProgressDialog();
-            Picasso.with(this)
-                    .load(url)
-                    .into(photoView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            attacher.update();
-                            dismissProgressDialog();
-                        }
+            DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true).build();
+            ImageLoader.getInstance().displayImage(url, photoView,options,new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
+                    showProgressDialog();
+                }
 
-                        @Override
-                        public void onError() {
-                            dismissProgressDialog();
-                        }
-                    });
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+                }
+
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    attacher.update();
+                    dismissProgressDialog();
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
         } else {
-            photoView.setImageBitmap(BitmapFactory.decodeFile(filepath));
+            ImageLoader.getInstance().displayImage("file://"+filepath,photoView);
         }
 
     }

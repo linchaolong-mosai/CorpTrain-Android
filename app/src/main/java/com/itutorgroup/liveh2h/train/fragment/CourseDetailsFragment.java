@@ -30,6 +30,7 @@ import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.ui.RatingDialog;
 import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
 import com.mosai.ui.SegmentedControlView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -124,7 +125,7 @@ public class CourseDetailsFragment extends BaseFragment implements SegmentedCont
         adapter = new ClassAdapter(context,classes,R.layout.item_listformat_class);
         lv.setAdapter(adapter);
         ratingBar.setRating(courses.getCourseInfo().getRating());
-        String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL, courses.getCourseInfo().getCourseId(), courses.getCourseInfo().getImageName());
+        String imgurl = Utils.getImgUrl(courses.getCourseInfo().getCourseId(), courses.getCourseInfo().getImageName());
         ImageLoader.getInstance().displayImage(imgurl, ivIcon);
         addListener();
         getClasses();

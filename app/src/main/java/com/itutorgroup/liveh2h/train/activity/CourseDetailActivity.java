@@ -45,14 +45,8 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
         tvTitle.setText(course.getCourseInfo().getSubject());
         getCourseByName();
         increaseViewcount();
-//        initCourseView();
     }
 
-    private void initCourseView() {
-        courseComentsFragment.ratingBar.setRating(course.getCourseInfo().getRating());
-        courseDetailsFragment.ratingBar.setRating(course.getCourseInfo().getRating());
-        ivFavorite.setSelected(course.getAttendeeInfo().getFavorite());
-    }
 
     private void increaseViewcount(){
         AppAction.incrementViewcount(context, course.getCourseInfo().getCourseId(), new HttpResponseHandler(context, HttpResponse.class) {

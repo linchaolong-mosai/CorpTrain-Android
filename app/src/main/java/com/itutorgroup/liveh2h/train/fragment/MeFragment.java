@@ -2,6 +2,7 @@ package com.itutorgroup.liveh2h.train.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,7 +32,11 @@ import com.mosai.ui.CircleImageView;
 import com.mosai.utils.ToastUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
@@ -55,7 +60,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .showImageForEmptyUri(R.drawable.ic_blank_user_small)
                 .showImageOnFail(R.drawable.ic_blank_user_small)
-                .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+                .considerExifParams(true).build();
+
     }
     public static MeFragment newInstance() {
         return new MeFragment();
@@ -116,6 +122,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private void initData() {
         ImageLoader.getInstance().displayImage(UserPF.getInstance().getAvatarUrl(),ivHeadpotrait,options);
+//        Picasso.with(mContext).load("https://imgsrv.liveh2h.com/resources/3F4285DE-8E71-4239-A41E-136F319739BD/caution-hard-lesson-ahead-300x276.jpg").into(ivHeadpotrait);
+
+//        ImageLoader.getInstance().displayImage("https://imgsrv.liveh2h.com/resources/DB9493FA-C188-4002-A995-D182298B0947/3%20copy.jpg",ivHeadpotrait,options);
+
         mldgSignout = new MaterialDialog(mContext)
 //                .setTitle("Tips")
                 .setMessage(getString(R.string.signout_message))
@@ -124,6 +134,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                     public void onClick(View v) {
                         mldgSignout.dismiss();
                         signout();
+
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {

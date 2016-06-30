@@ -106,7 +106,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
         coursesTemp.clear();
         if (!TextUtils.isEmpty(filter)) {
             for (Courses course : courses) {
-                if (course.getCourseInfo().getSubject().contains(filter)) {
+                if (course.getCourseInfo().getSubject().toLowerCase().contains(filter.toLowerCase())) {
                     coursesTemp.add(course);
                 }
             }
@@ -146,6 +146,7 @@ public class SearchCourseMainActivity extends ABaseToolbarActivity {
             public void onResponeseFail(int statusCode, HttpResponse response) {
                 if(showTips)
                 showHintDialog(response.message);
+
             }
         });
     }

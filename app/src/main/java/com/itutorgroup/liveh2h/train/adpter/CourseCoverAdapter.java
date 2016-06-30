@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
-import com.itutorgroup.liveh2h.train.network.AppAction;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.mosai.utils.CommonAdapter;
 import com.mosai.utils.CommonViewHolder;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -35,7 +35,7 @@ public class CourseCoverAdapter extends CommonAdapter<Courses> {
     @Override
     protected void fillData(CommonViewHolder holder, int position) {
         Courses course = listDatas.get(position);
-            String imgurl = String.format("%s%s/%s",AppAction.IMG_RESOURSE_COURSE_URL,course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
+            String imgurl = Utils.getImgUrl(course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
 //            LogUtils.e("imgurl:"+imgurl);
             String name = course.getCourseInfo().getSubject();
             int focus = course.getCourseInfo().getViewCount();
@@ -43,16 +43,12 @@ public class CourseCoverAdapter extends CommonAdapter<Courses> {
             TextView tvName = holder.getView(R.id.tv_creater);
             TextView tvFocus = holder.getView(R.id.tv_focus);
             if(!TextUtils.isEmpty(name)){
-                setImage(imgurl,ivImgurl);
+                Utils.displayImage(imgurl,ivImgurl,options);
             }
 
 
 
             tvName.setText(name);
             tvFocus.setText(focus+"");
-    }
-    private void setImage(String url,ImageView iv){
-        ImageLoader.getInstance().displayImage(url, iv, options, null);
-
     }
 }

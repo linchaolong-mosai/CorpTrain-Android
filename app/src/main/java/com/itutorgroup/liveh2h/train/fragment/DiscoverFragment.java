@@ -35,6 +35,7 @@ import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.network.HttpResponseHandler;
 import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
+import com.itutorgroup.liveh2h.train.util.Utils;
 import com.mosai.ui.HorizontalListView;
 
 import java.util.ArrayList;
@@ -148,10 +149,9 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
         mDemoSlider.setDuration(4000);
         mDemoSlider.addOnPageChangeListener(this);
         for(Courses course : hotCourses){
-            String imgurl = String.format("%s%s/%s", AppAction.IMG_RESOURSE_COURSE_URL,course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
+            String imgurl = Utils.getImgUrl(course.getCourseInfo().getCourseId(),course.getCourseInfo().getImageName());
             String name = course.getCourseInfo().getSubject();
             TextSliderView textSliderView = new TextSliderView(context);
-            // initialize a SliderLayout
             textSliderView
                     .empty(R.drawable.bg_course_default_cover)
                     .error(R.drawable.bg_course_default_cover)
@@ -159,18 +159,15 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
                     .image(imgurl)
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);
-
-            //add your extra information
             textSliderView.bundle(new Bundle());
             textSliderView.getBundle()
                     .putSerializable("extra",course);
             mDemoSlider.addSlider(textSliderView);
-            mDemoSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
         }
+        mDemoSlider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
 
     }
     private void initDatas(){
-//        initSlider();
         initSroller();
         getDatas();
     }
@@ -198,9 +195,6 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
 
                 }
                 Collections.sort(newCourses,new CreatTimeComparator());
-//                for (Courses courses1 : newCourses){
-//                    System.out.println(courses1.getCourseInfo().getCreateTime());
-//                }
                 newCourseCoverAdapter.notifyDataSetChanged();
                 recommendedCourseCoverAdapter.notifyDataSetChanged();
                 initSlider();
@@ -235,7 +229,6 @@ public class DiscoverFragment extends BaseFragment implements BaseSliderView.OnS
     //广告栏点击回调
     @Override
     public void onSliderClick(BaseSliderView slider) {
-//        ToastUtils.showToast(context,slider.getBundle().get("extra") + "");
         Courses courses = (Courses) slider.getBundle().get("extra");
         Intent intent = new Intent(context, CourseDetailActivity.class);
         intent.putExtra("course",courses);

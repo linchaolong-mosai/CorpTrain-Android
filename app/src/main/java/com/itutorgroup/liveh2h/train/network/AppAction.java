@@ -27,10 +27,17 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_SUBSCRIBED = 4;
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
-//    private static final String BASE_URL = "https://web1.liveh2h.com/tutormeetweb/";
+
+    //server:https://train-qa.liveh2h.com/
+//    public static final String URL = "https://train-qa.liveh2h.com/";
+//    public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
+//    public static final String RESOURCE_URL = "https://train-qa.liveh2h.com/";
+
+    //server:https://web1.liveh2h.com/
     public static final String URL = "https://web1.liveh2h.com/";
     public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
     public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
+
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";

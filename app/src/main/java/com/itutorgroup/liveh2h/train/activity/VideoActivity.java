@@ -20,6 +20,7 @@ package com.itutorgroup.liveh2h.train.activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -95,16 +96,36 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
             }
         });
     }
+    private Pause pause=Pause.First;
+    enum Pause{
+        First,Playing,Pausing;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(pause!=Pause.First){
+            mVideoView.seekTo(mSeekPosition);
+            if(pause==Pause.Playing){
+                mVideoView.start();
+            }else if(pause==Pause.Pausing){
 
+            }
+        }
+    }
     @Override
     protected void onPause() {
         super.onPause();
-        if (mVideoView != null && mVideoView.isPlaying()) {
-            mSeekPosition = mVideoView.getCurrentPosition();
-            mVideoView.pause();
-        }
-    }
+            mSeekPosition=mVideoView.getCurrentPosition();
+            if(mVideoView.isPlaying()){
+                pause=Pause.Playing;
+                mVideoView.pause();
+            }else{
+                pause=Pause.Pausing;
+            }
 
+//        }
+
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -166,13 +187,17 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
 
     private void submitPercent() {
         if (resources.percent != 100) {
+            if(mVideoView.isPlaying())
             mVideoView.pause();
             int current = mVideoView.getCurrentPosition();
             int duration = mVideoView.getDuration();
             final int percent = (int) (current * 0.01 / duration * 100 * 100);
             //当前进度小于上一次进度的时候不提交
-            if(resources.percent>percent)
+            if(resources.percent>percent){
                 VideoActivity.super.onBackPressed();
+                return;
+            }
+
             AppAction.submitResourcePercent(this, resources.getClassId(), resources.getResourceId(), percent, new HttpResponseHandler(this, HttpResponse.class) {
                 @Override
                 public void onResponeseSucess(int statusCode, HttpResponse response, String responseString) {
@@ -217,10 +242,11 @@ public class VideoActivity extends BaseActivity implements UniversalVideoView.Vi
                     mVideoView.start();
                 }
             }
-
-
         }
     }
+
+
+
     private void setUrlOrPath() {
         String videoUrl = getIntent().getStringExtra("url");
         String path = getIntent().getStringExtra("path");
