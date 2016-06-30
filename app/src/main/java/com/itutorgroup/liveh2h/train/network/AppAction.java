@@ -35,8 +35,8 @@ public class AppAction {
 
     //server:https://web1.liveh2h.com/
     public static final String URL = "https://web1.liveh2h.com/";
-    public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
     public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
+    public static final String AVATAR_URL= RESOURCE_URL+"tutormeetupload/changeavatar.do";
 
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
@@ -162,7 +162,6 @@ public class AppAction {
             AsyncHttp.getInstance().getClient().addHeader("API_TOKEN", UserPF.getInstance().getString(UserPF.API_TOKEN, ""));
             AsyncHttp.getInstance().getClient().post(context,AVATAR_URL,params,responseHandler);
         } catch (FileNotFoundException e) {
-
             e.printStackTrace();
         }
     }

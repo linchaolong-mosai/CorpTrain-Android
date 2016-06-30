@@ -55,7 +55,7 @@ public class Utils {
         return getAvatar(userId,0);
     }
     public static String getAvatar(int userId,int version){
-        return String.format(AppAction.URL+"data/users/avatar/%d_medium.jpg?version=%d",userId,version);
+        return String.format(AppAction.RESOURCE_URL+"data/users/avatar/%d_medium.jpg?version=%d",userId,version);
     }
     public static String getFeedbackSubject(Context context){
         return String.format("H2H Learn Android %s", AppUtils.getVersionCode(context));
