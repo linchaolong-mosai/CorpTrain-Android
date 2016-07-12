@@ -66,7 +66,7 @@
     <string name="confirm_new_password">确认新密码</string>
     <string name="subject">主题</string>
     <string name="subject_cannot_be_empty">主题不能为空</string>
-    <string name="feedback_text_hint">告诉您的意见</string>
+    <string name="feedback_text_hint">告诉我们您的意见</string>
     <string name="feedback_cannot_be_empty">反馈信息不能为空</string>
     <string name="photo_album">相册</string>
     <string name="photograph">拍照</string>

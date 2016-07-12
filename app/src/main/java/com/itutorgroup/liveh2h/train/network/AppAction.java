@@ -28,13 +28,8 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
-    //server:https://train-qa.liveh2h.com/
-//    public static final String URL = "https://train-qa.liveh2h.com/";
-//    public static final String AVATAR_URL= URL+"tutormeetupload/changeavatar.do";
-//    public static final String RESOURCE_URL = "https://train-qa.liveh2h.com/";
 
-    //server:https://web1.liveh2h.com/
-    public static final String URL = "https://web1.liveh2h.com/";
+    public static final String URL = "https://app.liveh2h.com/";
     public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
     public static final String AVATAR_URL= RESOURCE_URL+"tutormeetupload/changeavatar.do";
 
@@ -172,7 +167,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getTopCategoryList(Context context,AsyncHttpResponseHandler responseHandler){
-        //https://web1.liveh2h.com/corptraining/api/category/subcategories
+        //https://cn2.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories",new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -183,7 +178,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getSubCategorylist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //https://web1.liveh2h.com/corptraining/api/category/subcategories
+        //https://cn2.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/subcategories/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -196,7 +191,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getCourselist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
-        //https://web1.liveh2h.com/corptraining/api/category/subcategories
+        //https://cn2.liveh2h.com/corptraining/api/category/subcategories
         AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/courses/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
@@ -319,7 +314,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getClassesByCourseId(Context context,String courseId,AsyncHttpResponseHandler responseHandler){
-        //https://web1.liveh2h.com/corptraining/api/course/classes/<course_id>
+        //https://cn2.liveh2h.com/corptraining/api/course/classes/<course_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/course/classes/")+courseId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
@@ -330,7 +325,7 @@ public class AppAction {
      * @param responseHandler
      */
     public static void getResourceByClassId(Context context,String classId,AsyncHttpResponseHandler responseHandler){
-        //https://web1.liveh2h.com/corptraining/api/class/resources/<class_id>
+        //https://cn2.liveh2h.com/corptraining/api/class/resources/<class_id>
         AsyncHttp.getInstance().execute(context,getUrl("api/class/resources/")+classId,AsyncHttp.METHOD_GET,responseHandler);
     }
 
