@@ -41,6 +41,16 @@ public class AppAction {
     }
 
     /**
+     * forceUpdate
+     *
+     */
+    public static void forceUpdate(Context context, AsyncHttpResponseHandler responseHandler){
+        RequestParams params = new RequestParams();
+        Map<String, Object> map = new HashMap<String, Object>();
+        AsyncHttp.getInstance().execute(context, getUrl("api/system/forceUpdateVersion/android"), AsyncHttp.METHOD_GET, responseHandler);
+    }
+
+    /**
      * login
      *
      * @param context

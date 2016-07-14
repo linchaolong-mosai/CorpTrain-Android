@@ -2,6 +2,7 @@ package com.itutorgroup.liveh2h.train.network;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.nfc.Tag;
 import android.text.TextUtils;
 
@@ -128,7 +129,7 @@ public abstract class HttpResponseHandler extends TextHttpResponseHandler {
      * @param statusCode 服务器响应值
      * @param response   返回的数据
      */
-    public abstract void onResponeseSucess(int statusCode, HttpResponse response, String responseString);
+    public abstract void onResponeseSucess(int statusCode, HttpResponse response, String responseString) throws PackageManager.NameNotFoundException;
 
     /**
      * 请求发起前调用
