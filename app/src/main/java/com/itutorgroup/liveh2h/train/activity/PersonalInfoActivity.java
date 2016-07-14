@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.itutorgroup.liveh2h.train.event.Event;
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.util.AnalyticsUtils;
+import com.itutorgroup.liveh2h.train.util.AppManager;
 import com.itutorgroup.liveh2h.train.util.LogUtils;
 import com.itutorgroup.liveh2h.train.util.NetworkUtils;
 import com.itutorgroup.liveh2h.train.util.ViewUtil;
@@ -205,6 +208,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 textMap.put("userid",UserPF.getInstance().getInt(UserPF.USER_ID,0)+"");
                 HashMap<String,String> filetMap = new HashMap<String, String>();
                 filetMap.put("file",path);
+                Log.e("Test upload", AppAction.AVATAR_URL);
                 return NetworkUtils.formUpload(AppAction.AVATAR_URL,textMap,filetMap);
             }
 

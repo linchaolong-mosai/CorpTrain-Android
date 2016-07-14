@@ -31,8 +31,7 @@ public class AppAction {
 
     public static final String URL = "https://app.liveh2h.com/";
     public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
-    public static final String AVATAR_URL= RESOURCE_URL+"tutormeetupload/changeavatar.do";
-
+    public static final String AVATAR_URL= "https://upload.liveh2h.com/"+"tutormeetupload/changeavatar.do";
     private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";

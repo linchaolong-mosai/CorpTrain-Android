@@ -1,5 +1,7 @@
 package com.itutorgroup.liveh2h.train.util;
 
+import android.util.Log;
+
 import com.itutorgroup.liveh2h.train.local.UserPF;
 
 import java.io.BufferedReader;
@@ -33,6 +35,7 @@ public class NetworkUtils {
      */
     public static boolean formUpload(String urlStr, Map<String, String> textMap,
                                     Map<String, String> fileMap) {
+
         String res = "";
         HttpURLConnection conn = null;
         String BOUNDARY = "---------------------------123821742118716"; //boundary就是request头和上传文件内容的分隔符

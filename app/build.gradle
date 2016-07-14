@@ -18,7 +18,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
     defaultConfig {
-        applicationId "com.itutorgroup.liveh2h.com"
+        applicationId "com.itutorgroup.liveh2h.train"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
