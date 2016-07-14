@@ -172,6 +172,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
         }
     }
     private void HandleReturnPic(File imageFile) {
+        
         UCrop.Options options = new UCrop.Options();
         int color = getResources().getColor(R.color.colorPrimary);
         //options.setCropFrameColor(color);
@@ -187,12 +188,14 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
                 .withOptions(options)
                 .start(mContext);
     }
+
     private void setImageloaderOptions(){
          options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .showImageForEmptyUri(R.drawable.ic_blank_user_small)
                 .showImageOnFail(R.drawable.ic_blank_user_small)
                 .considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
     }
+
     private void uploadFile(final String path){
         new AsyncTask<Void,Void,Boolean>(){
             @Override
