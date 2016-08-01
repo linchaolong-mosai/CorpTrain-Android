@@ -172,7 +172,7 @@ public class PersonalInfoActivity extends BaseToolbarActivity implements View.On
         }
     }
     private void HandleReturnPic(File imageFile) {
-        
+
         UCrop.Options options = new UCrop.Options();
         int color = getResources().getColor(R.color.colorPrimary);
         //options.setCropFrameColor(color);

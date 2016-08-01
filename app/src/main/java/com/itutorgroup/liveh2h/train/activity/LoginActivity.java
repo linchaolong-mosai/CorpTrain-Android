@@ -3,10 +3,12 @@ package com.itutorgroup.liveh2h.train.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.constants.TrackName;
@@ -164,7 +166,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 			@Override
 			public void onResponeseFail(int statusCode, HttpResponse response) {
-				showHintDialog(response.message);
+				showHintDialog(R.string.NO_REGISTRATION_REMINDER);
 			}
         });
     }

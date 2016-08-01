@@ -120,4 +120,5 @@
     <string name="action_settings">设置</string>
     <string name="error_text">错误!</string>
     <string name="forceUpdateReminder">App有新版本了,快去更新吧</string>
+    <string name="NO_REGISTRATION_REMINDER">您的H2H帐号还不是H2H Learn帐号,请联系您的单位获取H2H Learn帐号</string>
 </resources>
