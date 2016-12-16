@@ -4,14 +4,13 @@ import android.content.Context;
 
 import com.itutorgroup.liveh2h.train.local.UserPF;
 import com.itutorgroup.liveh2h.train.util.ConverStr;
-import com.itutorgroup.liveh2h.train.util.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.nio.channels.AsynchronousCloseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -29,14 +28,18 @@ public class AppAction {
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
 
-    public static final String URL = "https://app.liveh2h.com/";
+    private static final String URL = "https://app.liveh2h.com/";
+    private static final String BASE_URL = URL + "corptraining/";
+    private static final String BASE_TME_URL = URL + "tutormeetweb/";
+    private static final String CORP_LOGIN = BASE_TME_URL + "corplogin.do";
+    private static final String CORP_USER = BASE_TME_URL + "corpuser.do";
+    private static final String MESSAGE = BASE_TME_URL + "message.do";
+    public static final String AVATAR_URL = "https://upload.liveh2h.com/" + "tutormeetupload/changeavatar.do";
     public static final String RESOURCE_URL = "https://imgsrv.liveh2h.com/";
-    public static final String AVATAR_URL= "https://upload.liveh2h.com/"+"tutormeetupload/changeavatar.do";
-    private static final String BASE_URL = URL+"corptraining/";
     public static final String IMG_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
     public static final String FILE_RESOURSE_COURSE_URL = RESOURCE_URL + "resources/";
 
-    public static String getUrl(String url) {
+    private static String getUrl(String url) {
         return BASE_URL + url;
     }
 
@@ -45,8 +48,6 @@ public class AppAction {
      *
      */
     public static void forceUpdate(Context context, AsyncHttpResponseHandler responseHandler){
-        RequestParams params = new RequestParams();
-        Map<String, Object> map = new HashMap<String, Object>();
         AsyncHttp.getInstance().execute(context, getUrl("api/system/forceUpdateVersion/android"), AsyncHttp.METHOD_GET, responseHandler);
     }
 
@@ -60,10 +61,10 @@ public class AppAction {
     public static void login(Context context, String email, String password, AsyncHttpResponseHandler responseHandler) {
         RequestParams params = new RequestParams();
         params.put("action", "authUser");
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("email", email);
         map.put("password", password);
-        AsyncHttp.getInstance().execute(context, getUrl("corplogin.do"), params, map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, CORP_LOGIN, params, map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     /**
@@ -73,11 +74,11 @@ public class AppAction {
      * @param responseHandler
      */
     public static void forgotPassword(Context context, String email, AsyncHttpResponseHandler responseHandler) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("action", "forgotPwd");
         map.put("email", email);
         map.put("locale", Locale.getDefault().getLanguage());
-        AsyncHttp.getInstance().execute(context, getUrl("message.do"), map,
+        AsyncHttp.getInstance().execute(context, MESSAGE, map,
                 AsyncHttp.METHOD_POST, "application/x-www-form-urlencoded", responseHandler);
     }
 
@@ -99,11 +100,11 @@ public class AppAction {
      * @param responseHandler
      */
     public static void changePassword(Context context, String original, String password, AsyncHttpResponseHandler responseHandler) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("action", "updateUser");
         map.put("original", original);
         map.put("password", password);
-        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map,
+        AsyncHttp.getInstance().execute(context, CORP_USER, map,
                 AsyncHttp.METHOD_POST, "application/x-www-form-urlencoded", responseHandler);
     }
 
@@ -114,10 +115,10 @@ public class AppAction {
      * @param responseHandler
      */
     public static void changeName(Context context, String name, AsyncHttpResponseHandler responseHandler) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("action", "updateUser");
         map.put("name", name);
-        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, CORP_USER, map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     /**
@@ -127,10 +128,10 @@ public class AppAction {
      * @param responseHandler
      */
     public static void changePhoneNumber(Context context, String phone, AsyncHttpResponseHandler responseHandler) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         map.put("action", "updateUser");
         map.put("phone", phone);
-        AsyncHttp.getInstance().execute(context, getUrl("corpuser.do"), map, AsyncHttp.METHOD_POST, responseHandler);
+        AsyncHttp.getInstance().execute(context, CORP_USER, map, AsyncHttp.METHOD_POST, responseHandler);
     }
 
     /**
@@ -380,7 +381,7 @@ public class AppAction {
      * @param asyncHttpResponseHandler
      */
     public static void submitQuizAnswer(Context context,String classId,String questionId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
-        HashMap<String,Object> params = new HashMap<String,Object>();
+        HashMap<String,Object> params = new HashMap<>();
         params.put("answer",answerIndex);
         params.put("classId",classId);
         params.put("questionId",questionId);
@@ -418,7 +419,7 @@ public class AppAction {
      * @param asyncHttpResponseHandler
      */
     public static void submitSurveyAnswer(Context context,String classId,String questionId,int answerIndex,AsyncHttpResponseHandler asyncHttpResponseHandler){
-        HashMap<String,Object> params = new HashMap<String,Object>();
+        HashMap<String,Object> params = new HashMap<>();
         params.put("answer",answerIndex);
         params.put("classId",classId);
         params.put("questionId",questionId);
