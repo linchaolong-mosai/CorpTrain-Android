@@ -29,6 +29,7 @@ import butterknife.BindView;
 import de.greenrobot.event.EventBus;
 
 public class CourseDetailActivity extends ABaseToolbarActivity implements SelectedCallback {
+
     private CourseDetailsFragment courseDetailsFragment;
     private CourseComentsFragment courseComentsFragment;
 
@@ -38,15 +39,16 @@ public class CourseDetailActivity extends ABaseToolbarActivity implements Select
     private final static int TWO = 1;
     private Courses course;
     private TextView tvTitle;
+
     @BindView(R.id.iv_favorite)
     ImageView ivFavorite;
+
     @Override
     protected void initDatas() {
         tvTitle.setText(course.getCourseInfo().getSubject());
         getCourseByName();
         increaseViewcount();
     }
-
 
     private void increaseViewcount(){
         AppAction.incrementViewcount(context, course.getCourseInfo().getCourseId(), new HttpResponseHandler(context, HttpResponse.class) {

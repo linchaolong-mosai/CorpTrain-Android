@@ -27,7 +27,6 @@ public class AppAction {
     public static int SEARCH_USER_COURSE_FILTER_TYPE_UNFINISHED = 5;
     public static int  SEARCH_USER_COURSE_FILTER_TYPE_FINISHED = 6;
 
-
     private static final String URL = "https://app.liveh2h.com/";
     private static final String BASE_URL = URL + "corptraining/";
     private static final String BASE_TME_URL = URL + "tutormeetweb/";
@@ -202,7 +201,11 @@ public class AppAction {
      */
     public static void getCourselist(Context context,String categoryid,AsyncHttpResponseHandler responseHandler){
         //https://cn2.liveh2h.com/corptraining/api/category/subcategories
-        AsyncHttp.getInstance().execute(context,BASE_URL+"api/category/courses/"+categoryid,new RequestParams(),AsyncHttp.METHOD_GET,null,responseHandler);
+        //http://124.42.240.97/corptraining/course/list?category_id=B623ED47-FE06-4C64-AFCE-7BDBCEE93738&descending=true&limit=10&offset=0
+        RequestParams params = new RequestParams();
+        params.add("category_id", categoryid);
+        params.add("descending", "true");
+        AsyncHttp.getInstance().execute(context,BASE_URL+"course/list",params,AsyncHttp.METHOD_GET,null,responseHandler);
     }
 
     /**

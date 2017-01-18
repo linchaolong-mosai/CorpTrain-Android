@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import com.itutorgroup.liveh2h.train.R;
 import com.itutorgroup.liveh2h.train.bean.CourseFindByCategory;
+import com.itutorgroup.liveh2h.train.bean.usercourse.CourseInfo;
+import com.itutorgroup.liveh2h.train.bean.usercourse.Courses;
 import com.itutorgroup.liveh2h.train.network.AppAction;
 import com.itutorgroup.liveh2h.train.util.Utils;
 import com.mosai.utils.CommonAdapter;
@@ -24,9 +26,9 @@ import java.util.List;
  * 时间：2016/5/19 0019 16:31
  * 邮箱：zhounianbin@mastercom.cn
  */
-public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCategory> {
+public class CourseFindByCategoryAdapter extends CommonAdapter<Courses> {
     private DisplayImageOptions options;
-    public CourseFindByCategoryAdapter(Context context, List<CourseFindByCategory> listDatas, int layoutId) {
+    public CourseFindByCategoryAdapter(Context context, List<Courses> listDatas, int layoutId) {
         super(context, listDatas, layoutId);
         options = new DisplayImageOptions.Builder().cacheInMemory(true).cacheOnDisk(true)
                 .showImageForEmptyUri(R.drawable.bg_course_default_cover_little)
@@ -36,13 +38,14 @@ public class CourseFindByCategoryAdapter extends CommonAdapter<CourseFindByCateg
 
     @Override
     protected void fillData(CommonViewHolder holder, int position) {
-        CourseFindByCategory courseFindByCategory = listDatas.get(position);
-        String imgurl = Utils.getImgUrl(courseFindByCategory.getCourseId(),courseFindByCategory.getImageName());
-        String subject = courseFindByCategory.getSubject();
-        int viewcount = courseFindByCategory.getViewCount();
-        float rating = courseFindByCategory.getRating();
-        int lession = courseFindByCategory.classCount;
-        long publishtime = courseFindByCategory.getPublishTime();
+        Courses courseFindByCategory = listDatas.get(position);
+        CourseInfo courseInfo = courseFindByCategory.getCourseInfo();
+        String imgurl = Utils.getImgUrl(courseInfo.getCourseId(), courseInfo.getImageName());
+        String subject = courseInfo.getSubject();
+        int viewcount = courseInfo.getViewCount();
+        float rating = courseInfo.getRating();
+        int lession = courseFindByCategory.getClassCount();
+        long publishtime = courseInfo.getPublishTime();
 
         TextView tvLesson = holder.getView(R.id.tv_lessoncount);
         TextView tvDueDate = holder.getView(R.id.tv_duedate);
